@@ -1,0 +1,198 @@
+<?php 
+// $Id:
+
+/** 
+ * Implements hook_menu
+ */
+function commerce_3d_secure_menu(){
+  $items = array();
+
+  $items['commerce_3d_secure/3d_secure_waiting_page'] = array(
+    'page callback' => 'commerce_3d_secure_waiting_page',
+    'access arguments' => array('access content'),
+    'type' => MENU_CALLBACK,
+  );
+  
+  return $items;
+}
+
+
+/**
+ * Implements hook_commerce_checkout_router 
+ */
+function commerce_3d_secure_commerce_checkout_router($order, $checkout_page){
+  // Check if we have an active 3D Secure request from a payment module.
+  // If we don't, skip this page and move onto the next in the checkout process.
+  if ($checkout_page['page_id'] == '3d_secure') {
+    
+    // If there is 3D Authentication required, the payment module should have placed an array
+    // in an order object field called 'extra_authorisation'
+    // This additional data will not be stored permanently, just utilised for this transaction.
+    // The array should contain the following 4 fields:
+    // 1) PAReq
+    // 2) ACSURL
+    // 3) MD
+    // 4) Term URL
+    // If the array is not present in the order object or any of the 4 fields are missing, we 
+    // skip straight past the checkout page.
+    $skip_3d_secure = FALSE;
+  
+    if (!isset($order->data['extra_authorisation'])) {
+      $skip_3d_secure = TRUE;
+    } else {
+      if (!isset($order->data['extra_authorisation']['PAReq']) || 
+          !isset($order->data['extra_authorisation']['ACSURL']) || 
+          !isset($order->data['extra_authorisation']['MD']) ||
+          !isset($order->data['extra_authorisation']['TermUrl'])) {
+        watchdog('commerce_3d_secure','Only partial 3D Secure Data present, cannot proceed so skipping this step', array(), WATCHDOG_WARNING);  
+        $skip_3d_secure = TRUE;
+      }       
+    }
+
+    if ($skip_3d_secure){
+      // if there are no 3d secure markers in the order, we're done. Go to checkout completion page or to the offsite redirect page.
+      $checkout_pages = commerce_checkout_pages();
+      $next_step =  $checkout_pages['3d_secure']['next_page'];
+      commerce_order_status_update($order, 'checkout_' . $next_step);
+      drupal_goto('checkout/' . $order->order_number . '/' . $next_step);
+    }
+  }
+}
+
+/**
+ * Implements hook_commerce_checkout_page_info
+ */
+function commerce_3d_secure_commerce_checkout_page_info() {
+  $checkout_pages = array();
+  
+  // Define an additional Checkout page for 3D Secure authentication
+  // Add at a default weight of 15 so it appears before the thank you page
+  // which has a default weight of 20.
+  $checkout_pages['3d_secure'] = array(
+    'title' => t('3D Secure Authentication'),
+    'help' => t('Your payment card provider has requested some additional security details.'),
+    'status_cart' => FALSE,
+    'locked' => TRUE,
+    'buttons' => FALSE,
+    'weight' => 15,
+  );
+  return $checkout_pages;
+}
+
+/**
+ * Implements hook_commerce_checkout_pane_info
+ */
+function commerce_3d_secure_commerce_checkout_pane_info() {
+  $checkout_panes = array();
+
+  $checkout_panes['3d_secure'] = array(
+    'title' => t('3D Secure Authentication'),
+    'module' => 'commerce_3d_secure',
+    'page' => '3d_secure',
+    'collapsible' => FALSE,
+    'collapsed' => FALSE,
+    'weight' => 0,
+    'enabled' => TRUE,
+    'review' => FALSE,
+    'base' => 'commerce_3d_secure_pane',
+    'callbacks' => array('checkout_form'),
+  );
+
+  return $checkout_panes;
+
+}
+
+/**
+ * Implemented hook_checkout_form 
+ */
+function commerce_3d_secure_pane_checkout_form($form, &$form_state, $checkout_pane, $order) {
+  // Add the fields required for 3D Secure transaction. 
+  // These will have been sent back to the payment gateway module by the initial
+  // request for payment authentication. We are relying on the payment module having
+  // placed these variables in to the $order->data array.
+  // nb We already checked for this in the hook_router function above. 
+
+    drupal_add_js("window.onload = function() { document.forms['commerce-checkout-form-3d-secure'].submit(); }", 'inline');
+    
+    $form['PaReq'] = array(
+      '#type' => 'hidden',
+      '#default_value' => $order->data['extra_authorisation']['PAReq'],
+    );
+  
+    $form['TermUrl'] = array(
+      '#type' => 'hidden',
+      '#default_value' => $order->data['extra_authorisation']['TermUrl'],
+    );
+  
+    $form['MD'] = array(
+      '#type' => 'hidden',
+      '#default_value' => $order->data['extra_authorisation']['MD'],
+    );
+  
+    $form['submit'] = array(
+    	'#type' => 'submit',
+      '#value' => 'Proceed with 3D Secure Authentication',
+    );
+  
+    $form['hidden_action'] = array(
+      '#type' => 'hidden',
+      '#value' => $order->data['extra_authorisation']['ACSURL'],
+    );
+
+    $form['iframe_3d_secure'] = array(
+      '#markup' => '<iframe width="410" height="410" scrolling="no" frameborder="0" name ="iframe_3d_secure" id ="iframe_3d_secure" src="' . 
+      url('commerce_3d_secure/3d_secure_waiting_page')
+      . '" />'
+    );
+    return $form;
+}
+
+/**
+ * Implements hook_form_alter
+ */
+function commerce_3d_secure_form_alter(&$form, &$form_state, $form_id){
+  // Modify the checkout form so we can change the action to redirect offsite.
+  // Also rewrite the fields so they are at the top level of the form array where
+  // they will be expect by the 3rd party 3d Secure service.
+  
+  if ($form_id == 'commerce_checkout_form_3d_secure'){
+    // Change the form action.
+    $form['#action'] = $form['3d_secure']['hidden_action']['#value'];	
+    $form['#attributes']['target'] = 'iframe_3d_secure';
+    
+    // Move the fields to the top level.
+    $form['PaReq'] = $form['3d_secure']['PaReq'];
+    $form['TermUrl'] = $form['3d_secure']['TermUrl'];
+    $form['MD'] = $form['3d_secure']['MD'];
+    $form['submit'] = $form['3d_secure']['submit'];
+    $form['iframe_3d_secure'] = $form['3d_secure']['iframe_3d_secure'];
+    
+    // Remove redundant form elements.
+    unset($form['3d_secure']);
+  } 
+}
+
+/**
+ * A temporary page that is displayed until the 3d secure form is submitted.
+ * Since the form is submitted via a javascript call, this page is only really visible
+ * to those that have JS turned off.
+ */
+function commerce_3d_secure_waiting_page(){
+  print ('<html><head><title></title></head><body><p>');
+  print t('Please wait to be redirected to your card provider for authorisation.');
+  print ('</p></body></html>');
+}
+
+function commerce_3d_secure_clear_iframe($redirect_url){
+if (variable_get('uc_protx_vsp_direct_iframe', 1)) {
+    print('<html><head><title></title></head><body onload="document.forms[0].submit();">');
+    print('<form name="3d_secure_callback" method="post" action="'. url($redirect_url) .'" target="_top">');
+    print('<noscript>');
+    print('<input type="submit" value="');
+    print t('Please click here to continue.');
+    print('" />');
+    print('</noscript>');
+    print('</form>');
+    print('</body></html>');
+  }
+}
