@@ -1,0 +1,18 @@
+name = Commerce Migrate
+description = Provides Commerce-specific Migrate handlers.
+core = 7.x
+package = Commerce (contrib)
+dependencies[] = migrate
+dependencies[] = commerce_product
+
+; Destination plugins
+files[] = plugins/destinations/commerce_product_type.inc
+files[] = plugins/destinations/entity_api.inc
+files[] = plugins/destinations/fields.inc
+
+; Information added by drupal.org packaging script on 2012-01-26
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "commerce_migrate"
+datestamp = "1327536679"
+

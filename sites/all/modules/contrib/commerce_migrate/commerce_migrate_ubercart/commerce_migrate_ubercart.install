@@ -1,0 +1,34 @@
+<?php
+/**
+ * @file
+ *   install file for commerce_migrate_ubercart.
+ */
+
+/**
+ * Implements hook_uninstall() to deregister migrations.
+ */
+function commerce_migrate_ubercart_uninstall() {
+  $migrations = array(
+    'CommerceMigrateUbercartCustomerBillingProfile',
+    'CommerceMigrateUbercartLineItem',
+    'CommerceMigrateUbercartOrder',
+    'CommerceMigrateUbercartLineItem',
+    'CommerceMigrateUbercartNode',
+    'CommerceMigrateUbercartProductType',
+  );
+  module_load_include('module', 'commerce_migrate_ubercart');
+  module_load_include('inc', 'commerce_migrate_ubercart', 'product');
+  module_load_include('inc', 'commerce_migrate_ubercart', 'customer_billing_profile');
+  module_load_include('inc', 'commerce_migrate_ubercart', 'line_item');
+  module_load_include('inc', 'commerce_migrate_ubercart', 'order');
+  module_load_include('inc', 'commerce_migrate_ubercart', 'product_node');
+  module_load_include('inc', 'commerce_migrate_ubercart', 'product_type');
+  $migrations = array_merge(
+    $migrations,
+    CommerceMigrateUbercartProductMigration::getProductMigrations(),
+    CommerceMigrateUbercartNodeMigration::getProductNodeMigrations()
+  );
+  foreach ($migrations as $migration) {
+    Migration::deregisterMigration($migration);
+  }
+}
