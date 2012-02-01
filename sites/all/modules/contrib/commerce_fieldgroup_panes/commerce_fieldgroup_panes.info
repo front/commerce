@@ -1,0 +1,19 @@
+name = Order Fieldgroup Panes
+description = Provides for each fieldgroup in the order entity a pane.
+package = Commerce
+core = 7.x
+version = 7.x-1.0
+dependencies[] = commerce
+dependencies[] = field_group
+
+
+files[] = commerce_fieldgroup_panes.module
+
+
+
+; Information added by drupal.org packaging script on 2011-08-14
+version = "7.x-1.0-rc2"
+core = "7.x"
+project = "commerce_fieldgroup_panes"
+datestamp = "1313310121"
+
