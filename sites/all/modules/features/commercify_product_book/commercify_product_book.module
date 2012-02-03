@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Commercify Book product + display feature.
+ */
+
+include_once('commercify_product_book.features.inc');
