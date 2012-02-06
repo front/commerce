@@ -7,218 +7,241 @@
 
 
 /**
+ * Checkout pane callback: returns the shipping service pane's settings form.
+ */
+function commerce_shipping_pane_settings_form($checkout_pane) {
+  $form = array();
+
+  $form['commerce_shipping_pane_require_service'] = array(
+    '#type' => 'checkbox',
+    '#title' => t('Require a shipping service at all times, preventing checkout if none are available.'),
+    '#default_value' => variable_get('commerce_shipping_pane_require_service', FALSE),
+  );
+
+  return $form;
+}
+
+/**
  * Checkout pane callback: builds a shipping quote selection form.
  */
 function commerce_shipping_pane_checkout_form($form, &$form_state, $checkout_pane, $order) {
   $pane_form = array();
 
-  // TODO, before we active shipping methods etc, we should check that there
-  // actually are shippable products. Right not that is not possible because
-  // physical products aren't defined yet.
+  // TODO: integrate with Commerce Physical Product to ensure an order contains
+  // physical products before attempting to quote shipping rates.
 
+  // Collect shipping rates for the order.
+  commerce_shipping_collect_rates($order);
 
-  // Invoke the shipping methods event that will populate the order with
-  // an array of method IDs for available shipping methods.
-  $order->commerce_shipping_methods = array();
-  rules_invoke_all('commerce_shipping_methods', $order);
-
-  // Generate an array of shipping method options for the checkout form.
-  $options = array();
-  foreach ($order->commerce_shipping_methods as $instance_id => $method_info) {
-    $plugin = commerce_shipping_method_instance_load($instance_id);
-    $class = new $plugin['handler']['class']($plugin['settings'], $order);
-    if ($class->form_label()) {
-      $options[$instance_id] = $class->form_label();
-    }
-    else {
-      $plugin_title = isset($plugin['display_title']) ? $plugin['display_title'] : $plugin['title'];
-      $options[$instance_id] = !empty($plugin['shipping_label']) ?
-        $plugin['shipping_label'] : $plugin_title;
-    }
-  }
-
-  // If no shipping methods were found, return the empty form.
-  if (empty($options)) {
-    return $pane_form;
-  }
-
-  // Store the shipping methods in the form for validation purposes.
-  $pane_form['shipping_methods'] = array(
-    '#type' => 'value',
-    '#value' => $order->commerce_shipping_methods,
-  );
+  // Generate an array of shipping service rate options.
+  $options = commerce_shipping_service_rate_options($order);
 
   // If at least one shipping option is available...
   if (!empty($options)) {
-    // Add a radio select widget to specify the shipping method.
-    $pane_form['shipping_method'] = array(
+    // Store the shipping methods in the form for validation purposes.
+    $pane_form['shipping_rates'] = array(
+      '#type' => 'value',
+      '#value' => $order->shipping_rates,
+    );
+
+    // Add a radios element to let the customer select a shipping service.
+    $pane_form['shipping_service'] = array(
       '#type' => 'radios',
       '#options' => $options,
       '#ajax' => array(
-        'callback' => 'commerce_shipping_pane_checkout_form_details_refresh',
-        'wrapper' => 'shipping-details',
+        'callback' => 'commerce_shipping_pane_service_details_refresh',
+        'wrapper' => 'commerce-shipping-service-details',
       ),
     );
 
-    // Find the default shipping method using either the preselected value stored
-    // in the order / checkout pane or the first available method.
+    // Find the default shipping method using either the pre-selected value
+    // stored as a line item on the order or the first available method.
     $pane_values = !empty($form_state['values']) ? $form_state['values'][$checkout_pane['pane_id']] : array();
+    $pane_values['service_details'] = array();
 
-    if (isset($pane_values['shipping_method']) && isset($options[$pane_values['shipping_method']])) {
-      $default_value = $pane_values['shipping_method'];
-    }
-    elseif (isset($order->data['shipping_method']) && isset($options[$order->data['shipping_method']])) {
-      $default_value = $order->data['shipping_method'];
+    // First check for a shipping service selection in the pane values.
+    if (!empty($pane_values['shipping_service']) && !empty($options[$pane_values['shipping_service']])) {
+      $default_value = $pane_values['shipping_service'];
     }
     else {
-      reset($options);
+      // Then look for one in a line item on the order already.
+      $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+
+      foreach ($order_wrapper->commerce_line_items as $delta => $line_item_wrapper) {
+        if ($line_item_wrapper->type->value() == 'shipping' && !empty($options[$line_item_wrapper->commerce_shipping_service->value()])) {
+          $default_value = $line_item_wrapper->commerce_shipping_service->value();
+
+          // If the service details value is empty, see if there are any values
+          // in the line item to merge into the array as defaults.
+          if (empty($pane_values['service_details'])) {
+            $pane_values['service_details'] = $line_item_wrapper->value()->data['service_details'];
+          }
+
+          break;
+        }
+      }
+    }
+
+    // If we still don't have a default value, use the first available.
+    if (empty($default_value)) {
       $default_value = key($options);
     }
 
     // Set the default value for the shipping method radios.
-    $pane_form['shipping_method']['#default_value'] = $default_value;
-    $pane_form['shipping_details'] = array();
+    $pane_form['shipping_service']['#default_value'] = $default_value;
+    $shipping_service = commerce_shipping_service_load($default_value);
 
-    // Store the invoked plugin class of the selected shipping method for
-    // later use.
-    $plugin = commerce_shipping_method_instance_load($pane_form['shipping_method']['#default_value']);
-    $class = new $plugin['handler']['class']($plugin['settings'], $order);
-    $pane_form['shipping_details'] = $class->submit_form($pane_values, $checkout_pane);
-    $pane_form['commerce_shipping_plugin'] = array(
-      '#type' => 'value',
-      '#value' => $class
+    $pane_form['service_details'] = array('#type' => 'container');
+
+    // If the service specifies a details form callback...
+    if ($callback = commerce_shipping_service_callback($shipping_service, 'details_form')) {
+      // Look for a form array from the callback.
+      $details_form = $callback($pane_form, $pane_values, $checkout_pane, $order, $shipping_service);
+
+      // If a details form array was actually returned...
+      if (!empty($details_form)) {
+        // Add it to the form now.
+        $pane_form['service_details'] += $details_form;
+      }
+    }
+
+    $pane_form['service_details']['#prefix'] = '<div id="commerce-shipping-service-details">';
+    $pane_form['service_details']['#suffix'] = '</div>';
+  }
+  elseif (variable_get('commerce_shipping_pane_require_service', FALSE)) {
+    $pane_form['message'] = array(
+      '#markup' => '<div>' . t('Unfortunately we could not calculate any valid shipping rates for your order, and we require shipping service selection to complete checkout.') . '<br /><strong>' . t('Please contact us to resolve any issues with your order.') . '</strong></div>',
     );
 
-    $pane_form['shipping_details']['#prefix'] = '<div id="shipping-details">';
-    $pane_form['shipping_details']['#suffix'] = '</div>';
+    $pane_form['shipping_rates'] = array(
+      '#type' => 'value',
+      '#value' => FALSE,
+    );
   }
+
   return $pane_form;
 }
 
 /**
  * Returns the shipping details element for display via AJAX.
  */
-function commerce_shipping_pane_checkout_form_details_refresh($form, $form_state) {
-  return $form['commerce_shipping']['shipping_details'];
+function commerce_shipping_pane_service_details_refresh($form, $form_state) {
+  return $form['commerce_shipping']['service_details'];
 }
 
 /**
- * shipping pane: validation callback.
+ * Checkout pane callback: validate the shipping service selection and details.
  */
 function commerce_shipping_pane_checkout_form_validate($form, &$form_state, $checkout_pane, $order) {
-  $pane_form = $form[$checkout_pane['pane_id']];
-  $pane_values = &$form_state['values'][$checkout_pane['pane_id']];
-  $class = $pane_form['commerce_shipping_plugin']['#value'];
-  if (!isset($pane_values['shipping_details'])) {
-    $pane_values['shipping_details'] = array();
-  }
+  $pane_id = $checkout_pane['pane_id'];
 
-  // Only attempt validation if there were shipping methods available.
-  if ($pane_values['shipping_methods']) {
-    // If the selected shipping method was changed, we always need to rebuild
-    // to update the plugin class.
-    if ($pane_values['shipping_method'] != $pane_form['shipping_method']['#default_value']) {
-      return FALSE;
+  // Only attempt validation if we actually had shipping services on the form.
+  if (!empty($form[$pane_id]) && !empty($form_state['values'][$pane_id])) {
+    $pane_form = $form[$pane_id];
+    $pane_values = $form_state['values'][$pane_id];
+
+    // Initialize the extra details if necessary.
+    if (empty($pane_values['service_details'])) {
+      $pane_values['service_details'] = array();
     }
 
-    // Run the validation that the plugin class inplements.
-    $result = $class->submit_form_validate($pane_form['shipping_details'], $pane_values['shipping_details'], array($checkout_pane['pane_id'], 'shipping_details'), $order);
-    return $result === FALSE ? FALSE : TRUE;
+    // Only attempt validation if there were shipping services available.
+    if ($pane_values['shipping_rates']) {
+      // If the selected shipping service was changed...
+      if ($pane_values['shipping_service'] != $pane_form['shipping_service']['#default_value']) {
+        // And the newly selected service has a valid details form callback...
+        if ($shipping_service = commerce_shipping_service_load($pane_values['shipping_service'])) {
+          if (commerce_shipping_service_callback($shipping_service, 'details_form')) {
+            // Fail validation so the form is rebuilt to include the shipping
+            // service specific form elements.
+            return FALSE;
+          }
+        }
+      }
+
+      // Allow the shipping service to validate the service details.
+      $shipping_service = commerce_shipping_service_load($pane_values['shipping_service']);
+
+      if ($callback = commerce_shipping_service_callback($shipping_service, 'details_form_validate')) {
+        $result = $callback($pane_form['service_details'], $pane_values['service_details'], $shipping_service, $order, array($checkout_pane['pane_id'], 'service_details'));
+
+        // To prevent payment method validation routines from having to return TRUE
+        // explicitly, only return FALSE if it was specifically returned.  Otherwise
+        // default to TRUE.
+        return $result === FALSE ? FALSE : TRUE;
+      }
+    }
+    elseif (variable_get('commerce_shipping_pane_require_service', FALSE)) {
+      // But fail validation if no rates were returned and we require selection.
+      drupal_set_message(t('You cannot continue checkout without selecting a valid shipping service. Please contact us if an error is preventing you from seeing valid shipping rates for your order.'), 'error');
+      return FALSE;
+    }
   }
+
   // Nothing to validate.
   return TRUE;
 }
 
 /**
- * shipping pane: submit callback.
+ * Checkout pane callback: submit the shipping checkout pane.
  */
 function commerce_shipping_pane_checkout_form_submit($form, &$form_state, $checkout_pane, $order) {
+  $pane_id = $checkout_pane['pane_id'];
+
+  // Only attempt validation if we actually had payment methods on the form.
+  if (!empty($form[$pane_id]) && !empty($form_state['values'][$pane_id])) {
+    $pane_form = $form[$pane_id];
+    $pane_values = $form_state['values'][$pane_id];
+
+    // Initialize the extra details if necessary.
+    if (empty($pane_values['service_details'])) {
+      $pane_values['service_details'] = array();
+    }
+
+    // Only submit if there were shipping services available.
+    if (!empty($pane_values['shipping_rates'])) {
+      $shipping_service = commerce_shipping_service_load($pane_values['shipping_service']);
+
+      // Delete any existing shipping line items from the order.
+      commerce_shipping_delete_shipping_line_items($order, TRUE);
+
+      // Extract the unit price from the calculated rate.
+      $rate_line_item = $pane_values['shipping_rates'][$pane_values['shipping_service']];
+      $rate_line_item_wrapper = entity_metadata_wrapper('commerce_line_item', $rate_line_item);
+      $unit_price = $rate_line_item_wrapper->commerce_unit_price->value();
+
+      // Create a new shipping line item with the calculated rate from the form.
+      $line_item = commerce_shipping_line_item_new($pane_values['shipping_service'], $unit_price, $order->order_id, $rate_line_item->data, $rate_line_item->type);
+
+      // Add the service details to the line item's data array and the order.
+      $line_item->data['service_details'] = $pane_values['service_details'];
+
+      // Allow the details form submit handler to make any necessary updates to
+      // the line item before adding it to the order.
+      if ($callback = commerce_shipping_service_callback($shipping_service, 'details_form_submit')) {
+        $callback($pane_form['service_details'], $pane_values['service_details'], $line_item);
+      }
+
+      // Save and add the line item to the order.
+      commerce_shipping_add_shipping_line_item($line_item, $order, TRUE);
+    }
+  }
+}
+
+/**
+ * Checkout pane callback: show the selected shipping service on the review pane.
+ */
+function commerce_shipping_pane_review($form, $form_state, $checkout_pane, $order) {
   $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
 
-  // In case this order already have shipping line items, we need to remove them.
-  commerce_shipping_clear_order($order);
-
-  $pane_form = $form[$checkout_pane['pane_id']];
-  $pane_values = $form_state['values'][$checkout_pane['pane_id']];
-  $class = $pane_form['commerce_shipping_plugin']['#value'];
-  $rule_ids = explode('|', $pane_values['shipping_method']);
-  $method_id = $rule_ids[0];
-
-  // Only process if there were shipping methods available.
-  if ($pane_values['shipping_methods']) {
-    $order->data['shipping_method'] = $pane_values['shipping_method'];
-
-    $default_currency_code = commerce_default_currency();
-    if ($balance = commerce_payment_order_balance($order)) {
-      $default_currency_code = $balance['currency_code'];
+  // Loop over all the line items on the order.
+  foreach ($order_wrapper->commerce_line_items as $delta => $line_item_wrapper) {
+    // If the current line item is a shipping line item...
+    if ($line_item_wrapper->type->value() == 'shipping') {
+      // Return its label and formatted total price.
+      $total_price = $line_item_wrapper->commerce_total->value();
+      $rate = commerce_currency_format($total_price['amount'], $total_price['currency_code'], $line_item_wrapper->value());
+      return t('@service: @rate', array('@service' => $line_item_wrapper->line_item_label->value(), '@rate' => $rate));
     }
-    $form_values = isset($form_state['values']['commerce_shipping']['shipping_details']) ? $form_state['values']['commerce_shipping']['shipping_details'] : array();
-
-    // Let the shipping method calculate the shipping price.
-    $plugin = commerce_shipping_plugin_get_plugin('quotes', $method_id);
-    $shipping_line_items = $class->calculate_quote($default_currency_code, $form_values, $order, $form, $form_state);
-
-    // Loop through the result and create line items if possible.
-    if (is_array($shipping_line_items)) {
-      foreach ($shipping_line_items as $shipping_line_item) {
-        $line_item = commerce_shipping_line_item_new($plugin);
-        $line_item->order_id = $order->order_id;
-        $line_item_wrapper = entity_metadata_wrapper('commerce_line_item', $line_item);
-        if (is_numeric($shipping_line_item)) {
-          $price = array(
-            'amount' => $shipping_line_item,
-          );
-        }
-        elseif (isset($shipping_line_item['amount'])) {
-          $price = array(
-            'amount' => $shipping_line_item['amount'],
-            'currency_code' => !empty($shipping_line_item['currency_code']) ? $shipping_line_item['currency_code'] : $default_currency_code,
-          );
-        }
-        elseif (isset($shipping_line_item['price'])) {
-            $price = $shipping_line_item['price'];
-        }
-        if (isset($shipping_line_item['label'])) {
-          $line_item_wrapper->line_item_label = $shipping_line_item['label'];
-        }
-        if (isset($shipping_line_item['quantity'])) {
-          $line_item_wrapper->quantity = $shipping_line_item['quantity'];
-        }
-
-        // Require that the price is set.
-        if (isset($price)) {
-          // Add component if needed
-          if (empty($price['data']['components'])) {
-            $price_component = 'quote';
-            if (!empty($plugin['price_component'])) {
-              $price_component = 'quote_' . $plugin['name'];
-            }
-            $price['data'] = commerce_price_component_add(
-              $price,
-              $price_component,
-              $price,
-              TRUE,
-              FALSE
-            );
-          }
-          // Make sure the currency code is set.
-          if (empty($price['currency_code'])) {
-            $price['currency_code'] = $default_currency_code;
-          }
-          $line_item_wrapper->commerce_unit_price = $price;
-          rules_invoke_all('commerce_shipping_calculate', $line_item);
-
-          $line_item_wrapper->save();
-          $order_wrapper->commerce_line_items[] = $line_item_wrapper->value();
-        }
-      }
-    }
-
-    // Lastly we save the order.
-    commerce_order_save($order);
-
-    // This is not actually needed, but for flexibility allow shipping methods
-    // to react on the form submission.
-    $class->shipping_items_created($pane_form['shipping_details'], $pane_values['shipping_details'], $order);
   }
 }
