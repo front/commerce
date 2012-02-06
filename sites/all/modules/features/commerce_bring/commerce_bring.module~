@@ -1,0 +1,318 @@
+<?php
+
+/**
+ * @file
+ * Integrates Bring with Commerce Shipping.
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function commerce_bring_menu(){
+  $items = array();
+  
+  $items['admin/commerce/config/shipping/methods/bring/edit'] = array(
+    'title' => t('Edit'),
+    'description' => t('Configure the Bring shipping method.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('commerce_bring_settings_form'),
+    'access arguments' => array('administer shipping'),
+    'type' => MENU_LOCAL_TASK,
+    'context' => MENU_CONTEXT_INLINE,
+  );
+  
+  return $items;
+}
+
+/*
+ * Form callback where we build settings from used to collect Bring Api and to enable supported shipping services.
+ */
+function commerce_bring_settings_form($form, &$form_state){
+  
+  $form['rate'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Rate request settings'),
+    '#collapsible' => TRUE,
+  ); 
+  
+  $form['rate']['commerce_bring_max_package_weight'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Maximum package weight'),
+    '#description' => t('If the total weight of an order exceeds the maximum package weight, multiple packages will be used in the rate request.'),
+    '#default_value' => variable_get('commerce_bring_max_package_weight', '1500'),
+    '#field_suffix' => t('g'),
+    '#size' => 10,
+  );
+  
+  $form['rate']['commerce_bring_rate_currency_code'] = array(
+    '#type' => 'select',
+    '#title' => t('Currency'),
+    '#options' => commerce_currency_code_options_list(),
+    '#default_value' => variable_get('commerce_bring_rate_currency_code', commerce_default_currency()),
+  );
+  
+  $form['services'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Enable Bring shipping services'),
+  	'#collapsible' => TRUE,
+  );
+  
+  $form['shop_address'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Shop information'),
+    '#collapsible' => TRUE,
+  );
+  
+  $form['shop_address']['shop_name'] = array(
+    '#type' => 'textfield',
+    '#title' => t('The shop name'),
+    '#default_value' => variable_get('shop_name','Shop Name'),
+    '#size' => 10,
+  );
+
+  $form['shop_address']['shop_zipcode'] = array(
+    '#type' => 'textfield',
+    '#title' => t('The shop zipcode'),
+    '#default_value' => variable_get('shop_zipcode', ''),
+  	'#size' => 10,
+  );
+  
+  // Get an array of service elements.
+  $package_services = commerce_bring_package_service();
+
+  foreach($package_services as $key => $values){
+    $form['services'][strtr($key, ' ', '-')] = array(
+      '#type' => 'checkboxes',
+      '#title' => check_plain($key),
+      '#options' => $values,
+      '#default_value' => variable_get('product_type'),
+    );
+  }
+  
+  $form['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save configuraion'),
+  );
+  
+  return $form;  
+}
+
+/*
+ * Implement settings_form_submit().
+ */
+function commerce_bring_settings_form_submit($form, &$form_state){
+  // Save informatin about shop.
+  variable_set('shop_zipcode', $form_state['input']['shop_zipcode']);
+  variable_set('shop_name', $form_state['input']['shop_name']);
+  
+  // Save information about rate used for request.
+  variable_set('commerce_bring_max_package_weight', $form_state['input']['commerce_bring_max_package_weight']);
+  variable_set('commerce_bring_rate_currency_code', $form_state['input']['commerce_bring_rate_currency_code']);
+  
+  // Save information about Bring Products.
+  if(isset($form_state['input']['Bring-Products'])){
+    $temp_products_id = array();
+    foreach($form_state['input']['Bring-Products'] as $product_code){
+      if(isset($form_state['input']['Bring-Products'][$product_code])){
+        $temp_products_id[] = $product_code;
+        variable_set('product_type', $temp_products_id);
+      }
+    }
+  }
+  drupal_set_message(t('Your configuration has been saved.'), 'status');
+  
+  $form_state['redirect'] = 'admin/commerce/config/shipping/methods';
+}
+
+function commerce_bring_commerce_shipping_method_info(){
+  $shipping_methods = array();
+  
+  $shipping_methods['bring'] = array(
+    'title' => t('Bring Commerce'),
+    'description' => t('Quote rates for any product service supported by Bring.'),
+  );
+  
+  return $shipping_methods;
+}
+
+// Start here Bring Shipping example of simple integration
+function commerce_bring_commerce_shipping_service_info() {
+  $products = variable_get('product_type');
+  $bring_products = commerce_bring_package_service();
+  
+  $shipping_services = array();
+  foreach ($products as $service) {
+    $title = $bring_products['Bring Products'][$service];
+    
+    $shipping_services[$service] = array(
+      'title' => $title,
+      'display_title' => $title,
+      'shipping_method' => 'bring',
+      'callbacks' => array(
+        'rate' => 'commerce_bring_service_rate',
+      ),
+    );  
+  }
+  
+  return $shipping_services;
+}
+
+/*
+ * Shipping service callback returns Bring calculated shipping rates for an order.
+ */
+function commerce_bring_service_rate($shipping_service, $order){
+  static $bring_response;
+  if(!$bring_response){
+    $rate_request_element = commerce_bring_build_rate_request($order);
+    if($rate_request_element){
+      $bring_response = commerce_bring_api_request($rate_request_element, t('Request for order: @order_number', array('@order_number' => $order->order_number)));
+    }
+  }  
+  //dpr($bring_response);
+  $bring_products = $bring_response->Product;
+  $shipping_id = $shipping_service['name'];
+  
+  foreach($bring_products as $product){
+    if($product->ProductId == $shipping_id){
+       return array(
+       	'amount' => $product->Price->PackagePriceWithoutAdditionalServices->AmountWithVAT * 100,
+	'currency_code' => 'NOK',
+        'data' => array(),//(array) $product,
+      );   
+    }
+  }
+}
+
+function commerce_bring_build_rate_request($order) {
+  $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+  // Get the shipping profile reference field name for the order.
+  $field_name = commerce_physical_order_shipping_field_name($order);
+  $shipping_profile = $order_wrapper->{$field_name}->value();
+
+  // Shipping address used in request.
+  if(!empty($order_wrapper->{$field_name}->commerce_customer_address)){
+    $shipping_address = $order_wrapper->{$field_name}->commerce_customer_address->value();
+    $shipping_address['phone'] = '';
+  }
+  else {
+    $shipping_address = array(
+      'organisation_name' => '',
+      'name_line' => '',
+      'thoroughfare' => '',
+      'premise' => '',
+      'locality' => '',
+      'administrative_area' => '',
+      'postal_code' => '',
+      'country' => '',
+      'phone' => '',
+    );
+  }
+  // Add phone number if it is available.
+  if($phone_field_name = commerce_physical_customer_profile_phone_number_field_name($shipping_profile)){
+    if(!empty($order_wrapper->{$field_name}->{$phone_field_name})){
+      $shipping_address['phone'] = $order_wrapper->{$field_name}->{$phone_field_name}->value(); 
+    }
+  }
+  
+  $rate_request_element = '?';
+  
+  // Get the total weight of the order in grams.
+  $weight = commerce_physical_order_weight($order, 'g');
+  $max_weight = variable_get('commerce_bring_max_package_weight', '');
+  $packages = 2;
+  
+  if($weight['weight'] > $max_weight){
+    // Determine number of weight packages.
+    while(ceil($weight['weight']) / $packages > $max_weight){
+      $packages++;
+    }
+	  
+    $rate_request_element .= 'weightInGrams'.$packages.'='.$weight['weight'].'&volume=0';
+  }
+  else {
+    $rate_request_element .= 'weightInGrams='.$weight['weight'].'&volume=0';
+  }
+  
+  $bring_products = variable_get('product_type','');
+  $prod = '';
+  foreach($bring_products as $bring_product){
+    $prod .= '&product='.$bring_product;
+  }
+  
+  $from_zipcode = '&from='.variable_get('shop_zipcode', '');
+  $rate_request_element .= $from_zipcode.'&to='.$shipping_address['postal_code'].$prod;
+  
+  dpr($rate_request_element);
+  return $rate_request_element;
+}
+
+/*
+ * Bring available products.
+ */
+function commerce_bring_package_service(){
+    $package_services = array(
+    'Bring Products' => array(
+      'SERVICEPAKKE' => t('Klimanøytral Servicepakke'),
+      'PA_DOREN' => t('På Døren'),
+      'BPAKKE_DOR-DOR' => t('Bedriftspakke'),
+      'EKSPRESS07' => t('Bedriftspakke Ekspress-Over natten 07'),
+      'EKSPRESS09' => t('Bedriftspakke Ekspress-Over natten 09'),
+      //'A-POST' => t('A-Prioritert'),
+      //'B-POST' => t('B-Økonomi'),
+      //'QUICKPACK_SAMEDAY' => t('QuickPack SameDay'),
+      'QUICKPACK_OVER_NIGHT_0900' => t('Quickpack Over Night 0900'),
+      'QUICKPACK_OVER_NIGHT_1200' => t('Quickpack Over Night 1200'),
+      'QUICKPACK_DAY_CERTAIN' => t('Quickpack Day Certain'),
+      'QUICKPACK_EXPRESS_ECONOMY' => t('Quickpack Express Economy'),
+      'CARRYON BUSINESS NORWAY' => t('CarryOn Business Norway'),
+      'CARRYON BUSINESS SWEDEN' => t('CarryOn Business Sweden'),
+      'CARRYON BUSINESS DENMARK' => t('CarryOn Business Denmark'),
+      'CARRYON BUSINESS FINLAND' => t('CarryOn Business Finland'),
+      'CARRYON HOMESHOPPING NORWAY' => t('CarryOn Homeshopping Norway'),
+      'CARRYON HOMESHOPPING SWEDEN' => t('CarryOn Homeshopping Sweden'),
+      'CARRYON HOMESHOPPING DENMARK' => t('CarryOn Homeshopping Denmark'),
+      'CARRYON HOMESHOPPING FINLAND' => t('CarryOn Homeshopping Finland'),
+      'HOMEDELIVERY_CURBSIDE_DAG' => t('HomeDelivery CurbSide'),
+      'COURIER_VIP' => t('Bud VIP'),
+      'COURIER_1H' => t('Bud 1 time'),
+      'COURIER_2H' => t('Bud 2 timer'),
+      'COURIER_4H' => t('Bud 4 timer'),
+      'COURIER_6H' => t('Bud 6 timer'),
+    ),
+  );
+  
+  return $package_services;
+}
+
+function commerce_bring_api_request($query_string, $message = '') {
+
+  if(!function_exists('curl_init')){
+    die(t('Sorry cURL is not installed.'));
+  }
+  
+  // Array information for the request. 
+  $header = array();
+  $header[] = 'Content-type: text/xml; charset=utf-8';
+  $header[] = 'Content-length: '.strlen($query_string);
+  
+  // Post the XML to the XML Processor.
+  $timeout = 20;
+  // This URL is used to get response with all Bring data.
+  $url = 'http://fraktguide.bring.no/fraktguide/products/all.xml'.$query_string;
+  //$url = 'http://fraktguide.bring.no/fraktguide/products/price.xml'.$query_string;
+  $ch = curl_init();
+  curl_setopt($ch,CURLOPT_URL,$url);
+  curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+  curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+  
+  $result = curl_exec($ch);
+  curl_close($ch);
+  if(!empty($result)){
+    $response = new SimpleXMLElement($result);
+    $response->asXML();
+    return $response;
+  }
+  else {
+    return FALSE;
+  }
+}
