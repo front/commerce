@@ -1,0 +1,8 @@
+name = Aller store custom code
+description = Custom code for the aller store
+core = 7.x
+package = Aller store
+dependencies[] = commerce
+dependencies[] = commerce_product
+dependencies[] = views_rss
+files[] = aller_store.module

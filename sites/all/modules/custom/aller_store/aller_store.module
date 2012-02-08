@@ -1,0 +1,24 @@
+<?php
+
+/**
+ * @file
+ * Custom code for the allershop store. 
+ */
+
+/**
+* Implements hook_views_rss_date_sources().
+ * 
+ * Implements correct dates in views_rss when using commerce products
+*/
+function aller_store_views_rss_date_sources() {
+  $sources['commerce_product'] = array(
+    'pubDate' => array(
+      'table' => 'commerce_product',
+      'field' => 'created',
+    ),
+    'lastBuildDate' => array(
+      'table' => 'commerce_product',
+      'field' => 'changed',
+    ),
+  );
+}
