@@ -8,7 +8,7 @@
 /**
  * Implements hook_menu().
  */
-function commerce_bring_menu(){
+function commerce_bring_menu() {
   $items = array();
   
   $items['admin/commerce/config/shipping/methods/bring/edit'] = array(
@@ -27,7 +27,7 @@ function commerce_bring_menu(){
 /*
  * Form callback where we build settings from used to collect Bring Api and to enable supported shipping services.
  */
-function commerce_bring_settings_form($form, &$form_state){
+function commerce_bring_settings_form($form, &$form_state) {
   
   $form['rate'] = array(
     '#type' => 'fieldset',
@@ -53,8 +53,8 @@ function commerce_bring_settings_form($form, &$form_state){
   
   $form['services'] = array(
     '#type' => 'fieldset',
-    '#title' => t('Enable Bring shipping services'),
-  	'#collapsible' => TRUE,
+    '#title' => t('Enable Bring shipping services'), 
+	'#collapsible' => TRUE,
   );
   
   $form['shop_address'] = array(
@@ -66,7 +66,7 @@ function commerce_bring_settings_form($form, &$form_state){
   $form['shop_address']['shop_name'] = array(
     '#type' => 'textfield',
     '#title' => t('The shop name'),
-    '#default_value' => variable_get('shop_name','Shop Name'),
+    '#default_value' => variable_get('shop_name', 'Shop Name'),
     '#size' => 10,
   );
 
@@ -80,7 +80,7 @@ function commerce_bring_settings_form($form, &$form_state){
   // Get an array of service elements.
   $package_services = commerce_bring_package_service();
 
-  foreach($package_services as $key => $values){
+  foreach ($package_services as $key => $values) {
     $form['services'][strtr($key, ' ', '-')] = array(
       '#type' => 'checkboxes',
       '#title' => check_plain($key),
@@ -100,7 +100,7 @@ function commerce_bring_settings_form($form, &$form_state){
 /*
  * Implement settings_form_submit().
  */
-function commerce_bring_settings_form_submit($form, &$form_state){
+function commerce_bring_settings_form_submit($form, &$form_state) {
   // Save informatin about shop.
   variable_set('shop_zipcode', $form_state['input']['shop_zipcode']);
   variable_set('shop_name', $form_state['input']['shop_name']);
@@ -110,10 +110,10 @@ function commerce_bring_settings_form_submit($form, &$form_state){
   variable_set('commerce_bring_rate_currency_code', $form_state['input']['commerce_bring_rate_currency_code']);
   
   // Save information about Bring Products.
-  if(isset($form_state['input']['Bring-Products'])){
+  if (isset($form_state['input']['Bring-Products'])) {
     $temp_products_id = array();
-    foreach($form_state['input']['Bring-Products'] as $product_code){
-      if(isset($form_state['input']['Bring-Products'][$product_code])){
+    foreach ($form_state['input']['Bring-Products'] as $product_code) {
+      if (isset($form_state['input']['Bring-Products'][$product_code])) {
         $temp_products_id[] = $product_code;
         variable_set('product_type', $temp_products_id);
       }
@@ -124,7 +124,7 @@ function commerce_bring_settings_form_submit($form, &$form_state){
   $form_state['redirect'] = 'admin/commerce/config/shipping/methods';
 }
 
-function commerce_bring_commerce_shipping_method_info(){
+function commerce_bring_commerce_shipping_method_info() {
   $shipping_methods = array();
   
   $shipping_methods['bring'] = array(
@@ -135,7 +135,6 @@ function commerce_bring_commerce_shipping_method_info(){
   return $shipping_methods;
 }
 
-// Start here Bring Shipping example of simple integration
 function commerce_bring_commerce_shipping_service_info() {
   $products = variable_get('product_type');
   $bring_products = commerce_bring_package_service();
@@ -160,58 +159,43 @@ function commerce_bring_commerce_shipping_service_info() {
 /*
  * Shipping service callback returns Bring calculated shipping rates for an order.
  */
-function commerce_bring_service_rate($shipping_service, $order){
-  static $bring_response;
-  if(!$bring_response){
-    $rate_request_element = commerce_bring_build_rate_request($order);
-    if($rate_request_element){
+function commerce_bring_service_rate($shipping_service, $order) {
+  // Check if there is a to zipcode and then make the request.
+  $start_request = FALSE;
+  $rate_request_element = commerce_bring_build_rate_request($order);
+  if ($rate_request_element && strstr($rate_request_element, '&to=')) {
+    $start_request = TRUE;  
+    if ($start_request === TRUE) {
       $bring_response = commerce_bring_api_request($rate_request_element, t('Request for order: @order_number', array('@order_number' => $order->order_number)));
     }
-  }  
-  //dpr($bring_response);
-  $bring_products = $bring_response->Product;
-  $shipping_id = $shipping_service['name'];
-  
-  foreach($bring_products as $product){
-    if($product->ProductId == $shipping_id){
-       return array(
-       	'amount' => $product->Price->PackagePriceWithoutAdditionalServices->AmountWithVAT * 100,
-	'currency_code' => 'NOK',
-        'data' => array(),//(array) $product,
-      );   
+    $bring_products = $bring_response->Product;
+    $shipping_id = $shipping_service['name'];
+    
+    foreach ($bring_products as $product) {
+      if ($product->ProductId == $shipping_id) {
+         return array(
+         	'amount' => $product->Price->PackagePriceWithoutAdditionalServices->AmountWithVAT * 100,
+            'currency_code' => 'NOK',
+            'data' => array(),
+          );   
+      }
     }
   }
 }
 
 function commerce_bring_build_rate_request($order) {
-  $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
-  // Get the shipping profile reference field name for the order.
-  $field_name = commerce_physical_order_shipping_field_name($order);
-  $shipping_profile = $order_wrapper->{$field_name}->value();
-
-  // Shipping address used in request.
-  if(!empty($order_wrapper->{$field_name}->commerce_customer_address)){
-    $shipping_address = $order_wrapper->{$field_name}->commerce_customer_address->value();
-    $shipping_address['phone'] = '';
+  if (isset($order->shipping_address_ajax)) {
+    $shipping_address = $order->shipping_address_ajax['commerce_customer_address']['und'][0];
   }
-  else {
-    $shipping_address = array(
-      'organisation_name' => '',
-      'name_line' => '',
-      'thoroughfare' => '',
-      'premise' => '',
-      'locality' => '',
-      'administrative_area' => '',
-      'postal_code' => '',
-      'country' => '',
-      'phone' => '',
-    );
-  }
-  // Add phone number if it is available.
-  if($phone_field_name = commerce_physical_customer_profile_phone_number_field_name($shipping_profile)){
-    if(!empty($order_wrapper->{$field_name}->{$phone_field_name})){
-      $shipping_address['phone'] = $order_wrapper->{$field_name}->{$phone_field_name}->value(); 
+  elseif ($order->commerce_customer_shipping) {
+    $shipping_profile = commerce_customer_profile_load($order->commerce_customer_shipping['und'][0]['profile_id']);
+    if ($shipping_profile) {
+      $shipping_address = $shipping_profile->commerce_customer_address['und'][0]; 
     }
+  }  
+ 
+  if (isset($shipping_address['postal_code'])) {
+    $to_zipcode = $shipping_address['postal_code'];
   }
   
   $rate_request_element = '?';
@@ -220,36 +204,43 @@ function commerce_bring_build_rate_request($order) {
   $weight = commerce_physical_order_weight($order, 'g');
   $max_weight = variable_get('commerce_bring_max_package_weight', '');
   $packages = 2;
-  
-  if($weight['weight'] > $max_weight){
-    // Determine number of weight packages.
-    while(ceil($weight['weight']) / $packages > $max_weight){
-      $packages++;
-    }
-	  
-    $rate_request_element .= 'weightInGrams'.$packages.'='.$weight['weight'].'&volume=0';
+
+  $volume = commerce_physical_order_volume($order, 'cm');
+  $volume_packages = 2;
+  $total_volume = 1;
+
+  if ($volume['volume'] > 0) {
+    $total_volume = $total_volume * (floatval($volume['volume'] / 1000));
   }
   else {
-    $rate_request_element .= 'weightInGrams='.$weight['weight'].'&volume=0';
+    $total_volume = 0;
   }
+
+  $rate_request_element .= 'weightInGrams=' . $weight['weight'] . '&length=&width=&height=&volume=' . $total_volume;
   
-  $bring_products = variable_get('product_type','');
+  $bring_products = variable_get('product_type', '');
   $prod = '';
-  foreach($bring_products as $bring_product){
-    $prod .= '&product='.$bring_product;
+  foreach ($bring_products as $bring_product) {
+    $prod .= '&product=' . $bring_product;
   }
   
-  $from_zipcode = '&from='.variable_get('shop_zipcode', '');
-  $rate_request_element .= $from_zipcode.'&to='.$shipping_address['postal_code'].$prod;
+  if (isset($to_zipcode)) {
+    $to = '&to=' . $to_zipcode;  
+  }
+  else {
+    $to = '';
+  }
   
-//   dpr($rate_request_element);
+  $from_zipcode = '&from=' . variable_get('shop_zipcode', '');
+  $rate_request_element .= $from_zipcode . $to . $prod;
+
   return $rate_request_element;
 }
 
 /*
  * Bring available products.
  */
-function commerce_bring_package_service(){
+function commerce_bring_package_service() {
     $package_services = array(
     'Bring Products' => array(
       'SERVICEPAKKE' => t('Klimanøytral Servicepakke'),
@@ -286,33 +277,94 @@ function commerce_bring_package_service(){
 
 function commerce_bring_api_request($query_string, $message = '') {
 
-  if(!function_exists('curl_init')){
+  if (!function_exists('curl_init')) {
     die(t('Sorry cURL is not installed.'));
   }
   
   // Array information for the request. 
   $header = array();
   $header[] = 'Content-type: text/xml; charset=utf-8';
-  $header[] = 'Content-length: '.strlen($query_string);
+  $header[] = 'Content-length: ' . strlen($query_string);
   
   // Post the XML to the XML Processor.
   $timeout = 20;
   // This URL is used to get response with all Bring data.
-  $url = 'http://fraktguide.bring.no/fraktguide/products/all.xml'.$query_string;
-  //$url = 'http://fraktguide.bring.no/fraktguide/products/price.xml'.$query_string;
+  //$url = 'http://fraktguide.bring.no/fraktguide/products/all.xml' . $query_string;
+  $url = 'http://fraktguide.bring.no/fraktguide/products/price.xml'.$query_string;
   $ch = curl_init();
-  curl_setopt($ch,CURLOPT_URL,$url);
-  curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
-  curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
   
   $result = curl_exec($ch);
   curl_close($ch);
-  if(!empty($result)){
+  if (!empty($result)) {
     $response = new SimpleXMLElement($result);
     $response->asXML();
     return $response;
   }
   else {
     return FALSE;
+  }
+}
+
+/**
+ * Implementation of hook_form_alter().
+ */
+function commerce_bring_form_alter(&$form, $form_state, $form_id) {
+  if ($form_id == 'commerce_checkout_form_checkout') {
+    $form['commerce_shipping']['bring_request'] = array(
+      '#type' => 'button',
+      '#value' => t('Calculate Shipping'),
+      '#ajax' => array(
+        'callback' => 'commerce_bring_request_callback',
+      	'wrapper' => 'commerce-shipping-bring',
+      	'method' => 'replace',
+      	'effect' => 'fade',
+      ),
+    );
+    
+    $form['commerce_shipping']['#prefix'] = "<div id='commerce-shipping-bring'>";
+    $form['commerce_shipping']['#suffix'] = "</div>";
+    $form['commerce_shipping']['message'] = array(
+      '#markup' => '<div>' . t('The Shipping service is mandatory.') . '<br />' . t('Please fill all mandatory fields in this form an then press "Calculate Shipping" button to get an shipping price.') .'<br /><strong>' . t('If is not working please contact us to resolve any issues with your order.') . '</strong></div>',
+      '#weight' => 0,
+    );
+  }  
+}
+
+function commerce_bring_request_callback($form, $form_state) {
+  $checkout_pane = array();
+
+  $order = $form_state['order'];
+  $country = $form_state['input']['customer_profile_shipping']['commerce_customer_address']['und'][0]['country'];
+  
+  if ($country == 'NO') {
+  $panes = commerce_checkout_panes();
+  $checkout_pane = $panes['commerce_shipping'];
+  
+  $pane_shipping = commerce_shipping_pane_checkout_form($form, $form_state, $checkout_pane, $order);
+  
+    $order->shipping_address_ajax = $form_state['input']['customer_profile_shipping'];
+      
+    $f = drupal_get_form('commerce_shipping_pane_checkout_form', $checkout_pane, $order);
+  
+    $form['commerce_shipping']['shipping_rates'] = $f['shipping_rates'];
+    $form['commerce_shipping']['shipping_service'] = $f['shipping_service'];
+    $form['commerce_shipping']['service_details'] = $f['service_details'];
+    
+    if ($form['commerce_shipping']['shipping_rates'] && $form['commerce_shipping']['shipping_service'] && $form['commerce_shipping']['service_details']) {
+      unset($form['commerce_shipping']['service_details']);  
+      unset($form['commerce_shipping']['message']);
+    }
+    
+    return drupal_render($form['commerce_shipping']);
+  }
+  else {
+    
+    $form['commerce_shipping']['message']['#markup'] = '<div class="only-norway">' . t('This shipping method is only for Norway') . '</div>';
+    
+    return drupal_render($form['commerce_shipping']);
+  
   }
 }
