@@ -263,7 +263,7 @@ function commerce_extra_price_formatters_field_formatter_view($entity_type, $ent
         break;
 
         case 'commerce_price_no_decimals':
-          include(drupal_get_path('module', 'commerce_extra_price_formatters') . '/includes/extra_functions.inc');
+          include_once(drupal_get_path('module', 'commerce_extra_price_formatters') . '/includes/extra_functions.inc');
           $markup = '';
           $markup .= commerce_extra_price_no_decimal_currency_format($item['amount'], $item['currency_code'], $entity);
 
