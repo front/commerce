@@ -1,5 +1,12 @@
 <?php
 
+/*
+ * Implements hook_init().
+ */
+function commerce_bring_init() {
+    drupal_add_js(drupal_get_path('module', 'commerce_bring') . 'js/commerce_bring.js');
+}
+
 /**
  * @file
  * Integrates Bring with Commerce Shipping.
@@ -338,6 +345,20 @@ function commerce_bring_request_callback($form, $form_state) {
 
   $order = $form_state['order'];
   $country = $form_state['input']['customer_profile_shipping']['commerce_customer_address']['und'][0]['country'];
+  
+  foreach ($form_state['values']['customer_profile_billing']['commerce_customer_address']['und'][0] as $key => $field) {
+    if (empty($field) && $key != 'country' && $key != 'premise') {
+      $form['commerce_shipping']['message']['#markup'] = '<div class="fill-form">' . t('Please fill the mandatory fields.') . '</div>';
+      return drupal_render($form['commerce_shipping']);
+    }  
+  }
+  
+  foreach ($form_state['values']['customer_profile_shipping']['commerce_customer_address']['und'][0] as $key => $field) {
+    if (empty($field) && $key != 'country' && $key != 'premise') {
+      $form['commerce_shipping']['message']['#markup'] = '<div class="fill-form">' . t('Please fill the mandatory fields.') . '</div>';
+      return drupal_render($form['commerce_shipping']);
+    }  
+  }
   
   if ($country == 'NO') {
   $panes = commerce_checkout_panes();
