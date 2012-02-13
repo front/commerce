@@ -1,0 +1,202 @@
+<?php
+
+/**
+ * @file
+ * Defines additional menu item and order reports functionality.
+ */
+
+/**
+ * Implements hook_theme().
+ */
+function commerce_reports_theme() {
+
+  return array(
+    'commerce_reports_products_qty_monthly_line' => array(
+        'variables' => array('data' => NULL),
+        'template' => 'theme/commerce-reports-products-qty-monthly-line'
+    ),
+    'commerce_reports_products_sales_monthly_bar' => array(
+        'variables' => array('data' => NULL),
+        'template' => 'theme/commerce-reports-products-sales-monthly-bar'
+    ),
+    'commerce_reports_products_percent_monthly_pie' => array(
+        'variables' => array('data' => NULL),
+        'template' => 'theme/commerce-reports-products-percent-pie'
+    )
+  );
+}
+
+/*
+ * Implements hook_views_api().
+ */
+function commerce_reports_views_api() {
+  return array(
+    'api' => 2,
+    'path' => drupal_get_path('module', 'commerce_reports') . '/includes/views',
+  );
+}
+
+function __prepare_commerce_reports_products_percent_pie_data($view_result) {
+    
+    $data = array();
+    
+    foreach ($view_result as $order_details){
+        
+        $order = commerce_order_load($order_details->order_id);
+        $wrapper = entity_metadata_wrapper('commerce_order', $order);
+        $currency_code = $wrapper->commerce_order_total->currency_code->value();
+
+        foreach ($wrapper->commerce_line_items as $delta => $line_item_wrapper) {
+            //print $line_item_wrapper->commerce_product->title->value();
+            //print '<br />';
+            switch ($line_item_wrapper->type->value()) {
+                case 'shipping':
+                    //$line_item_wrapper->line_item_label->value();
+                    break;
+                case 'product':
+                //default:
+                    
+                    $title = $line_item_wrapper->commerce_product->title->value();
+                    $qty = round($line_item_wrapper->quantity->value());
+                    $price = $qty*commerce_currency_amount_to_decimal($line_item_wrapper->commerce_unit_price->amount->value(), $currency_code);
+                    $data['qty'][$title] = (isset($data['qty'][$title])) ? $data['qty'][$title]+$qty : $qty;
+                    $data['price'][$title] = (isset($data['price'][$title])) ? $data['price'][$title]+$price : $price;
+                    //print $line_item_wrapper->commerce_product->title->value();
+                    //print '<br />';
+                    break;
+              }
+        }
+    }
+    
+    ksort($data['qty']);
+
+    return $data;
+}
+
+function __prepare_commerce_reports_products_sales_monthly_bar_data($view_result) {
+    
+    $data = array();
+    
+    foreach ($view_result as $order_details){
+        
+        $order = commerce_order_load($order_details->order_id);
+        $wrapper = entity_metadata_wrapper('commerce_order', $order);
+        $currency_code = $wrapper->commerce_order_total->currency_code->value();
+        $amount = commerce_currency_amount_to_decimal($wrapper->commerce_order_total->amount->value(), $currency_code);
+        
+        $month = date("M Y", $order->created);
+        if (!isset($data[$month])){
+            $data[$month] = $amount;    
+        }
+        else {
+            $data[$month] += $amount;
+        }
+    }
+    
+    return $data;
+}
+
+function __prepare_commerce_reports_products_qty_monthly_line_data($view_result) {
+    
+    $data = array();
+    
+    foreach ($view_result as $order_details){
+      //dpm($order_details);
+        $wrapper = "";
+        // Try to find order ID
+        if (is_numeric($order_details->order_id)){
+          $order = commerce_order_load($order_details->order_id);
+          $order_id = $order_details->order_id;
+          
+        }
+        elseif (is_numeric($order_details->line_item_id)){
+          $line_item_id = $order_details->line_item_id;
+          $line_item = commerce_line_item_load($line_item_id);
+          $order_id = $line_item->order_id;
+        }
+        //xdebug_break();
+        if ($order = commerce_order_load($order_id)){
+        $wrapper = entity_metadata_wrapper('commerce_order', $order);
+        
+        $currency_code = $wrapper->commerce_order_total->currency_code->value();
+        $amount = commerce_currency_amount_to_decimal($wrapper->commerce_order_total->amount->value(), $currency_code);
+        
+        $month = date("M Y", $order->created);
+        if (!isset($data[$month])){
+            $data[$month] = array();    
+        }
+        else {
+            $data[$month] += array();
+        }
+        
+        foreach ($wrapper->commerce_line_items as $delta => $line_item_wrapper) {
+            //print $line_item_wrapper->commerce_product->title->value();
+            //print '<br />';
+            switch ($line_item_wrapper->type->value()) {
+                case 'shipping':
+                    //$line_item_wrapper->line_item_label->value();
+                    break;
+                case 'product':
+                //default:
+                    $title = $line_item_wrapper->commerce_product->title->value();
+                    $qty = round($line_item_wrapper->quantity->value());
+                    $data[$month]['qty'][$title] = (isset($data[$month]['qty'][$title])) ? $data[$month]['qty'][$title]+$qty : $qty;
+                    break;
+            }
+        }
+    }
+    }
+    
+    $seen = array();
+    $data['cols'] = array();
+    foreach ($data as $k => $d){
+        
+        if ($k == 'cols') continue;
+        
+        foreach ($d['qty'] as $b => $v) {
+            if (!isset($seen[$b])){
+                $data['cols'][] = $b;
+                $seen[$b] = 1;
+            }
+        }
+    }
+    sort($data['cols']);
+    
+    return $data;
+}
+
+/**
+* This will add the Google Chart tools
+*   @see http://code.google.com/apis/chart/interactive/docs/index.html
+* Change the date format on all views-exposed forms
+*/
+function commerce_reports_form_views_exposed_form_alter(&$form, $form_state) {
+    
+    if ($form_state['view']->name == 'order_report') {
+        
+        $form['#attached']['js'][] = array(
+            'data' => 'https://www.google.com/jsapi',
+            'type' => 'external',
+        );
+        
+        $form['#attached']['js'][] = array(
+            'data' => "(function ($) { google.load('visualization', '1.0', {'packages':['corechart']}); })(jQuery);",
+            'type' => 'inline',
+        );
+        
+        $form['#attached']['js'][] = array(
+            'data' => drupal_get_path('module', 'commerce_reports') . '/commerce_reports.js',
+            'type' => 'file',
+        );
+        
+        $form['#attached']['css'] = array(
+            'data' => drupal_get_path('module', 'commerce_reports') . '/commerce_reports.css',
+            'type' => 'file',
+        );
+        
+        $form['created']['min']['#type'] = 'date_popup';
+        $form['created']['min']['#date_format'] = 'Y-m-d';
+        $form['created']['max']['#type'] = 'date_popup';
+        $form['created']['max']['#date_format'] = 'Y-m-d';
+    }
+}

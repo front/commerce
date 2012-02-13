@@ -1,0 +1,22 @@
+
+.commerce-reports-accordion {
+    margin-bottom: 5px;
+    cursor: pointer;
+    border: 1px solid #BEBFB9;
+}
+
+    .commerce-reports-accordion header.active {
+        margin-bottom: 30px;
+    }
+    
+        .commerce-reports-accordion header h2 {
+            position: relative;
+            margin: 0;
+            padding: 5px 0 5px 20px;
+            background: #E1E2DC;
+        }
+
+            .commerce-reports-accordion header h2 a {
+                position: absolute;
+                right: 20px;
+            }
