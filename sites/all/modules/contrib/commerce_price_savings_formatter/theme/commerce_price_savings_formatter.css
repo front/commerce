@@ -1,0 +1,42 @@
+/* $Id$ */
+
+table.commerce-price-savings-formatter-prices {
+  width: auto;
+  color: #323232;
+}
+
+.commerce-price-savings-formatter-prices tr.odd,
+.commerce-price-savings-formatter-prices tr.even {
+  background: none;
+}
+
+.commerce-price-savings-formatter-prices tr td {
+  padding-top: 0;
+  padding-bottom: 0;
+  vertical-align: middle;
+  font-size: .86em;
+}
+
+.commerce-price-savings-formatter-prices .price-label {
+  text-align: right;
+  color: #666;
+}
+
+.commerce-price-savings-formatter-prices .price-amount  {
+  text-align: left;
+}
+
+.commerce-price-savings-formatter-list .price-amount {
+  text-decoration: line-through;
+}
+.commerce-price-savings-formatter-price .price-amount {
+  font-size: 1.2em;
+  color: #009402;
+}
+.commerce-price-savings-formatter-savings .price-amount {
+  color: #009402;
+}
+
+.commerce-price-savings-formatter-prices-count-1 .commerce-price-savings-formatter-list .price-amount {
+  text-decoration: none;
+}

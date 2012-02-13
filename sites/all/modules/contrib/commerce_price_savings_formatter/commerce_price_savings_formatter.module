@@ -1,0 +1,265 @@
+<?php
+// $Id$
+
+/**
+ * @file
+ * Adds a display formatter for the price field showing the amount of savings.
+ */
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function commerce_price_savings_formatter_field_formatter_info() {
+  return array(
+    'commerce_price_savings_formatter_formatter' => array(
+      'label' => t('Formatted amount with savings'),
+      'field types' => array('commerce_price'),
+      'settings' => array(
+        'calculation' => 'calculated_sell_price',
+        'prices' => array('list', 'price', 'savings'),
+        'savings' => 'both',
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function commerce_price_savings_formatter_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $settings = $instance['display'][$view_mode]['settings'];
+
+  // Add the default calculation type selection option.
+  $form = commerce_price_field_formatter_settings_form($field, $instance, $view_mode, $form, $form_state);
+
+  // Add the price display settings form.
+  $form['prices'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Prices to display'),
+    '#options' => array(
+      'list' => t('List price'),
+      'price' => t('Price'),
+      'savings' => t('You save'),
+    ),
+    '#default_value' => !empty($settings['prices']) ? $settings['prices'] : drupal_map_assoc(array('list', 'price', 'savings')),
+  );
+
+  $form['savings'] = array(
+    '#type' => 'radios',
+    '#title' => t('Savings display method'),
+    '#options' => array(
+      'amount' => t('The amount saved'),
+      'percentage' => t('The percentage saved'),
+      'both' => t('Both the amount and percentage saved'),
+    ),
+    '#default_value' => !empty($settings['savings']) ? $settings['savings'] : 'both',
+  );
+
+  return $form;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function commerce_price_savings_formatter_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $settings = $instance['display'][$view_mode]['settings'];
+
+  $summary = array();
+
+  // Add the default calculation text to the summary.
+  $summary[] = commerce_price_field_formatter_settings_summary($field, $instance, $view_mode);
+
+  // Add rows for specific settings.
+  $prices = array(
+    'list' => t('List price'),
+    'price' => t('Price'),
+    'savings' => t('You save'),
+  );
+
+  $prices_shown = implode(', ', array_intersect_key($prices, drupal_map_assoc(array_values($settings['prices']))));
+
+  if (!empty($prices_shown)) {
+    $summary[] = t('Showing: !prices', array('!prices' => $prices_shown));
+  }
+  else {
+    $summary[] = t('Not showing any prices.');
+  }
+
+  switch ($settings['savings']) {
+    case 'amount':
+      $summary[] = t('Savings displayed as the amount.');
+      break;
+
+    case 'percentage':
+      $summary[] = t('Savings displayed as the percentage.');
+      break;
+
+    case 'both':
+      $summary[] = t('Savings displayed as the amount and percentage.');
+      break;
+  }
+
+  return implode('<br />', $summary);
+}
+
+/**
+ * Implements hook_field_formatter_prepare_view().
+ */
+function commerce_price_savings_formatter_field_formatter_prepare_view($entity_type, $entities, $field, $instances, $langcode, &$items, $displays) {
+  commerce_price_field_formatter_prepare_view($entity_type, $entities, $field, $instances, $langcode, $items, $displays);
+}
+
+/**
+ * Implements hook_field_formatter_view().
+ */
+function commerce_price_savings_formatter_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $settings = $display['settings'];
+  $element = array();
+  $tax_module_exists = module_exists('commerce_tax');
+
+  // exit if no display prices
+  if (empty($settings['prices'])) {
+    return $element;
+  }
+
+  // remove prices not selected
+  $settings['prices'] = array_filter($settings['prices']);
+
+  // exit if no prices selected
+  if (empty($settings['prices'])) {
+    return $element;
+  }
+
+  // store prices count
+  $prices_count = count($settings['prices']);
+
+  // Loop through each price value in this field.
+  foreach ($items as $delta => $item) {
+    // Theme the display of the price based on the display type.
+    if ($display['type'] == 'commerce_price_savings_formatter_formatter') {
+      // Build an array of prices to send to the theme function.
+      $prices = array();
+      $difference = 0;
+      $base_price_component = commerce_price_component_total($item, 'base_price');
+
+      if ($base_price_component) {
+        // calculate included tax amount on base amount
+        $included_tax_amount = 0;
+        foreach ($item['data']['components'] as $component) {
+          if (!empty($component['included']) && !empty($component['price']['data']['tax_rate'])) {
+            $tax_rate = $component['price']['data']['tax_rate'];
+            $included_tax_amount += $base_price_component['amount'] * $tax_rate['rate'];
+          }
+        }
+        $base_price_component['amount'] += $included_tax_amount;
+
+        // Calculate the difference between the base price and calculated price.
+        $difference = $base_price_component['amount'] - commerce_currency_convert($item['amount'], $item['currency_code'], $base_price_component['currency_code']);
+      }
+
+      // format prices
+      foreach ($settings['prices'] as $price_type) {
+        switch ($price_type) {
+          case 'list':
+            // Only show the list price if the current price is lower.
+            if ($difference > 0 || $prices_count == 1) {
+              $prices['list'] = commerce_currency_format($base_price_component['amount'], $base_price_component['currency_code'], $entity);
+            }
+            break;
+
+          case 'price':
+            $prices['price'] = commerce_currency_format($item['amount'], $item['currency_code'], $entity);
+            break;
+
+          case 'savings':
+            // Only show the savings if the current price is lower than the list
+            // price; i.e. if there actually are savings.
+            if ($difference > 0) {
+              $amount = commerce_currency_format($difference, $item['currency_code'], $entity);
+              $percentage = round(($difference / $base_price_component['amount']) * 100) . '%';
+
+              switch ($settings['savings']) {
+                case 'amount':
+                  $prices['savings'] = $amount;
+                  break;
+
+                case 'percentage':
+                  $prices['savings'] = $percentage;
+                  break;
+
+                case 'both':
+                default:
+                  $prices['savings'] = $amount . ' (' . $percentage . ')';
+                  break;
+              }
+            }
+            break;
+        }
+      }
+
+      $element[$delta] = array(
+        '#theme' => 'commerce_price_savings_formatter_formatter',
+        '#prices' => $prices,
+        '#attached' => array(
+          'css' => array(drupal_get_path('module', 'commerce_price_savings_formatter') . '/theme/commerce_price_savings_formatter.css'),
+        ),
+      );
+    }
+  }
+
+  return $element;
+}
+
+/**
+ * Implements hook_theme().
+ */
+function commerce_price_savings_formatter_theme() {
+  return array(
+    'commerce_price_savings_formatter_formatter' => array(
+      'variables' => array('prices' => array()),
+    ),
+  );
+}
+
+/**
+ * Theme callback: display prices in a table.
+ */
+function theme_commerce_price_savings_formatter_formatter($vars) {
+  // Build an array of table rows based on the prices passed in.
+  $rows = array();
+
+  // exit if no prices
+  if (empty($vars['prices'])) {
+    return '';
+  }
+
+  // store prices count
+  $prices_count = count($vars['prices']);
+
+  // build rows
+  foreach ($vars['prices'] as $key => $value) {
+    switch ($key) {
+      case 'list':
+        $label = t('List price:');
+        break;
+
+      case 'price':
+        $label = t('Price:');
+        break;
+
+      case 'savings':
+        $label = t('You save:');
+        break;
+    }
+
+    $rows[] = array(
+      'data' => array(
+        array('data' => $label, 'class' => array('price-label')),
+        array('data' => $value, 'class' => array('price-amount')),
+      ),
+      'class' => array('commerce-price-savings-formatter-' . $key),
+    );
+  }
+
+  return theme('table', array('rows' => $rows, 'attributes' => array('class' => array('commerce-price-savings-formatter-prices', 'commerce-price-savings-formatter-prices-count-' . $prices_count))));
+}
