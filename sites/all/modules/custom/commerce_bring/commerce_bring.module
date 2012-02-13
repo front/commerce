@@ -1,12 +1,4 @@
 <?php
-
-/*
- * Implements hook_init().
- */
-function commerce_bring_init() {
-    drupal_add_js(drupal_get_path('module', 'commerce_bring') . 'js/commerce_bring.js');
-}
-
 /**
  * @file
  * Integrates Bring with Commerce Shipping.
