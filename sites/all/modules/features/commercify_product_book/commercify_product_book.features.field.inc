@@ -133,7 +133,7 @@ function commercify_product_book_field_default_fields() {
           'currency_code' => 'default',
         ),
         'type' => 'commerce_price_full',
-        'weight' => '20',
+        'weight' => '8',
       ),
     ),
   );
@@ -201,7 +201,7 @@ function commercify_product_book_field_default_fields() {
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => '11',
+        'weight' => '6',
       ),
     ),
   );
@@ -287,7 +287,7 @@ function commercify_product_book_field_default_fields() {
           'size' => 60,
         ),
         'type' => 'taxonomy_autocomplete',
-        'weight' => '17',
+        'weight' => '5',
       ),
     ),
   );
@@ -359,7 +359,161 @@ function commercify_product_book_field_default_fields() {
           'rows' => 5,
         ),
         'type' => 'text_textarea',
-        'weight' => '18',
+        'weight' => '4',
+      ),
+    ),
+  );
+
+  // Exported field: 'commerce_product-publication-field_product_detail_publisher'
+  $fields['commerce_product-publication-field_product_detail_publisher'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_product_detail_publisher',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'publication',
+      'commerce_bpc' => array(
+        'show_field' => 1,
+      ),
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Utgivende forlag',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 14,
+        ),
+        'line_item' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'node_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'commerce_product',
+      'field_name' => 'field_product_detail_publisher',
+      'label' => 'Forlag',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '5',
+      ),
+    ),
+  );
+
+  // Exported field: 'commerce_product-publication-field_product_detail_year'
+  $fields['commerce_product-publication-field_product_detail_year'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_product_detail_year',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'publication',
+      'commerce_bpc' => array(
+        'show_field' => 1,
+      ),
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Utgitt årstall',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 13,
+        ),
+        'line_item' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'node_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'commerce_product',
+      'field_name' => 'field_product_detail_year',
+      'label' => 'Årstall',
+      'required' => 0,
+      'settings' => array(
+        'text_processing' => '0',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'text',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'text_textfield',
+        'weight' => '6',
       ),
     ),
   );
@@ -423,7 +577,7 @@ function commercify_product_book_field_default_fields() {
           'unit_select_list' => 1,
         ),
         'type' => 'physical_dimensions_textfields',
-        'weight' => '22',
+        'weight' => '10',
       ),
     ),
   );
@@ -519,6 +673,149 @@ function commercify_product_book_field_default_fields() {
     ),
   );
 
+  // Exported field: 'commerce_product-publication-field_product_language'
+  $fields['commerce_product-publication-field_product_language'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_product_language',
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => 255,
+      ),
+      'translatable' => '0',
+      'type' => 'text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'publication',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => '',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'text',
+          'settings' => array(),
+          'type' => 'text_default',
+          'weight' => 16,
+        ),
+        'line_item' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'node_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'commerce_product',
+      'field_name' => 'field_product_language',
+      'label' => 'Språk',
+      'required' => FALSE,
+      'settings' => array(
+        'text_processing' => 0,
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'module' => 'text',
+        'settings' => array(
+          'size' => 60,
+        ),
+        'type' => 'text_textfield',
+        'weight' => '8',
+      ),
+    ),
+  );
+
+  // Exported field: 'commerce_product-publication-field_product_pages'
+  $fields['commerce_product-publication-field_product_pages'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_product_pages',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'module' => 'number',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'number_integer',
+    ),
+    'field_instance' => array(
+      'bundle' => 'publication',
+      'commerce_bpc' => array(
+        'show_field' => 1,
+      ),
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Bokens antall sider',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'number',
+          'settings' => array(
+            'decimal_separator' => '.',
+            'prefix_suffix' => TRUE,
+            'scale' => 0,
+            'thousand_separator' => ' ',
+          ),
+          'type' => 'number_integer',
+          'weight' => 15,
+        ),
+        'line_item' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'node_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'commerce_product',
+      'field_name' => 'field_product_pages',
+      'label' => 'Antall sider',
+      'required' => 0,
+      'settings' => array(
+        'max' => '300',
+        'min' => '1',
+        'prefix' => '',
+        'suffix' => ' sider',
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'number',
+        'settings' => array(),
+        'type' => 'number',
+        'weight' => '7',
+      ),
+    ),
+  );
+
   // Exported field: 'commerce_product-publication-field_product_price_before'
   $fields['commerce_product-publication-field_product_price_before'] = array(
     'field_config' => array(
@@ -584,7 +881,98 @@ function commercify_product_book_field_default_fields() {
           'currency_code' => 'default',
         ),
         'type' => 'commerce_price_simple',
-        'weight' => '19',
+        'weight' => '7',
+      ),
+    ),
+  );
+
+  // Exported field: 'commerce_product-publication-field_product_series_num'
+  $fields['commerce_product-publication-field_product_series_num'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_product_series_num',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          1 => 'Nr 1',
+          2 => 'Nr 2',
+          3 => 'Nr 3',
+          4 => 'Nr 4',
+          5 => 'Nr 5',
+          6 => 'Nr 6',
+          7 => 'Nr 7',
+          8 => 'Nr 8',
+          9 => 'Nr 9',
+          10 => 'Nr 10',
+          11 => 'Nr 11',
+          12 => 'Nr 12',
+          13 => 'Nr 13',
+          14 => 'Nr 14',
+          15 => 'Nr 15',
+          16 => 'Nr 16',
+          17 => 'Nr 17',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_integer',
+    ),
+    'field_instance' => array(
+      'bundle' => 'publication',
+      'commerce_bpc' => array(
+        'is_static' => 0,
+        'show_field' => 1,
+      ),
+      'commerce_cart_settings' => array(
+        'attribute_field' => 1,
+        'attribute_widget' => 'select',
+      ),
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Nummer i serien den hører til. Dette er viktig hvis flere bøker i samme bokserie skal vises på samme produkt.',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => 12,
+        ),
+        'line_item' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'node_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'commerce_product',
+      'field_name' => 'field_product_series_num',
+      'label' => 'Nummer i serie',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_select',
+        'weight' => '4',
       ),
     ),
   );
@@ -658,7 +1046,7 @@ function commercify_product_book_field_default_fields() {
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => '12',
+        'weight' => '7',
       ),
     ),
   );
@@ -740,7 +1128,7 @@ function commercify_product_book_field_default_fields() {
           'display_label' => 1,
         ),
         'type' => 'options_onoff',
-        'weight' => '13',
+        'weight' => '8',
       ),
     ),
   );
@@ -808,7 +1196,7 @@ function commercify_product_book_field_default_fields() {
           'unit_select_list' => 0,
         ),
         'type' => 'physical_weight_textfield',
-        'weight' => '21',
+        'weight' => '9',
       ),
     ),
   );
@@ -1217,7 +1605,9 @@ function commercify_product_book_field_default_fields() {
   // Included for use with string extractors like potx.
   t('Aktiverer lagervasrling. Settes automatisk om nivå faller for lavt.');
   t('Angir på hvilket nivå lagerbeholdningen må være før det skal settes opp ny bestilling.');
+  t('Antall sider');
   t('Beskrivelse');
+  t('Bokens antall sider');
   t('Boktype');
   t('Boktype.');
   t('Dimensjon');
@@ -1227,18 +1617,25 @@ function commercify_product_book_field_default_fields() {
   t('Et produukt som kan selges.');
   t('Forfatter');
   t('Forfattere av publikasjoner.');
+  t('Forlag');
   t('Lagervarsling');
   t('Lavt lagernivå');
+  t('Nummer i serie');
+  t('Nummer i serien den hører til. Dette er viktig hvis flere bøker i samme bokserie skal vises på samme produkt.');
   t('Price');
   t('Produkt');
   t('Produktbilde');
   t('Produktbilde for gjeldende produkt.');
   t('Publikasjonens forfatter(e)');
   t('Sjanger');
+  t('Språk');
   t('Stock');
+  t('Utgitt årstall');
+  t('Utgivende forlag');
   t('Veiledende pris');
   t('Veiledende pris for produktet.');
   t('Vekt');
+  t('Årstall');
 
   return $fields;
 }
