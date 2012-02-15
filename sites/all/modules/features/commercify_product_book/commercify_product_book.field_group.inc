@@ -21,12 +21,14 @@ function commercify_product_book_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Produkt',
-    'weight' => '2',
+    'weight' => '3',
     'children' => array(
       0 => 'commerce_price',
       1 => 'field_product_weight',
       2 => 'field_product_dimension',
       3 => 'field_product_price_before',
+      4 => 'field_product_description',
+      5 => 'field_product_author',
     ),
     'format_type' => 'fieldset',
     'format_settings' => array(
@@ -51,7 +53,7 @@ function commercify_product_book_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Lager',
-    'weight' => '3',
+    'weight' => '4',
     'children' => array(
       0 => 'commerce_stock',
       1 => 'field_product_stock_min',
