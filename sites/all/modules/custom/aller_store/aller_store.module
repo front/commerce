@@ -6,19 +6,41 @@
  */
 
 /**
-* Implements hook_views_rss_date_sources().
+ * Implements hook_views_rss_date_sources().
  * 
  * Implements correct dates in views_rss when using commerce products
-*/
+ */
 function aller_store_views_rss_date_sources() {
   $sources['commerce_product'] = array(
-    'pubDate' => array(
-      'table' => 'commerce_product',
-      'field' => 'created',
-    ),
-    'lastBuildDate' => array(
-      'table' => 'commerce_product',
-      'field' => 'changed',
-    ),
+      'pubDate' => array(
+          'table' => 'commerce_product',
+          'field' => 'created',
+      ),
+      'lastBuildDate' => array(
+          'table' => 'commerce_product',
+          'field' => 'changed',
+      ),
   );
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter();
+ * Have a date popup.
+ */
+function aller_store_form_alter(&$form, &$form_state, $form_id) {
+  if (module_exists('date_popup')) {
+    if ($form_state['view']->name == 'c_dashboard_order_exports') {
+      $form['created']['min']['#type'] = 'date_popup';
+      $form['created']['min']['#date_format'] = 'Y-m-d';
+      $form['created']['max']['#type'] = 'date_popup';
+      $form['created']['max']['#date_format'] = 'Y-m-d';
+    }
+    if ($form_state['view']->name == 'c_dashboard_product_charts') {
+      $form['created']['#type'] = 'date_popup';
+      $form['created']['#date_format'] = 'Y-m-d';
+      $form['created_1']['#type'] = 'date_popup';
+      $form['created_1']['#date_format'] = 'Y-m-d';
+
+    }
+  }
 }
