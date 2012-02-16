@@ -1,19 +1,47 @@
 <?php
 
 /**
- * Implementation of hook_views_rss_channel_elements_alter().
+ * @file
+ * Provides core <channel> and <item> elements for Views RSS module.
  */
-function views_rss_core_views_rss_channel_elements_alter(&$elements) {
+
+/**
+ * Module installation path.
+ */
+define('VIEWS_RSS_CORE_PATH', drupal_get_path('module', 'views_rss_core'));
+
+/**
+ * Include file with all preprocess functions.
+ */
+include_once VIEWS_RSS_CORE_PATH . '/views_rss_core.inc';
+
+/**
+ * Implementation of hook_views_rss_namespaces().
+ */
+function views_rss_core_views_rss_namespaces() {
+  $namespaces['base'] = array(
+    'prefix' => 'xml',
+    'uri' => trim($GLOBALS['base_url'], '/') . '/',
+  );
+  return $namespaces;
+}
+
+/**
+ * Implements hook_views_rss_channel_elements().
+ */
+function views_rss_core_views_rss_channel_elements() {
   $elements['title'] = array(
     'configurable' => FALSE,
     'preprocess functions' => array('views_rss_core_preprocess_channel_title'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-title',
   );
   $elements['description'] = array(
-    'type' => 'textarea',
-    'title' => t('Feed description'),
     'description' => t('Description for this feed. If left blank, the default site mission will be used.'),
-    'preprocess functions' => array('views_rss_core_preprocess_channel_description'),
+    'settings form' => array('#type' => 'textarea', '#rows' => 3),
+    'preprocess functions' => array(
+      'views_rss_core_preprocess_channel_description',
+      'views_rss_htmlspecialchars',
+    ),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-description',
   );
   $elements['link'] = array(
@@ -22,64 +50,60 @@ function views_rss_core_views_rss_channel_elements_alter(&$elements) {
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-link',
   );
   $elements['language'] = array(
-    'title' => t('Language'),
     'description' => t('The language the channel is written in. This allows aggregators to group all Italian language sites, for example, on a single page. See list of <a href="@w3c_url">allowable values</a> for this element defined by the W3C.', array(
       '@w3c_url' => url('http://www.w3.org/TR/REC-html40/struct/dirlang.html', array('fragment' => 'langcodes')),
     )),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-language',
   );
   $elements['category'] = array(
-    'title' => t('Category'),
     'description' => t('Specify one or more categories that the channel belongs to. Separate multiple items with comma.'),
-    'theme' => 'views_rss_core_element_category',
+    'preprocess functions' => array(
+      'views_rss_htmlspecialchars',
+      'views_rss_core_preprocess_category',
+    ),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-category',
   );
   $elements['copyright'] = array(
-    'title' => t('Copyright'),
     'description' => t('Copyright notice for content in the channel.'),
+    'preprocess functions' => array('views_rss_htmlspecialchars'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-copyright',
   );
   $elements['managingEditor'] = array(
-    'title' => t('Managing editor'),
     'description' => t('Email address for person responsible for editorial content.'),
+    'preprocess functions' => array('views_rss_htmlspecialchars'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-managingeditor',
   );
   $elements['webMaster'] = array(
-    'title' => t('Webmaster'),
     'description' => t('Email address for person responsible for technical issues relating to channel.'),
+    'preprocess functions' => array('views_rss_htmlspecialchars'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-webmaster',
   );
   $elements['generator'] = array(
-    'title' => t('Generator'),
     'description' => t('A string indicating the program used to generate the channel.'),
+    'preprocess functions' => array('views_rss_htmlspecialchars'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-generator',
   );
   $elements['docs'] = array(
-    'title' => t('Docs'),
     'description' => t("A URL that points to the documentation for the format used in the RSS file. It's for people who might stumble across an RSS file on a Web server 25 years from now and wonder what it is."),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-docs',
   );
   $elements['cloud'] = array(
-    'title' => t('Cloud'),
     'description' => t("Allows processes to register with a cloud to be notified of updates to the channel, implementing a lightweight publish-subscribe protocol for RSS feeds. Example: <em>soap://rpc.sys.com:80/RPC2#pingMe</em>"),
-    'preprocess functions' => array('views_rss_core_preprocess_item_cloud'),
+    'preprocess functions' => array('views_rss_core_preprocess_channel_cloud'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-cloud',
   );
   $elements['ttl'] = array(
-    'title' => t('TTL'),
     'description' => t("ttl stands for time to live. It's a number of minutes that indicates how long a channel can be cached before refreshing from the source."),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-ttl',
   );
   $elements['skipHours'] = array(
-    'title' => t('Skip hours'),
     'description' => t('A hint for aggregators telling them which hours they can skip. The hours must be expressed as an integer representing the number of hours since 00:00:00 GMT. Values from 0 to 23 are permitted, with 0 representing midnight. An hour must not be duplicated.'),
-    'theme' => 'views_rss_core_element_skip',
+    'preprocess functions' => array('views_rss_core_preprocess_channel_skip'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-skiphours',
   );
   $elements['skipDays'] = array(
-    'title' => t('Skip days'),
     'description' => t('A hint for aggregators telling them which days of the week they can skip (up to seven days).'),
-    'theme' => 'views_rss_core_element_skip',
+    'preprocess functions' => array('views_rss_core_preprocess_channel_skip'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-skipdays',
   );
   $elements['pubDate'] = array(
@@ -93,265 +117,143 @@ function views_rss_core_views_rss_channel_elements_alter(&$elements) {
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-lastbuilddate',
   );
   // @TODO: add 'image', ignore 'textInput'.
+  return $elements;
 }
 
 /**
- * Implementation of hook_views_rss_item_elements_alter().
+ * Implements hook_views_rss_item_elements().
  */
-function views_rss_core_views_rss_item_elements_alter(&$elements) {
+function views_rss_core_views_rss_item_elements() {
   $elements['title'] = array(
-    'title' => t('Title'),
-    'description' => t('RSS 2.0 title element.'),
+    'description' => t('The title of the item. Required by RSS specification.'),
+    'preprocess functions' => array('views_rss_htmlspecialchars'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-title',
   );
   $elements['link'] = array(
-    'title' => t('Link'),
-    'description' => t('RSS 2.0 link element.'),
+    'description' => t('The URL of the item. Required by RSS specification.'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-link',
   );
   $elements['description'] = array(
-    'title' => t('Description'),
-    'description' => t('RSS 2.0 description element.'),
-    'preprocess functions' => array('views_rss_core_preprocess_item_description'),
+    'description' => t('The item synopsis. Required by RSS specification.'),
+    'preprocess functions' => array(
+      'views_rss_htmlspecialchars',
+      'views_rss_rewrite_relative_paths',
+    ),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-description',
   );
   $elements['author'] = array(
-    'title' => t('Author e-mail'),
-    'description' => t('RSS 2.0 author element.'),
+    'description' => t('Email address of the author of the item.'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-author',
   );
   $elements['category'] = array(
-    'title' => t('Category'),
-    'description' => t('RSS 2.0 category element.'),
-    'theme' => 'views_rss_core_element_category',
+    'description' => t('Includes the item in one or more categories.'),
+    'preprocess functions' => array(
+      'views_rss_htmlspecialchars',
+      'views_rss_core_preprocess_category',
+    ),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-category',
   );
   $elements['comments'] = array(
-    'title' => t('Comments'),
-    'description' => t('RSS 2.0 comments element.'),
+    'description' => t('URL of a page for comments relating to the item.'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-comments',
   );
   $elements['enclosure'] = array(
-    'title' => t('Enclosure'),
-    'description' => t('RSS 2.0 enclosure element.'),
-    'theme' => FALSE,
+    'description' => t('Describes a media object that is attached to the item.'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-enclosure',
   );
   $elements['guid'] = array(
-    'title' => t('guid'),
-    'description' => t('RSS 2.0 guid element.'),
+    'description' => t('A string that uniquely identifies the item.'),
     'preprocess functions' => array('views_rss_core_preprocess_item_guid'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-guid',
   );
   $elements['pubDate'] = array(
-    'title' => t('pubDate'),
-    'description' => t('RSS 2.0 pubDate element.'),
+    'description' => t('Indicates when the item was published.'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-pubdate',
   );
   $elements['source'] = array(
     'configurable' => FALSE,
+    'description' => t('The RSS channel that the item came from.'),
     'preprocess functions' => array('views_rss_core_preprocess_item_source'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-source',
   );
+  return $elements;
 }
 
 /**
- * Implementation of hook_views_data_alter().
+ * Implements hook_views_rss_date_sources().
+ */
+function views_rss_core_views_rss_date_sources() {
+  $sources['node'] = array(
+    'pubDate' => array(
+      'table' => 'node',
+      'field' => 'created',
+    ),
+    'lastBuildDate' => array(
+      'table' => 'node',
+      'field' => 'changed',
+    ),
+  );
+  $sources['node_revisions'] = array(
+    'pubDate' => array(
+      'table' => 'node_revisions',
+      'field' => 'timestamp',
+    ),
+  );
+  $sources['comments'] = array(
+    'lastBuildDate' => array(
+      'table' => 'comments',
+      'field' => 'timestamp',
+    ),
+  );
+  $sources['files'] = array(
+    'pubDate' => array(
+      'table' => 'files',
+      'field' => 'timestamp',
+    ),
+  );
+  $sources['users'] = array(
+    'pubDate' => array(
+      'table' => 'users',
+      'field' => 'created',
+    ),
+  );
+  return $sources;
+}
+
+/**
+ * Implements hook_views_query_alter().
  */
 function views_rss_core_views_query_alter(&$view, &$query) {
-  if ($view->style_plugin->definition['handler'] == 'views_plugin_style_rss_fields') {
-    // Select the most recent node creation date for <pubDate> element.
-    $query->fields['views_rss_created'] = array(
-      'field' => 'created',
-      'table' => 'node',
-      'alias' => 'views_rss_created',
-    );
-    // Select the most recent node update date for <lastBuildDate> element.
-    $query->fields['views_rss_changed'] = array(
-      'field' => 'changed',
-      'table' => 'node',
-      'alias' => 'views_rss_changed',
-    );
-  }
-}
-
-/**
- * Preprocess function for channel <title> element.
- */
-function views_rss_core_preprocess_channel_title($vars) {
-  $view_title = $vars['view']->get_title();
-  return ($view_title) ? $view_title : variable_get('sitename', t('Drupal'));
-}
-
-/**
- * Preprocess function for channel <description> element.
- */
-function views_rss_core_preprocess_channel_description($vars) {
-  if (
-    isset($vars['view']->style_options['channel']['core']['description'])
-    && $vars['view']->style_options['channel']['core']['description']
-  ) {
-    $description = $vars['view']->style_options['channel']['core']['description'];
-  }
-  else {
-    $description = variable_get('site_mission', '');
-  }
-  return check_plain(htmlspecialchars_decode($description, ENT_QUOTES));
-}
-
-/**
- * Preprocess function for channel <link> element.
- */
-function views_rss_core_preprocess_channel_link($vars) {
-  global $base_url;
-  return $base_url;
-}
-
-/**
- * Preprocess function for item <lastBuildDate> element.
- */
-function views_rss_core_preprocess_channel_date($vars) {
-  $field = ($vars['element'] == 'pubDate') ? 'views_rss_created' : 'views_rss_changed';
-  if (count($vars['view']->result) > 0) {
-    $max_date = 0;
-    foreach ($vars['view']->result as $row) {
-      if ($row->$field > $max_date) {
-        $max_date = $row->$field;
+  if ($view->style_plugin->definition['handler'] == 'views_rss_plugin_style_fields') {
+    $date_sources = views_rss_get('date_sources');
+    foreach (array_keys($date_sources) as $module) {
+      if (isset($date_sources[$module][$view->base_table])) {
+        // Select the most recent node creation date for <pubDate> element.
+        if (isset($date_sources[$module][$view->base_table]['pubDate'])) {
+          $query->fields['pubDate'] = $date_sources[$module][$view->base_table]['pubDate'];
+        }
+        // Select the most recent node update date for <lastBuildDate> element.
+        if (isset($date_sources[$module][$view->base_table]['lastBuildDate'])) {
+          $query->fields['lastBuildDate'] = $date_sources[$module][$view->base_table]['lastBuildDate'];
+        }
       }
     }
-    return date('r', $max_date);
   }
 }
 
 /**
- * Preprocess function for item <description> element.
- */
-function views_rss_core_preprocess_item_description($vars) {
-  return check_plain(htmlspecialchars_decode($vars['value'], ENT_QUOTES));
-}
-
-/**
- * Preprocess function for item <guid> element.
- */
-function views_rss_core_preprocess_item_guid($vars) {
-  if ($vars['value']) {
-    $value = array(
-      'value' => $vars['value'],
-      'arguments' => array(
-        'isPermaLink' => 'false',
-      ),
-    );
-    if ((!isset($vars['item']['link']) || empty($vars['item']['link'])) && valid_url($value['value'], TRUE)) {
-      $value['arguments']['isPermaLink'] = 'true';
-    }
-    return $value;
-  }
-}
-
-/**
- * Preprocess function for channel <source> element.
- */
-function views_rss_core_preprocess_item_source($vars) {
-  global $base_url;
-  return array(
-    'value' => $vars['view']->get_title(),
-    'arguments' => array(
-      'url' => $base_url . '/' . $vars['view']->get_url(),
-    ),
-  );
-}
-
-/**
- * Theme function for channel <cloud> element.
- */
-function views_rss_core_preprocess_item_cloud($vars) {
-  if ($vars['value']) {
-    if ($url = parse_url($vars['value'])) {
-      return array(
-        'arguments' => array(
-          'domain' => $url['host'],
-          'port' => $url['port'],
-          'path' => $url['path'],
-          'registerProcedure' => $url['fragment'],
-          'protocol' => $url['scheme'],
-        ),
-      );
-    }
-  }
-}
-
-/**
- * Implementation of hook_theme().
- */
-function views_rss_core_theme() {
-  $theme = array(
-    'views_rss_core_element_category' => array(
-      'variables' => array('vars' => NULL),
-    ),
-    'views_rss_core_element_skip' => array(
-      'variables' => array('vars' => NULL),
-    ),
-    'views_rss_core_formatter_enclosure' => array(
-      'variables' => array('field' => NULL, 'item' => NULL, 'image_style' => NULL),
-    ),
-  );
-  return $theme;
-}
-
-/**
- * Theme function for channel <category> element.
- */
-function theme_views_rss_core_element_category($vars) {
-  $categories = array_map('trim', explode(',', $vars['value']));
-  $output = '';
-  foreach ($categories as $category) {
-    $output .= theme('views_rss_element', array(
-      'element' => $vars['element'],
-      'value' => $category,
-    ));
-  }
-  return $output;
-}
-
-/**
- * Theme function for channel <skipHours> and <skipDays> elements.
- */
-function theme_views_rss_core_element_skip($vars) {
-  $values = array_map('trim', explode(',', strip_tags($vars['value'])));
-  switch ($vars['element']) {
-    case 'skipHours':
-      $subelement = 'hour';
-      break;
-    case 'skipDays':
-      $subelement = 'day';
-      break;
-  }
-  $output = "\n";
-  foreach ($values as $value) {
-    $output .= theme('views_rss_element', array(
-      'element' => $subelement,
-      'value' => $value,
-    ));
-  }
-  return theme('views_rss_element', array(
-    'element' => $vars['element'],
-    'value' => $output,
-  ));
-}
-
-/**
- * Implementation of hook_field_formatter_info().
+ * Implements hook_field_formatter_info().
  */
 function views_rss_core_field_formatter_info() {
   $formatters = array(
     // Generic image formatter for <enclosure> element.
     'enclosure_image' => array(
-      'label' => t('RSS enclosure element: image'),
+      'label' => t('RSS <enclosure> element'),
       'field types' => array('image'),
     ),
     // Generic file formatter for <enclosure> element.
     'enclosure_file' => array(
-      'label' => t('RSS enclosure element: file'),
+      'label' => t('RSS <enclosure> element'),
       'field types' => array('file'),
     ),
   );
@@ -364,6 +266,7 @@ function views_rss_core_field_formatter_info() {
 function views_rss_core_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
   $display = $instance['display'][$view_mode];
   $settings = $display['settings'];
+  $element = NULL;
 
   if ($field['type'] == 'image') {
     $image_styles = image_style_options(FALSE);
@@ -407,42 +310,49 @@ function views_rss_code_field_formatter_settings_summary($field, $instance, $vie
 
 /**
  * Implements hook_field_formatter_view().
+ *
+ * This is a dirty trick here. Essentially, we do not want to call a theme
+ * function from here, as it should be called from within a view (amongst
+ * other to have $view object in $variables). Therefore here we want to
+ * return value only, hence use of array('#markup' => $value). However,
+ * in some cases it won't be just a simple string value to return,
+ * sometimes we'd want to return an array (for example value with
+ * additional arguments) - hence the need to serialize it (plus add
+ * "serialized" string at the beginning so that our field preprocess
+ * function template_preprocess_views_view_views_rss_field() is able
+ * to recognize it as serialized array and treat accordingly.
+ *
+ * Any better ideas?
  */
 function views_rss_core_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
-  $element = array();
+  $element = NULL;
   foreach ($items as $delta => $item) {
-    $element[$delta] = array(
-      '#theme' => 'views_rss_core_formatter_enclosure',
-      '#field' => $field,
-      '#item' => $item,
-      '#image_style' => $display['settings']['image_style'],
-    );
+    // Inside a view item may contain NULL data. In that case, just return.
+    if (empty($item['fid'])) {
+      unset($items[$delta]);
+      continue;
+    }
+    // Get full image URL based on provided image style.
+    if ($field['type'] == 'image' && !empty($display['settings']['image_style']) && $image_style = image_style_load($display['settings']['image_style'])) {
+      $uri = image_style_url($display['settings']['image_style'], $item['uri']);
+      // Get file size of image preset file (if it has already been created,
+      // otherwise just create it first and then get file size).
+      $path = image_style_path($display['settings']['image_style'], $item['uri']);
+      $real_path = drupal_realpath($path);
+      if (file_exists($real_path) || image_style_create_derivative($image_style, $item['uri'], $path)) {
+        $item['filesize'] = filesize($real_path);
+      }
+    }
+    else {
+      $uri = file_create_url($item['uri']);
+    }
+    $element[$delta] = array('#markup' => 'serialized:' . serialize(array(
+      'arguments' => array(
+        'url' => $uri,
+        'length' => $item['filesize'],
+        'type'   => $item['filemime'],
+      ),
+    )));
   }
   return $element;
-}
-
-
-/**
- * Formatter for 'image' and 'filefield' CCK fields containing images
- * added to <enclosure> element. Besides default image size
- * also provides option to use imagecache'd images.
- */
-function theme_views_rss_core_formatter_enclosure($variables) {
-  // Inside a view item may contain NULL data. In that case, just return.
-  if (empty($variables['item']['fid'])) {
-    return;
-  }
-  // Get full image URL based on provided image style.
-  if ($variables['field']['type'] == 'image' && $variables['image_style']) {
-    $path = image_style_url($variables['image_style'], $variables['item']['uri']);
-  }
-  else {
-    $path = file_create_url($variables['item']['uri']);
-  }
-  // Return formatted XML element.
-  return strtr('<enclosure url="!url" length="!length" type="!type" />', array(
-    '!url'    => $path,
-    '!length' => $variables['item']['filesize'],
-    '!type'   => $variables['item']['filemime'],
-  )) . "\n";
 }

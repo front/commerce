@@ -1,10 +1,10 @@
 <?php
 
 /**
+ * @file
  * Field handler to provide additional control for the email field.
- *
- * @ingroup views_field_handlers
  */
+
 class views_rss_handler_field_user_mail extends views_handler_field_user_mail {
 
   function option_definition() {
@@ -20,7 +20,7 @@ class views_rss_handler_field_user_mail extends views_handler_field_user_mail {
       '#type' => 'select',
       '#options' => array(
         'default' => t('Generic email'),
-        'with_name' => t('RSS email: with user name'),
+        'with_name' => t('RSS <author> element (with user name)'),
       ),
       '#default_value' => isset($this->options['rss_format']) ? $this->options['rss_format'] : 'default',
     );
@@ -29,7 +29,7 @@ class views_rss_handler_field_user_mail extends views_handler_field_user_mail {
   function render_link($data, $values) {
     parent::render_link($data, $values);
     if ($this->options['rss_format'] == 'with_name') {
-      $account = user_load_by_mail($values->{$this->field_alias});
+      $account = user_load_by_mail($data);
       return $data . ' (' . $account->name . ')';
     }
     return $data;
