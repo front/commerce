@@ -1276,7 +1276,7 @@ function commercify_product_book_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '-3',
+        'weight' => '1',
       ),
     ),
   );
@@ -1342,19 +1342,19 @@ function commercify_product_book_field_default_fields() {
           'size' => 60,
         ),
         'type' => 'taxonomy_autocomplete',
-        'weight' => '33',
+        'weight' => '6',
       ),
     ),
   );
 
-  // Exported field: 'node-produktvisning-field_product_book_cat'
-  $fields['node-produktvisning-field_product_book_cat'] = array(
+  // Exported field: 'node-produktvisning-field_product_category_main'
+  $fields['node-produktvisning-field_product_category_main'] = array(
     'field_config' => array(
       'active' => '1',
-      'cardinality' => '1',
+      'cardinality' => '-1',
       'deleted' => '0',
       'entity_types' => array(),
-      'field_name' => 'field_product_book_cat',
+      'field_name' => 'field_product_category_main',
       'foreign keys' => array(
         'tid' => array(
           'columns' => array(
@@ -1372,7 +1372,7 @@ function commercify_product_book_field_default_fields() {
       'settings' => array(
         'allowed_values' => array(
           0 => array(
-            'vocabulary' => 'b_ker',
+            'vocabulary' => 'produkter',
             'parent' => '0',
           ),
         ),
@@ -1384,28 +1384,32 @@ function commercify_product_book_field_default_fields() {
       'bundle' => 'produktvisning',
       'default_value' => NULL,
       'deleted' => '0',
-      'description' => 'Boktype.',
+      'description' => 'Produktets hovedkategori.',
       'display' => array(
         'default' => array(
           'label' => 'above',
+          'module' => 'taxonomy',
           'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '24',
+          'type' => 'taxonomy_term_reference_link',
+          'weight' => 26,
         ),
       ),
       'entity_type' => 'node',
-      'field_name' => 'field_product_book_cat',
-      'label' => 'Boktype',
+      'field_name' => 'field_product_category_main',
+      'label' => 'Hovedkategori',
       'required' => 0,
       'settings' => array(
         'user_register_form' => FALSE,
       ),
       'widget' => array(
-        'active' => 1,
-        'module' => 'options',
-        'settings' => array(),
-        'type' => 'options_select',
-        'weight' => '35',
+        'active' => 0,
+        'module' => 'taxonomy',
+        'settings' => array(
+          'autocomplete_path' => 'taxonomy/autocomplete',
+          'size' => 60,
+        ),
+        'type' => 'taxonomy_autocomplete',
+        'weight' => '8',
       ),
     ),
   );
@@ -1465,7 +1469,7 @@ function commercify_product_book_field_default_fields() {
           'rows' => '5',
         ),
         'type' => 'text_textarea',
-        'weight' => '32',
+        'weight' => '5',
       ),
     ),
   );
@@ -1528,7 +1532,7 @@ function commercify_product_book_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '34',
+        'weight' => '7',
       ),
     ),
   );
@@ -1596,7 +1600,7 @@ function commercify_product_book_field_default_fields() {
           'progress_indicator' => 'throbber',
         ),
         'type' => 'image_image',
-        'weight' => '31',
+        'weight' => '4',
       ),
     ),
   );
@@ -1608,8 +1612,6 @@ function commercify_product_book_field_default_fields() {
   t('Antall sider');
   t('Beskrivelse');
   t('Bokens antall sider');
-  t('Boktype');
-  t('Boktype.');
   t('Dimensjon');
   t('Dimensjonen på produktet.');
   t('En beskrivelse av produktet.');
@@ -1618,6 +1620,7 @@ function commercify_product_book_field_default_fields() {
   t('Forfatter');
   t('Forfattere av publikasjoner.');
   t('Forlag');
+  t('Hovedkategori');
   t('Lagervarsling');
   t('Lavt lagernivå');
   t('Nummer i serie');
@@ -1626,6 +1629,7 @@ function commercify_product_book_field_default_fields() {
   t('Produkt');
   t('Produktbilde');
   t('Produktbilde for gjeldende produkt.');
+  t('Produktets hovedkategori.');
   t('Publikasjonens forfatter(e)');
   t('Sjanger');
   t('Språk');
