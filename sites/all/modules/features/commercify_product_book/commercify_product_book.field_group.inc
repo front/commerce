@@ -13,6 +13,38 @@ function commercify_product_book_field_group_info() {
   $field_group = new stdClass;
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_cart|node|produktvisning|default';
+  $field_group->group_name = 'group_cart';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'produktvisning';
+  $field_group->mode = 'default';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => '',
+    'weight' => '4',
+    'children' => array(
+      0 => 'field_display_product',
+      1 => 'product:commerce_price',
+    ),
+    'format_type' => 'div',
+    'format_settings' => array(
+      'label' => '',
+      'instance_settings' => array(
+        'classes' => 'cart_items',
+        'description' => '',
+        'show_label' => '0',
+        'label_element' => 'h3',
+        'effect' => 'none',
+        'speed' => 'fast',
+      ),
+      'formatter' => 'open',
+    ),
+  );
+  $export['group_cart|node|produktvisning|default'] = $field_group;
+
+  $field_group = new stdClass;
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_details|commerce_product|publication|form';
   $field_group->group_name = 'group_details';
   $field_group->entity_type = 'commerce_product';
