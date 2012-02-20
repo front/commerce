@@ -16,45 +16,39 @@ function commercify_product_book_ds_layout_settings_info() {
   $ds_layout->entity_type = 'node';
   $ds_layout->bundle = 'produktvisning';
   $ds_layout->view_mode = 'default';
-  $ds_layout->layout = 'panels-threecol_25_50_25_stacked';
+  $ds_layout->layout = 'panels-twocol_bricks';
   $ds_layout->settings = array(
     'hide_empty_regions' => 0,
     'hide_sidebars' => 0,
     'regions' => array(
-      'top' => array(
-        0 => 'title',
-      ),
-      'left' => array(
+      'left_above' => array(
         0 => 'product:field_product_image',
+        1 => 'group_details',
+        2 => 'product:field_product_detail_year',
+        3 => 'product:field_product_pages',
+        4 => 'product:field_product_language',
       ),
-      'middle' => array(
-        0 => 'field_product_description',
-        1 => 'product:field_product_description',
-        2 => 'product:field_product_author',
-      ),
-      'right' => array(
-        0 => 'product:sku',
-        1 => 'product:field_product_price_before',
-        2 => 'product:commerce_price',
-        3 => 'product:field_product_weight',
-        4 => 'product:commerce_stock',
-        5 => 'product:field_product_dimension',
-        6 => 'field_display_product',
+      'right_above' => array(
+        0 => 'title',
+        1 => 'product:field_product_author',
+        2 => 'group_cart',
+        3 => 'field_product_description',
+        4 => 'product:commerce_price',
+        5 => 'field_display_product',
       ),
     ),
     'fields' => array(
-      'title' => 'top',
-      'product:field_product_image' => 'left',
-      'field_product_description' => 'middle',
-      'product:field_product_description' => 'middle',
-      'product:field_product_author' => 'middle',
-      'product:sku' => 'right',
-      'product:field_product_price_before' => 'right',
-      'product:commerce_price' => 'right',
-      'product:field_product_weight' => 'right',
-      'product:commerce_stock' => 'right',
-      'product:field_product_dimension' => 'right',
-      'field_display_product' => 'right',
+      'product:field_product_image' => 'left_above',
+      'group_details' => 'left_above',
+      'title' => 'right_above',
+      'product:field_product_detail_year' => 'left_above',
+      'product:field_product_author' => 'right_above',
+      'product:field_product_pages' => 'left_above',
+      'group_cart' => 'right_above',
+      'product:field_product_language' => 'left_above',
+      'field_product_description' => 'right_above',
+      'product:commerce_price' => 'right_above',
+      'field_display_product' => 'right_above',
     ),
     'classes' => array(),
   );
