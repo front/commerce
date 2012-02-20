@@ -5,6 +5,50 @@
  */
 
 /**
+ * Implements hook_ds_field_settings_info().
+ */
+function commercify_frontpage_standard_ds_field_settings_info() {
+  $export = array();
+
+  $ds_fieldsetting = new stdClass;
+  $ds_fieldsetting->api_version = 1;
+  $ds_fieldsetting->id = 'node|produktvisning|default';
+  $ds_fieldsetting->entity_type = 'node';
+  $ds_fieldsetting->bundle = 'produktvisning';
+  $ds_fieldsetting->view_mode = 'default';
+  $ds_fieldsetting->settings = array(
+    'title' => array(
+      'weight' => '2',
+      'label' => 'hidden',
+      'format' => 'default',
+    ),
+  );
+  $export['node|produktvisning|default'] = $ds_fieldsetting;
+
+  $ds_fieldsetting = new stdClass;
+  $ds_fieldsetting->api_version = 1;
+  $ds_fieldsetting->id = 'node|produktvisning|teaser';
+  $ds_fieldsetting->entity_type = 'node';
+  $ds_fieldsetting->bundle = 'produktvisning';
+  $ds_fieldsetting->view_mode = 'teaser';
+  $ds_fieldsetting->settings = array(
+    'title' => array(
+      'weight' => '1',
+      'label' => 'hidden',
+      'format' => 'default',
+      'formatter_settings' => array(
+        'link' => '0',
+        'wrapper' => 'h4',
+        'class' => '',
+      ),
+    ),
+  );
+  $export['node|produktvisning|teaser'] = $ds_fieldsetting;
+
+  return $export;
+}
+
+/**
  * Implements hook_ds_layout_settings_info().
  */
 function commercify_frontpage_standard_ds_layout_settings_info() {
