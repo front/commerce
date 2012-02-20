@@ -1,0 +1,43 @@
+<?php
+/**
+ * @file
+ * Install file for Commerce Mediaconnect integration
+ *
+ * Adds a text field that can be added to the products.
+ */
+function commerce_mc_install() {
+
+  foreach (_commerce_mc_installed_fields() as $field) {
+    field_create_field($field);
+  }
+}
+
+/**
+ * Makes a field available for inclusion on products.
+ * It's available to all entities, but only sensible to use it on
+ * a product.
+ */
+function _commerce_mc_installed_fields() {
+  $t = get_t();
+  $fields = array(
+      // text field
+      'commerce_mc_sku' => array(
+          'field_name' => 'commerce_mc_sku',
+          'label' => $t('Mediaconnect SKU'),
+          'cardinality' => 1,
+          'type' => 'text',
+          'settings' => array(
+              'max_length' => 100,
+          ),
+      ),
+  );
+  return $fields;
+}
+
+function commerce_mc_uninstall() {
+  foreach (array_keys(_commerce_mc_installed_fields()) as $field) {
+    field_delete_field($field);
+  }
+
+  field_purge_batch(1000);
+}

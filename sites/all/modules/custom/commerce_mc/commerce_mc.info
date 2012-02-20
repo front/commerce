@@ -1,0 +1,7 @@
+name = "Commerce Mediaconnect integration"
+description = "Integrate with Mediaconnect's subscription services"
+core = "7.x"
+package = "Commerce"
+php = "5.2.4"
+version = "7.x-1.0-dev"
+configure = admin/commerce/settings/mediaconnect

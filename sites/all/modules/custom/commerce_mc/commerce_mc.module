@@ -1,0 +1,252 @@
+<?php
+
+/**
+ * @file
+ * Commerce Mediaconnect module.
+ * Integration framework for Mediaconnect
+ */
+define('COMMERCE_MC_PATH_CONFIG', 'admin/commerce/settings/mediaconnect');
+
+/**
+ * Implements hook_menu()
+ * 
+ * - Order overview.
+ * - Settings pages.
+ */
+function commerce_mc_menu() {
+  $items = array();
+
+  // Mediaconnect information for the order page
+  $items['admin/commerce/orders/%commerce_order/mediaconnect'] = array(
+      'title' => 'MediaConnect',
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('commerce_mc_order_form', 3),
+      'access callback' => 'commerce_order_access',
+      'access arguments' => array('update', 3),
+      'type' => MENU_LOCAL_TASK,
+      'weight' => 20,
+      'context' => MENU_CONTEXT_PAGE | MENU_CONTEXT_INLINE,
+      'file' => 'commerce_mc.page.order.inc',
+  );
+
+  // Mediaconnect general settings
+  $items['admin/commerce/config/mediaconnect'] = array(
+      'title' => t('MediaConnect integration settings'),
+      'description' => t('Mediaconnect structure settings.'),
+      'page callback' => 'drupal_get_form',
+      'page arguments' => array('commerce_mc_settings_form'),
+      'access arguments' => array('administer mediaconnect'),
+      'file' => 'commerce_mc.page.settings.inc',
+      'type' => MENU_NORMAL_ITEM
+  );
+  $items['admin/commerce/config/mediaconnect/settings'] = array(
+      'title' => t('General settings'),
+      'description' => t('General settings.'),
+      'weight' => 0,
+      'type' => MENU_DEFAULT_LOCAL_TASK
+  );
+
+  // Mediaconnect mapping
+  $items['admin/commerce/config/mediaconnect/mapping'] = array(
+      'title' => t('Mapping'),
+      'description' => t('XML mapping'),
+      'page arguments' => array('commerce_mc_settings_mapping_form'),
+      'access arguments' => array('administer mediaconnect'),
+      'file' => 'commerce_mc.page.settings.inc',
+      'weight' => 1,
+      'type' => MENU_LOCAL_TASK
+  );
+
+  // Mediaconnect mapping
+  $items['admin/commerce/config/mediaconnect/login'] = array(
+      'title' => t('Login info'),
+      'description' => t('Mediaconnect login info'),
+      'page arguments' => array('commerce_mc_login_form'),
+      'access arguments' => array('administer mediaconnect'),
+      'file' => 'commerce_mc.page.settings.inc',
+      'weight' => 1,
+      'type' => MENU_LOCAL_TASK
+  );
+
+  return $items;
+}
+
+/**
+ * Implements hook_permission()
+ * 
+ * Domain integration.
+ * This perm requires the permissions to be rebuilt everytime
+ * a new domain is added.
+ * 
+ */
+function commerce_mc_permission() {
+  $perms = array();
+
+  $perms['administer mediaconnect'] = array(
+      'title' => t('Administer Mediaconnect'),
+      'description' => t('Access field settings'),
+  );
+
+  return $perms;
+}
+
+/**
+ * Rules ACTION
+ * Collect & process line items that contains our commerce_mc special field.
+ * This process will hopefully end in a complete XML.
+ * 
+ * @param order $order 
+ * The order being worked on.
+ * 
+ * We here run trough the stuff from the order.
+ */
+function commerce_mc_process_order($order, $test = false) {
+  xdebug_break();
+  // First find all product instances with our field.
+  // Set entityMetaDataWrapper
+  $order_wrapper = entity_metadata_wrapper('commerce_order', $order);
+
+  // Get field instances
+  //$field_info = field_info_field('commerce_mc_sku'); // The correct line!!!!
+  $field_info = field_info_field('commerce_price');
+  $bundles = $field_info['bundles']['commerce_product'];
+
+  // Collect necessary line item info.
+  $lines = array();
+
+  // Traverse the order line items, to find correct product types.
+  // Only MC relevant lines are to arrive at the export.
+  foreach ($order_wrapper->commerce_line_items as $delta => $line_item_wrapper) {
+    // Line item is product..
+    if ($line_item_wrapper->type->value() == 'product') {
+      // Product has our field...
+      if (in_array($line_item_wrapper->commerce_product->type->value(), $bundles)) {
+        // Extract line item info. 
+        $lines[] = $line_item_wrapper;
+      }
+    }
+  }
+
+    // Token available elements
+  $order_elements = array(
+      'commerce_order' => $order,
+  );
+  
+  // Now we have the lines. We now need to format a XML.
+  // First load the settings.
+  $order_settings = variable_get('commerce_mc_order', array());
+  $line_settings = variable_get('commerce_mc_lines', array());
+
+  // Load a default order tree.
+//  $file = drupal_get_path('module', 'commerce_mc') . '/xml/order_base.xml';
+//  dpm($order_wrapper->commerce_customer_billing->value());
+
+  // Create a DOM tree resembling a basic order
+  $dom = new DOMDocument('1.0', 'utf-8');
+  $dom->appendChild($dom->createElement('orders'))->
+          appendChild($dom->createElement('order'))
+          ->setAttribute('externalOrderId', variable_get('commerce_mc_orderid', 123))
+          ->parentNode
+          ->appendChild($dom->createElement('orderTime', token_replace($order_settings['orderTime'],$order_elements)))
+          ->parentNode
+          ->appendChild($dom->createElement('marketingCouponcode', token_replace($order_settings['marketingCouponcode'],$order_elements)))
+          ->parentNode
+          ->appendChild($dom->createElement('marketingCouponno', token_replace($order_settings['marketingCouponno'].$order_elements)))
+          ->parentNode
+          ->appendChild($dom->createElement('paymentMethod', $order_settings['paymentMethod']))
+          ->parentNode
+          ->appendChild($dom->createElement('totalInclVat', token_replace($order_settings['totalInclVat'],$order_elements)))
+          ->parentNode
+          ->appendChild($dom->createElement('payer'))
+          ->appendchild($dom->createElement('firstName', $order_wrapper->commerce_customer_billing->commerce_customer_address->name_line->value()))
+          ->parentNode
+          ->appendchild($dom->createElement('lastName', $order_wrapper->commerce_customer_billing->commerce_customer_address->name_line->value()))
+          ->parentNode
+          ->appendchild($dom->createElement('street', $order_wrapper->commerce_customer_billing->commerce_customer_address->locality->value()))
+          ->parentNode
+          ->appendchild($dom->createElement('postalCode', $order_wrapper->commerce_customer_billing->commerce_customer_address->postal_code->value()))
+          ->parentNode
+          ->appendchild($dom->createElement('postalPlace', $order_wrapper->commerce_customer_billing->commerce_customer_address->thoroughfare->value()))
+          ->parentNode
+          ->appendchild($dom->createElement('countryCode', $order_wrapper->commerce_customer_billing->commerce_customer_address->country->value()))
+          ->parentNode->parentNode
+          ->appendchild($dom->createElement('lines'));
+
+
+  
+  // Now, we need the lines. Lines are a bit different.
+foreach ($lines AS $line_id => $line_wrapper){
+      // Token available elements
+  $line_elements = array(
+      'commerce_order' => $line_wrapper->value(),
+  );
+  
+  $dom->getElementsByTagName('lines')->item(0)->
+          appendChild($dom->createElement('line'))
+          ->appendChild($dom->createElement('productSpecType',$line_settings['productSpecType']))
+          ->parentNode
+          ->appendChild($dom->createElement('orderProduct',$line_settings['orderProduct']))
+          ->parentNode
+          ->appendChild($dom->createElement('quantity',$line_settings['quantity']))
+          ->parentNode
+          ->appendChild($dom->createElement('unitPrice',$line_settings['unitPrice']))
+          ->parentNode;
+}
+
+// There. We should have the complete order.
+
+  // Is this a function test?
+  if (!$test) {
+    //$dom->formatOutput = true;
+    commerce_mc_order_send($dom->saveXml());
+  }
+  else { // Yeap.
+  $dom->formatOutput = true;
+  dpm($dom->saveXml());
+  }
+}
+
+/**
+ * Sends an order and returns any eventualities.
+ * 
+ * @param type $xml
+ * @param type $message
+ * @return boolean 
+ */
+function commerce_mc_order_send($xml_data) {
+  if (empty($xml_data)) {
+    watchdog('Commerce Mediaconnect', 'Tried to send Order data, but recieved empty xml data.', NULL, WATCHDOG_DEBUG);
+  }
+
+  $mc_uname = variable_get('commerce_mc_uname', 'test');
+  $mc_passw = variable_get('commerce_mc_pass', 'test');
+
+  // Post the XML to the XML Processor.
+  $timeout = 20;
+  $url = 'localhost:3333';
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_POST, 1);
+  curl_setopt($ch, CURLOPT_USERPWD, "$mc_uname:$mc_passw");
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+  curl_setopt($ch, CURLOPT_POSTFIELDS, "$xml_data");
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/x-www-form-urlencoded'));
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+
+  $result = curl_exec($ch);
+  curl_close($ch);
+  dpm($result);
+  if (!empty($result)) {
+    dpm($result);
+    $response = new SimpleXMLElement($result);
+    $response->asXML();
+    return $response;
+  }
+  else {
+    watchdog('Commerce Mediaconnect', 'Tried to send Order data, but no result was recieved.', NULL, WATCHDOG_DEBUG);
+  }
+}
+
+//commerce_mc_order_send("<xml><root>hei!</root></xml>");
