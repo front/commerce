@@ -75,7 +75,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['relationships']['coupon']['field'] = 'coupon';
   $handler->display->display_options['relationships']['coupon']['relationship'] = 'commerce_coupon_log';
   $handler->display->display_options['relationships']['coupon']['required'] = 0;
-  /* Field: Commerce Coupon: Bulk operations */
+  /* Field: Bulk operations: Commerce Coupon */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'commerce_coupon';
   $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
@@ -98,35 +98,35 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['entity_load_capacity'] = '10';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['operations'] = array(
-    'commerce_coupon_basic_validate_uses_of_coupon_component' => array(
+    'rules_component::commerce_coupon_basic_validate_uses_of_coupon_component' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_delete_item' => array(
+    'action::views_bulk_operations_delete_item' => array(
       'selected' => 1,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 1,
       'label' => 'Slett kupong',
     ),
-    'system_message_action' => array(
+    'action::system_message_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_script_action' => array(
+    'action::views_bulk_operations_script_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_argument_selector_action' => array(
+    'action::views_bulk_operations_argument_selector_action' => array(
       'selected' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
@@ -135,14 +135,14 @@ function commercify_admin_overview_views_default_views() {
         'url' => '',
       ),
     ),
-    'system_goto_action' => array(
+    'action::system_goto_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'system_send_email_action' => array(
+    'action::system_send_email_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
@@ -198,11 +198,13 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['operations']['id'] = 'operations';
   $handler->display->display_options['fields']['operations']['table'] = 'commerce_coupon';
   $handler->display->display_options['fields']['operations']['field'] = 'operations';
+  $handler->display->display_options['fields']['operations']['label'] = 'Handlinger';
   $handler->display->display_options['fields']['operations']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['absolute'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['external'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['operations']['alter']['trim_whitespace'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['nl2br'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['word_boundary'] = 1;
   $handler->display->display_options['fields']['operations']['alter']['ellipsis'] = 1;
@@ -213,6 +215,64 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['operations']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['operations']['hide_empty'] = 0;
   $handler->display->display_options['fields']['operations']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['operations']['hide_alter_empty'] = 1;
+  /* Field: Commerce Coupon: Fixed Amount */
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['id'] = 'commerce_coupon_fixed_amount';
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['table'] = 'field_data_commerce_coupon_fixed_amount';
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['field'] = 'commerce_coupon_fixed_amount';
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['click_sort_column'] = 'amount';
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['type'] = 'commerce_price_formatted_amount';
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['settings'] = array(
+    'calculation' => FALSE,
+  );
+  $handler->display->display_options['fields']['commerce_coupon_fixed_amount']['field_api_classes'] = 0;
+  /* Field: Commerce Coupon: Percentage Amount */
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['id'] = 'commerce_coupon_percent_amount';
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['table'] = 'field_data_commerce_coupon_percent_amount';
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['field'] = 'commerce_coupon_percent_amount';
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['label'] = 'Prosent';
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['empty'] = 'Ingen';
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['hide_alter_empty'] = 0;
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['settings'] = array(
+    'thousand_separator' => ' ',
+    'decimal_separator' => '.',
+    'scale' => '2',
+    'prefix_suffix' => 1,
+  );
+  $handler->display->display_options['fields']['commerce_coupon_percent_amount']['field_api_classes'] = 0;
   /* Sort criterion: Commerce Coupon Log: Changed date */
   $handler->display->display_options['sorts']['changed']['id'] = 'changed';
   $handler->display->display_options['sorts']['changed']['table'] = 'commerce_coupon_log';
@@ -222,7 +282,27 @@ function commercify_admin_overview_views_default_views() {
 
   /* Display: Adminpage */
   $handler = $view->new_display('page', 'Adminpage', 'page');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Kuponger';
   $handler->display->display_options['display_description'] = 'Manage the coupons.';
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Commerce Coupon: Commerce Coupon Log */
+  $handler->display->display_options['relationships']['commerce_coupon_log']['id'] = 'commerce_coupon_log';
+  $handler->display->display_options['relationships']['commerce_coupon_log']['table'] = 'commerce_coupon';
+  $handler->display->display_options['relationships']['commerce_coupon_log']['field'] = 'commerce_coupon_log';
+  $handler->display->display_options['relationships']['commerce_coupon_log']['required'] = 0;
+  /* Relationship: Commerce Coupon Log: Coupon coupon_id */
+  $handler->display->display_options['relationships']['coupon']['id'] = 'coupon';
+  $handler->display->display_options['relationships']['coupon']['table'] = 'commerce_coupon_log';
+  $handler->display->display_options['relationships']['coupon']['field'] = 'coupon';
+  $handler->display->display_options['relationships']['coupon']['relationship'] = 'commerce_coupon_log';
+  $handler->display->display_options['relationships']['coupon']['required'] = 0;
+  /* Relationship: Commerce Coupon Log: Order order_id */
+  $handler->display->display_options['relationships']['order']['id'] = 'order';
+  $handler->display->display_options['relationships']['order']['table'] = 'commerce_coupon_log';
+  $handler->display->display_options['relationships']['order']['field'] = 'order';
+  $handler->display->display_options['relationships']['order']['relationship'] = 'commerce_coupon_log';
+  $handler->display->display_options['relationships']['order']['required'] = 0;
   $handler->display->display_options['defaults']['sorts'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Commerce Coupon: Coupon Code (commerce_coupon_code) */
@@ -238,6 +318,30 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['commerce_coupon_code_value']['expose']['identifier'] = 'commerce_coupon_code_value';
   $handler->display->display_options['filters']['commerce_coupon_code_value']['expose']['required'] = 0;
   $handler->display->display_options['filters']['commerce_coupon_code_value']['expose']['multiple'] = FALSE;
+  /* Filter criterion: Commerce Order: Order ID */
+  $handler->display->display_options['filters']['order_id']['id'] = 'order_id';
+  $handler->display->display_options['filters']['order_id']['table'] = 'commerce_order';
+  $handler->display->display_options['filters']['order_id']['field'] = 'order_id';
+  $handler->display->display_options['filters']['order_id']['relationship'] = 'order';
+  $handler->display->display_options['filters']['order_id']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['order_id']['expose']['operator_id'] = 'order_id_op';
+  $handler->display->display_options['filters']['order_id']['expose']['label'] = 'Ordre ID';
+  $handler->display->display_options['filters']['order_id']['expose']['operator'] = 'order_id_op';
+  $handler->display->display_options['filters']['order_id']['expose']['identifier'] = 'order_id';
+  $handler->display->display_options['filters']['order_id']['expose']['multiple'] = FALSE;
+  /* Filter criterion: Commerce Order: Created date */
+  $handler->display->display_options['filters']['created']['id'] = 'created';
+  $handler->display->display_options['filters']['created']['table'] = 'commerce_order';
+  $handler->display->display_options['filters']['created']['field'] = 'created';
+  $handler->display->display_options['filters']['created']['relationship'] = 'order';
+  $handler->display->display_options['filters']['created']['operator'] = '>=';
+  $handler->display->display_options['filters']['created']['value']['value'] = '17-12-1982';
+  $handler->display->display_options['filters']['created']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['created']['expose']['operator_id'] = 'created_op';
+  $handler->display->display_options['filters']['created']['expose']['label'] = 'I bruk siden YY-MM-DDDD';
+  $handler->display->display_options['filters']['created']['expose']['operator'] = 'created_op';
+  $handler->display->display_options['filters']['created']['expose']['identifier'] = 'created';
+  $handler->display->display_options['filters']['created']['expose']['multiple'] = FALSE;
   $handler->display->display_options['path'] = 'admin/commerce/overview/coupons';
   $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Kuponger';
@@ -422,16 +526,21 @@ function commercify_admin_overview_views_default_views() {
     t('Offset'),
     t('Commerce Coupon Log'),
     t('Commerce Coupon'),
-    t('Bulk operations'),
     t('Coupon Code'),
     t('Type'),
-    t('Operations links'),
+    t('Handlinger'),
+    t('Fixed Amount'),
+    t('Prosent'),
+    t('Ingen'),
     t('Adminpage'),
+    t('Kuponger'),
     t('Manage the coupons.'),
     t('more'),
-    t('Kupongkode'),
-    t('Block'),
     t('Commerce Order'),
+    t('Kupongkode'),
+    t('Ordre ID'),
+    t('I bruk siden YY-MM-DDDD'),
+    t('Block'),
     t('Sist brukte kupongkode'),
     t('Order ID'),
     t('Ordre [order_id]'),
@@ -1157,16 +1266,15 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['state']['id'] = 'state';
   $handler->display->display_options['filters']['state']['table'] = 'commerce_order';
   $handler->display->display_options['filters']['state']['field'] = 'state';
-  $handler->display->display_options['filters']['state']['operator'] = 'not in';
   $handler->display->display_options['filters']['state']['value'] = array(
-    'canceled' => 'canceled',
-    'cart' => 'cart',
-    'checkout' => 'checkout',
+    'pending' => 'pending',
+    'completed' => 'completed',
   );
-  $handler->display->display_options['filters']['state']['expose']['label'] = 'Order state';
-  $handler->display->display_options['filters']['state']['expose']['use_operator'] = 1;
+  $handler->display->display_options['filters']['state']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['state']['expose']['operator_id'] = 'state_op';
   $handler->display->display_options['filters']['state']['expose']['operator'] = 'state_op';
   $handler->display->display_options['filters']['state']['expose']['identifier'] = 'state';
+  $handler->display->display_options['filters']['state']['expose']['multiple'] = 1;
   $handler->display->display_options['filters']['state']['expose']['reduce'] = 0;
   /* Filter criterion: Commerce Order: Created date */
   $handler->display->display_options['filters']['created']['id'] = 'created';
@@ -1335,7 +1443,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['relationships']['commerce_product_product_id']['field'] = 'commerce_product_product_id';
   $handler->display->display_options['relationships']['commerce_product_product_id']['relationship'] = 'commerce_line_items_line_item_id';
   $handler->display->display_options['relationships']['commerce_product_product_id']['required'] = 0;
-  /* Field: Commerce Order: Bulk operations */
+  /* Field: Bulk operations: Commerce Order */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'commerce_order';
   $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
@@ -1359,28 +1467,28 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['entity_load_capacity'] = '10';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['operations'] = array(
-    'views_bulk_operations_delete_item' => array(
+    'action::views_bulk_operations_delete_item' => array(
       'selected' => 1,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 1,
       'label' => 'Slett ordre',
     ),
-    'system_message_action' => array(
+    'action::system_message_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_script_action' => array(
+    'action::views_bulk_operations_script_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_argument_selector_action' => array(
+    'action::views_bulk_operations_argument_selector_action' => array(
       'selected' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
@@ -1389,14 +1497,14 @@ function commercify_admin_overview_views_default_views() {
         'url' => '',
       ),
     ),
-    'system_goto_action' => array(
+    'action::system_goto_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'system_send_email_action' => array(
+    'action::system_send_email_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
@@ -1630,11 +1738,11 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['mail']['expose']['remember'] = 1;
   $handler->display->display_options['filters']['mail']['expose']['multiple'] = FALSE;
 
-  /* Display: Admin page */
-  $handler = $view->new_display('page', 'Admin page', 'admin_page');
+  /* Display: Ventende */
+  $handler = $view->new_display('page', 'Ventende', 'admin_page');
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'full';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '7';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '200';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '0';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all'] = 0;
@@ -1700,17 +1808,11 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['status']['field'] = 'status';
   $handler->display->display_options['filters']['status']['value'] = array(
     'pending' => 'pending',
-    'completed' => 'completed',
+    'processing' => 'processing',
   );
-  $handler->display->display_options['filters']['status']['exposed'] = TRUE;
-  $handler->display->display_options['filters']['status']['expose']['operator_id'] = 'status_op';
-  $handler->display->display_options['filters']['status']['expose']['label'] = 'Status';
-  $handler->display->display_options['filters']['status']['expose']['operator'] = 'status_op';
-  $handler->display->display_options['filters']['status']['expose']['identifier'] = 'status';
-  $handler->display->display_options['filters']['status']['expose']['reduce'] = 1;
   $handler->display->display_options['path'] = 'admin/commerce/overview/orders/view';
   $handler->display->display_options['menu']['type'] = 'default tab';
-  $handler->display->display_options['menu']['title'] = 'Ventende / Komplett';
+  $handler->display->display_options['menu']['title'] = 'Ventende (krever handling)';
   $handler->display->display_options['menu']['weight'] = '10';
   $handler->display->display_options['menu']['context'] = 0;
   $handler->display->display_options['tab_options']['type'] = 'tab';
@@ -1885,6 +1987,93 @@ function commercify_admin_overview_views_default_views() {
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
+
+  /* Display: Komplett */
+  $handler = $view->new_display('page', 'Komplett', 'page_1');
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '7';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all'] = 0;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Commerce Order: Order state */
+  $handler->display->display_options['filters']['state']['id'] = 'state';
+  $handler->display->display_options['filters']['state']['table'] = 'commerce_order';
+  $handler->display->display_options['filters']['state']['field'] = 'state';
+  $handler->display->display_options['filters']['state']['operator'] = 'not in';
+  $handler->display->display_options['filters']['state']['value'] = array(
+    'cart' => 'cart',
+    'checkout' => 'checkout',
+  );
+  $handler->display->display_options['filters']['state']['group'] = 1;
+  $handler->display->display_options['filters']['state']['expose']['label'] = 'Order state';
+  $handler->display->display_options['filters']['state']['expose']['use_operator'] = 1;
+  $handler->display->display_options['filters']['state']['expose']['operator'] = 'state_op';
+  $handler->display->display_options['filters']['state']['expose']['identifier'] = 'state';
+  $handler->display->display_options['filters']['state']['expose']['reduce'] = 0;
+  /* Filter criterion: Commerce Product: SKU */
+  $handler->display->display_options['filters']['sku']['id'] = 'sku';
+  $handler->display->display_options['filters']['sku']['table'] = 'commerce_product';
+  $handler->display->display_options['filters']['sku']['field'] = 'sku';
+  $handler->display->display_options['filters']['sku']['relationship'] = 'commerce_product_product_id';
+  $handler->display->display_options['filters']['sku']['operator'] = 'contains';
+  $handler->display->display_options['filters']['sku']['group'] = 1;
+  $handler->display->display_options['filters']['sku']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['sku']['expose']['operator_id'] = 'sku_op';
+  $handler->display->display_options['filters']['sku']['expose']['label'] = 'Ordre inneholder SKU';
+  $handler->display->display_options['filters']['sku']['expose']['operator'] = 'sku_op';
+  $handler->display->display_options['filters']['sku']['expose']['identifier'] = 'sku';
+  $handler->display->display_options['filters']['sku']['expose']['required'] = 0;
+  $handler->display->display_options['filters']['sku']['expose']['remember'] = 1;
+  $handler->display->display_options['filters']['sku']['expose']['multiple'] = FALSE;
+  /* Filter criterion: Commerce Order: Order ID */
+  $handler->display->display_options['filters']['order_id']['id'] = 'order_id';
+  $handler->display->display_options['filters']['order_id']['table'] = 'commerce_order';
+  $handler->display->display_options['filters']['order_id']['field'] = 'order_id';
+  $handler->display->display_options['filters']['order_id']['group'] = 1;
+  $handler->display->display_options['filters']['order_id']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['order_id']['expose']['operator_id'] = 'order_id_op';
+  $handler->display->display_options['filters']['order_id']['expose']['label'] = 'Ordre ID';
+  $handler->display->display_options['filters']['order_id']['expose']['operator'] = 'order_id_op';
+  $handler->display->display_options['filters']['order_id']['expose']['identifier'] = 'order_id';
+  $handler->display->display_options['filters']['order_id']['expose']['multiple'] = FALSE;
+  /* Filter criterion: User: E-mail */
+  $handler->display->display_options['filters']['mail']['id'] = 'mail';
+  $handler->display->display_options['filters']['mail']['table'] = 'users';
+  $handler->display->display_options['filters']['mail']['field'] = 'mail';
+  $handler->display->display_options['filters']['mail']['relationship'] = 'uid';
+  $handler->display->display_options['filters']['mail']['group'] = 1;
+  $handler->display->display_options['filters']['mail']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['mail']['expose']['operator_id'] = 'mail_op';
+  $handler->display->display_options['filters']['mail']['expose']['label'] = 'Kundens epost';
+  $handler->display->display_options['filters']['mail']['expose']['operator'] = 'mail_op';
+  $handler->display->display_options['filters']['mail']['expose']['identifier'] = 'mail';
+  $handler->display->display_options['filters']['mail']['expose']['required'] = 0;
+  $handler->display->display_options['filters']['mail']['expose']['remember'] = 1;
+  $handler->display->display_options['filters']['mail']['expose']['multiple'] = FALSE;
+  /* Filter criterion: Commerce Order: Order status */
+  $handler->display->display_options['filters']['status']['id'] = 'status';
+  $handler->display->display_options['filters']['status']['table'] = 'commerce_order';
+  $handler->display->display_options['filters']['status']['field'] = 'status';
+  $handler->display->display_options['filters']['status']['value'] = array(
+    'completed' => 'completed',
+  );
+  $handler->display->display_options['filters']['status']['expose']['operator_id'] = 'status_op';
+  $handler->display->display_options['filters']['status']['expose']['label'] = 'Status';
+  $handler->display->display_options['filters']['status']['expose']['operator'] = 'status_op';
+  $handler->display->display_options['filters']['status']['expose']['identifier'] = 'status';
+  $handler->display->display_options['filters']['status']['expose']['reduce'] = 1;
+  $handler->display->display_options['path'] = 'admin/commerce/overview/orders/list/complete';
+  $handler->display->display_options['menu']['type'] = 'tab';
+  $handler->display->display_options['menu']['title'] = 'Komplett';
+  $handler->display->display_options['menu']['weight'] = '30';
+  $handler->display->display_options['menu']['context'] = 0;
+  $handler->display->display_options['tab_options']['type'] = 'tab';
+  $handler->display->display_options['tab_options']['title'] = 'Ordre';
+  $handler->display->display_options['tab_options']['description'] = 'Manage orders in the store.';
+  $handler->display->display_options['tab_options']['weight'] = '';
+  $handler->display->display_options['tab_options']['name'] = 'management';
   $translatables['c_dashboard_orders'] = array(
     t('Defaults'),
     t('Salg'),
@@ -1914,9 +2103,8 @@ function commercify_admin_overview_views_default_views() {
     t('Ordre inneholder SKU'),
     t('Ordre ID'),
     t('Kundens epost'),
-    t('Admin page'),
+    t('Ventende'),
     t('more'),
-    t('Status'),
     t('Shopping carts'),
     t('There are currently no shopping cart orders.'),
     t('Ordre innelholder SKU'),
@@ -1925,6 +2113,8 @@ function commercify_admin_overview_views_default_views() {
     t('Siste 5 salg'),
     t('Content pane'),
     t('View panes'),
+    t('Komplett'),
+    t('Status'),
   );
   $export['c_dashboard_orders'] = $view;
 
@@ -2354,6 +2544,398 @@ function commercify_admin_overview_views_default_views() {
   $export['c_dashboard_product_charts'] = $view;
 
   $view = new view;
+  $view->name = 'c_dashboard_product_displays';
+  $view->description = '';
+  $view->tag = 'default';
+  $view->base_table = 'node';
+  $view->human_name = 'C Dashboard Product displays';
+  $view->core = 7;
+  $view->api_version = '3.0';
+  $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
+
+  /* Display: Master */
+  $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['title'] = 'Produktvisninger';
+  $handler->display->display_options['access']['type'] = 'perm';
+  $handler->display->display_options['cache']['type'] = 'none';
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['distinct'] = TRUE;
+  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['pager']['type'] = 'full';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['style_plugin'] = 'table';
+  $handler->display->display_options['style_options']['columns'] = array(
+    'title' => 'title',
+    'views_bulk_operations' => 'views_bulk_operations',
+    'field_display_product' => 'field_display_product',
+    'field_display_products' => 'field_display_product',
+  );
+  $handler->display->display_options['style_options']['default'] = '-1';
+  $handler->display->display_options['style_options']['info'] = array(
+    'title' => array(
+      'sortable' => 0,
+      'default_sort_order' => 'asc',
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'views_bulk_operations' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_display_product' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+    'field_display_products' => array(
+      'align' => '',
+      'separator' => '',
+      'empty_column' => 0,
+    ),
+  );
+  $handler->display->display_options['style_options']['override'] = 1;
+  $handler->display->display_options['style_options']['sticky'] = 0;
+  $handler->display->display_options['style_options']['empty_table'] = 0;
+  /* Relationship: Content: Referenced product */
+  $handler->display->display_options['relationships']['field_display_product_product_id']['id'] = 'field_display_product_product_id';
+  $handler->display->display_options['relationships']['field_display_product_product_id']['table'] = 'field_data_field_display_product';
+  $handler->display->display_options['relationships']['field_display_product_product_id']['field'] = 'field_display_product_product_id';
+  $handler->display->display_options['relationships']['field_display_product_product_id']['required'] = 0;
+  /* Field: Bulk operations: Content */
+  $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'node';
+  $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['label'] = '';
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['element_label_colon'] = FALSE;
+  $handler->display->display_options['fields']['views_bulk_operations']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['entity_load_capacity'] = '10';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['operations'] = array(
+    'action::node_assign_owner_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_delete_item' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::system_message_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_script_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_make_sticky_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_make_unsticky_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_modify_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+      'settings' => array(
+        'show_all_tokens' => 1,
+        'display_values' => array(
+          '_all_' => '_all_',
+        ),
+      ),
+    ),
+    'action::views_bulk_operations_argument_selector_action' => array(
+      'selected' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+      'settings' => array(
+        'url' => '',
+      ),
+    ),
+    'action::node_promote_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_publish_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::system_goto_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_unpromote_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_save_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::system_send_email_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_unpublish_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::node_unpublish_by_keyword_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+  );
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['enable_select_all_pages'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['display_type'] = '0';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['display_result'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['merge_single_action'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['force_single'] = 0;
+  /* Field: Content: Title */
+  $handler->display->display_options['fields']['title']['id'] = 'title';
+  $handler->display->display_options['fields']['title']['table'] = 'node';
+  $handler->display->display_options['fields']['title']['field'] = 'title';
+  $handler->display->display_options['fields']['title']['label'] = 'Produktvisning';
+  $handler->display->display_options['fields']['title']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['title']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['title']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['title']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['title']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['title']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['title']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['title']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['title']['link_to_node'] = 1;
+  /* Field: Content: Published */
+  $handler->display->display_options['fields']['status']['id'] = 'status';
+  $handler->display->display_options['fields']['status']['table'] = 'node';
+  $handler->display->display_options['fields']['status']['field'] = 'status';
+  $handler->display->display_options['fields']['status']['label'] = 'Visning er publisert';
+  $handler->display->display_options['fields']['status']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['status']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['status']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['status']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['status']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['status']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['status']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['status']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['status']['not'] = 0;
+  /* Field: Content: Produkt */
+  $handler->display->display_options['fields']['field_display_product']['id'] = 'field_display_product';
+  $handler->display->display_options['fields']['field_display_product']['table'] = 'field_data_field_display_product';
+  $handler->display->display_options['fields']['field_display_product']['field'] = 'field_display_product';
+  $handler->display->display_options['fields']['field_display_product']['label'] = 'Produkter i salg';
+  $handler->display->display_options['fields']['field_display_product']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['field_display_product']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['field_display_product']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['field_display_product']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['field_display_product']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['field_display_product']['type'] = 'commerce_product_reference_sku_link';
+  $handler->display->display_options['fields']['field_display_product']['settings'] = array(
+    'show_quantity' => 0,
+    'default_quantity' => '1',
+    'combine' => 1,
+    'line_item_type' => 0,
+  );
+  $handler->display->display_options['fields']['field_display_product']['group_rows'] = 1;
+  $handler->display->display_options['fields']['field_display_product']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_display_product']['delta_reversed'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['delta_first_last'] = 0;
+  $handler->display->display_options['fields']['field_display_product']['field_api_classes'] = 0;
+  /* Field: Content: Produktpakkevisning */
+  $handler->display->display_options['fields']['field_display_products']['id'] = 'field_display_products';
+  $handler->display->display_options['fields']['field_display_products']['table'] = 'field_data_field_display_products';
+  $handler->display->display_options['fields']['field_display_products']['field'] = 'field_display_products';
+  $handler->display->display_options['fields']['field_display_products']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['field_display_products']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['field_display_products']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['field_display_products']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['field_display_products']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['field_display_products']['type'] = 'commerce_product_reference_sku_link';
+  $handler->display->display_options['fields']['field_display_products']['settings'] = array(
+    'show_quantity' => 0,
+    'default_quantity' => '1',
+    'combine' => 1,
+    'line_item_type' => 0,
+  );
+  $handler->display->display_options['fields']['field_display_products']['group_columns'] = array(
+    'bundle' => 'bundle',
+    'entity_type' => 'entity_type',
+  );
+  $handler->display->display_options['fields']['field_display_products']['group_rows'] = 1;
+  $handler->display->display_options['fields']['field_display_products']['delta_offset'] = '0';
+  $handler->display->display_options['fields']['field_display_products']['delta_reversed'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['delta_first_last'] = 0;
+  $handler->display->display_options['fields']['field_display_products']['field_api_classes'] = 0;
+  /* Sort criterion: Content: Post date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'node';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  /* Filter criterion: Content: Hovedkategori (field_product_category_main) */
+  $handler->display->display_options['filters']['field_product_category_main_tid']['id'] = 'field_product_category_main_tid';
+  $handler->display->display_options['filters']['field_product_category_main_tid']['table'] = 'field_data_field_product_category_main';
+  $handler->display->display_options['filters']['field_product_category_main_tid']['field'] = 'field_product_category_main_tid';
+  $handler->display->display_options['filters']['field_product_category_main_tid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_product_category_main_tid']['expose']['operator_id'] = 'field_product_category_main_tid_op';
+  $handler->display->display_options['filters']['field_product_category_main_tid']['expose']['label'] = 'Hovedkategori';
+  $handler->display->display_options['filters']['field_product_category_main_tid']['expose']['operator'] = 'field_product_category_main_tid_op';
+  $handler->display->display_options['filters']['field_product_category_main_tid']['expose']['identifier'] = 'field_product_category_main_tid';
+  $handler->display->display_options['filters']['field_product_category_main_tid']['expose']['reduce'] = 0;
+  $handler->display->display_options['filters']['field_product_category_main_tid']['reduce_duplicates'] = 0;
+  $handler->display->display_options['filters']['field_product_category_main_tid']['type'] = 'select';
+  $handler->display->display_options['filters']['field_product_category_main_tid']['vocabulary'] = 'produkter';
+  $handler->display->display_options['filters']['field_product_category_main_tid']['hierarchy'] = 1;
+  $handler->display->display_options['filters']['field_product_category_main_tid']['error_message'] = 0;
+  /* Filter criterion: Commerce Product: SKU */
+  $handler->display->display_options['filters']['sku']['id'] = 'sku';
+  $handler->display->display_options['filters']['sku']['table'] = 'commerce_product';
+  $handler->display->display_options['filters']['sku']['field'] = 'sku';
+  $handler->display->display_options['filters']['sku']['relationship'] = 'field_display_product_product_id';
+  $handler->display->display_options['filters']['sku']['operator'] = 'contains';
+  $handler->display->display_options['filters']['sku']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['sku']['expose']['operator_id'] = 'sku_op';
+  $handler->display->display_options['filters']['sku']['expose']['label'] = 'refererer til SKU';
+  $handler->display->display_options['filters']['sku']['expose']['operator'] = 'sku_op';
+  $handler->display->display_options['filters']['sku']['expose']['identifier'] = 'sku';
+  $handler->display->display_options['filters']['sku']['expose']['required'] = 0;
+  $handler->display->display_options['filters']['sku']['expose']['multiple'] = FALSE;
+
+  /* Display: Page */
+  $handler = $view->new_display('page', 'Page', 'page');
+  $handler->display->display_options['path'] = 'admin/commerce/overview/products/displays';
+  $handler->display->display_options['menu']['type'] = 'tab';
+  $handler->display->display_options['menu']['title'] = 'Produktvisninger';
+  $handler->display->display_options['menu']['weight'] = '50';
+  $handler->display->display_options['menu']['context'] = 0;
+  $translatables['c_dashboard_product_displays'] = array(
+    t('Master'),
+    t('Produktvisninger'),
+    t('more'),
+    t('Apply'),
+    t('Reset'),
+    t('Sort by'),
+    t('Asc'),
+    t('Desc'),
+    t('Items per page'),
+    t('- All -'),
+    t('Offset'),
+    t('Product'),
+    t('Produktvisning'),
+    t('Visning er publisert'),
+    t('Produkter i salg'),
+    t('Produktpakkevisning'),
+    t('Hovedkategori'),
+    t('refererer til SKU'),
+    t('Page'),
+  );
+  $export['c_dashboard_product_displays'] = $view;
+
+  $view = new view;
   $view->name = 'c_dashboard_product_exports';
   $view->description = 'Display a list of products for store admin.';
   $view->tag = 'commerce';
@@ -2753,6 +3335,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['disable_sql_rewrite'] = TRUE;
+  $handler->display->display_options['query']['options']['distinct'] = TRUE;
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
@@ -2836,7 +3419,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['empty']['empty_text']['table'] = 'commerce_product';
   $handler->display->display_options['empty']['empty_text']['field'] = 'empty_text';
   $handler->display->display_options['empty']['empty_text']['add_path'] = 'admin/commerce/products/add';
-  /* Field: Commerce Product: Bulk operations */
+  /* Field: Bulk operations: Commerce Product */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'commerce_product';
   $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
@@ -2859,28 +3442,28 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['entity_load_capacity'] = '10';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['operations'] = array(
-    'views_bulk_operations_delete_item' => array(
+    'action::views_bulk_operations_delete_item' => array(
       'selected' => 1,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 1,
       'label' => 'Slett produkt',
     ),
-    'system_message_action' => array(
+    'action::system_message_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_script_action' => array(
+    'action::views_bulk_operations_script_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_argument_selector_action' => array(
+    'action::views_bulk_operations_argument_selector_action' => array(
       'selected' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
@@ -2889,14 +3472,14 @@ function commercify_admin_overview_views_default_views() {
         'url' => '',
       ),
     ),
-    'system_goto_action' => array(
+    'action::system_goto_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'system_send_email_action' => array(
+    'action::system_send_email_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
@@ -3142,28 +3725,6 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['commerce_stock_value']['expose']['identifier'] = 'commerce_stock_value';
   $handler->display->display_options['filters']['commerce_stock_value']['expose']['multiple'] = FALSE;
 
-  /* Display: Eksport */
-  $handler = $view->new_display('page', 'Eksport', 'admin_page');
-  $handler->display->display_options['defaults']['use_more'] = FALSE;
-  $handler->display->display_options['defaults']['footer'] = FALSE;
-  /* Footer: Global: Text area */
-  $handler->display->display_options['footer']['area']['id'] = 'area';
-  $handler->display->display_options['footer']['area']['table'] = 'views';
-  $handler->display->display_options['footer']['area']['field'] = 'area';
-  $handler->display->display_options['footer']['area']['empty'] = FALSE;
-  $handler->display->display_options['footer']['area']['format'] = 'filtered_html';
-  $handler->display->display_options['footer']['area']['tokenize'] = 0;
-  $handler->display->display_options['path'] = 'admin/commerce/overview/products/exports';
-  $handler->display->display_options['menu']['type'] = 'tab';
-  $handler->display->display_options['menu']['title'] = 'Eksport';
-  $handler->display->display_options['menu']['weight'] = '50';
-  $handler->display->display_options['menu']['context'] = 0;
-  $handler->display->display_options['tab_options']['type'] = 'tab';
-  $handler->display->display_options['tab_options']['title'] = 'Products';
-  $handler->display->display_options['tab_options']['description'] = 'Manage products and product types in the store.';
-  $handler->display->display_options['tab_options']['weight'] = '';
-  $handler->display->display_options['tab_options']['name'] = 'management';
-
   /* Display: Admin page */
   $handler = $view->new_display('page', 'Admin page', 'page_1');
   $handler->display->display_options['path'] = 'admin/commerce/overview/products/test';
@@ -3180,7 +3741,7 @@ function commercify_admin_overview_views_default_views() {
   /* Display: Varelager */
   $handler = $view->new_display('page', 'Varelager', 'page_2');
   $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Field: Commerce Product: Bulk operations */
+  /* Field: Bulk operations: Commerce Product */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'commerce_product';
   $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
@@ -3203,28 +3764,28 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['entity_load_capacity'] = '10';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['operations'] = array(
-    'views_bulk_operations_delete_item' => array(
+    'action::views_bulk_operations_delete_item' => array(
       'selected' => 1,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 1,
       'label' => 'Slett produkt',
     ),
-    'system_message_action' => array(
+    'action::system_message_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_script_action' => array(
+    'action::views_bulk_operations_script_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_argument_selector_action' => array(
+    'action::views_bulk_operations_argument_selector_action' => array(
       'selected' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
@@ -3233,14 +3794,14 @@ function commercify_admin_overview_views_default_views() {
         'url' => '',
       ),
     ),
-    'system_goto_action' => array(
+    'action::system_goto_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'system_send_email_action' => array(
+    'action::system_send_email_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
@@ -3807,7 +4368,7 @@ function commercify_admin_overview_views_default_views() {
     t('- All -'),
     t('Offset'),
     t('<a href="/admin/commerce/products/add">Nytt produkt >>'),
-    t('Bulk operations'),
+    t('Commerce Product'),
     t('SKU'),
     t('Title'),
     t('Type'),
@@ -3819,8 +4380,6 @@ function commercify_admin_overview_views_default_views() {
     t('Produkt-type'),
     t('SKU-kode (begynner med)'),
     t('Beholdning (lavere enn)'),
-    t('Eksport'),
-    t('Produktliste'),
     t('Admin page'),
     t('Varelager'),
     t('Lavt lagernivå'),
@@ -3857,7 +4416,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
   $handler->display->display_options['style_plugin'] = 'table';
-  /* Field: User: Bulk operations */
+  /* Field: Bulk operations: User */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'users';
   $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
@@ -3880,49 +4439,49 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['entity_load_capacity'] = '10';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['operations'] = array(
-    'system_block_ip_action' => array(
+    'action::system_block_ip_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'user_block_user_action' => array(
+    'action::user_block_user_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_delete_item' => array(
+    'action::views_bulk_operations_delete_item' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'system_message_action' => array(
+    'action::system_message_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_script_action' => array(
+    'action::views_bulk_operations_script_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_user_roles_action' => array(
+    'action::views_bulk_operations_user_roles_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_argument_selector_action' => array(
+    'action::views_bulk_operations_argument_selector_action' => array(
       'selected' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
@@ -3931,14 +4490,14 @@ function commercify_admin_overview_views_default_views() {
         'url' => '',
       ),
     ),
-    'system_goto_action' => array(
+    'action::system_goto_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'system_send_email_action' => array(
+    'action::system_send_email_action' => array(
       'selected' => 1,
       'use_queue' => 0,
       'skip_confirmation' => 0,
@@ -4106,7 +4665,7 @@ function commercify_admin_overview_views_default_views() {
     t('Items per page'),
     t('- All -'),
     t('Offset'),
-    t('Bulk operations'),
+    t('User'),
     t('Navn'),
     t('E-mail'),
     t('Kunderabatt'),
@@ -4185,7 +4744,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['relationships']['uid']['field'] = 'uid';
   $handler->display->display_options['relationships']['uid']['relationship'] = 'order_id';
   $handler->display->display_options['relationships']['uid']['required'] = 1;
-  /* Field: User: Bulk operations */
+  /* Field: Bulk operations: User */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
   $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'users';
   $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
@@ -4209,56 +4768,56 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['entity_load_capacity'] = '10';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['operations'] = array(
-    'system_block_ip_action' => array(
+    'action::system_block_ip_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'user_block_user_action' => array(
+    'action::user_block_user_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_delete_item' => array(
+    'action::views_bulk_operations_delete_item' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'rules_discount_set_user_discount' => array(
+    'rules_component::rules_discount_set_user_discount' => array(
       'selected' => 1,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 1,
       'label' => 'Sett kundebasert rabatt',
     ),
-    'system_message_action' => array(
+    'action::system_message_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_script_action' => array(
+    'action::views_bulk_operations_script_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_user_roles_action' => array(
+    'action::views_bulk_operations_user_roles_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'views_bulk_operations_argument_selector_action' => array(
+    'action::views_bulk_operations_argument_selector_action' => array(
       'selected' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
@@ -4267,14 +4826,14 @@ function commercify_admin_overview_views_default_views() {
         'url' => '',
       ),
     ),
-    'system_goto_action' => array(
+    'action::system_goto_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
     ),
-    'system_send_email_action' => array(
+    'action::system_send_email_action' => array(
       'selected' => 1,
       'use_queue' => 0,
       'skip_confirmation' => 0,
@@ -4397,6 +4956,19 @@ function commercify_admin_overview_views_default_views() {
     'value' => 'value',
   );
   $handler->display->display_options['fields']['field_user_discount']['field_api_classes'] = 0;
+  /* Filter criterion: User: E-mail */
+  $handler->display->display_options['filters']['mail']['id'] = 'mail';
+  $handler->display->display_options['filters']['mail']['table'] = 'users';
+  $handler->display->display_options['filters']['mail']['field'] = 'mail';
+  $handler->display->display_options['filters']['mail']['relationship'] = 'uid';
+  $handler->display->display_options['filters']['mail']['group'] = 1;
+  $handler->display->display_options['filters']['mail']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['mail']['expose']['operator_id'] = 'mail_op';
+  $handler->display->display_options['filters']['mail']['expose']['label'] = 'Kundens epost';
+  $handler->display->display_options['filters']['mail']['expose']['operator'] = 'mail_op';
+  $handler->display->display_options['filters']['mail']['expose']['identifier'] = 'mail';
+  $handler->display->display_options['filters']['mail']['expose']['required'] = 0;
+  $handler->display->display_options['filters']['mail']['expose']['multiple'] = FALSE;
   /* Filter criterion: Commerce Line Item: Type */
   $handler->display->display_options['filters']['type']['id'] = 'type';
   $handler->display->display_options['filters']['type']['table'] = 'commerce_line_item';
@@ -4404,6 +4976,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['type']['value'] = array(
     'product' => 'product',
   );
+  $handler->display->display_options['filters']['type']['group'] = 1;
   /* Filter criterion: Commerce Order: Order status */
   $handler->display->display_options['filters']['status']['id'] = 'status';
   $handler->display->display_options['filters']['status']['table'] = 'commerce_order';
@@ -4413,11 +4986,13 @@ function commercify_admin_overview_views_default_views() {
     'pending' => 'pending',
     'completed' => 'completed',
   );
+  $handler->display->display_options['filters']['status']['group'] = 1;
   /* Filter criterion: User: Kunderabatt (field_user_discount) */
   $handler->display->display_options['filters']['field_user_discount_value']['id'] = 'field_user_discount_value';
   $handler->display->display_options['filters']['field_user_discount_value']['table'] = 'field_data_field_user_discount';
   $handler->display->display_options['filters']['field_user_discount_value']['field'] = 'field_user_discount_value';
   $handler->display->display_options['filters']['field_user_discount_value']['relationship'] = 'uid';
+  $handler->display->display_options['filters']['field_user_discount_value']['group'] = 1;
   $handler->display->display_options['filters']['field_user_discount_value']['exposed'] = TRUE;
   $handler->display->display_options['filters']['field_user_discount_value']['expose']['operator_id'] = 'field_user_discount_value_op';
   $handler->display->display_options['filters']['field_user_discount_value']['expose']['label'] = 'Kunderabatt';
@@ -4447,12 +5022,13 @@ function commercify_admin_overview_views_default_views() {
     t('Desc'),
     t('Order'),
     t('Order owner'),
-    t('Bulk operations'),
+    t('User'),
     t('Name'),
     t('Ordreantall'),
     t('Totalbeløp alle ordre'),
     t('Kunderabatt (Gjeldende)'),
     t('[field_user_discount-value] %'),
+    t('Kundens epost'),
     t('Kunderabatt'),
     t('Page'),
   );
