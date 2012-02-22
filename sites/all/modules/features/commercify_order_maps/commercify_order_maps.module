@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Commercify Order Maps feature.
+ */
+
+include_once('commercify_order_maps.features.inc');
