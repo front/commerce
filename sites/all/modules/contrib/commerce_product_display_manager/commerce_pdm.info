@@ -8,9 +8,9 @@ files[] = commerce_pdm.admin.inc
 dependencies[] = commerce
 dependencies[] = commerce_product_ui
 
-; Information added by drupal.org packaging script on 2011-07-05
-version = "7.x-1.0-alpha3"
+; Information added by drupal.org packaging script on 2012-01-22
+version = "7.x-1.0-alpha3+5-dev"
 core = "7.x"
 project = "commerce_product_display_manager"
-datestamp = "1309881415"
+datestamp = "1327192110"
 

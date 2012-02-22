@@ -4,36 +4,311 @@
 define('COMMERCE_PDM_ORPHANS_ROW_TITLE', t('Products not assigned to any display node'));
 
 /**
+ * Display manager page.
+ */
+function commerce_pdm_product_display_manager_page() {
+
+  $output = array();
+
+  $output['filters'] = drupal_get_form('commerce_pdm_product_display_manager_filters');
+
+  $output['admin'] = drupal_get_form('commerce_pdm_product_display_manager_form');
+
+  return $output;
+}
+
+/**
+ * Creates the display manager form.
+ */
+function commerce_pdm_product_display_manager_filters($form, &$form_state) {
+
+  // Enable language column if translation module is enabled
+  // or if we have any product display node with language.
+  $multilanguage = (module_exists('translation') || db_query("SELECT COUNT(*) FROM {node} WHERE language <> :language", array(':language' => LANGUAGE_NONE))->fetchField());
+
+  // Add filters to the form.
+  $form['filter'] = product_manager_filter_form();
+  $form['#submit'] = array('product_manager_filter_form_submit');
+
+  return $form;
+}
+
+/**
+ * Return form for products and product displays administration filters.
+ */
+function product_manager_filter_form() {
+
+  $session = isset($_SESSION['products_overview_filter']) ? $_SESSION['products_overview_filter'] : array();
+  $filters = product_manager_filters();
+
+  $i = 0;
+  $form['filters'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Show only items where'),
+    '#theme' => 'exposed_filters__node',
+  );
+  foreach ($session as $filter) {
+    list($type, $value) = $filter;
+    if ($type == 'term') {
+      // Load term name from DB rather than search and parse options array.
+      $value = module_invoke('taxonomy', 'term_load', $value);
+      $value = $value->name;
+    }
+    elseif ($type == 'language') {
+      $value = $value == LANGUAGE_NONE ? t('Language neutral') : module_invoke('locale', 'language_name', $value);
+    }
+    else {
+      $value = $filters[$type]['options'][$value];
+    }
+    $t_args = array('%property' => $filters[$type]['title'], '%value' => $value);
+    if ($i++) {
+      $form['filters']['current'][] = array('#markup' => t('and where %property is %value', $t_args));
+    }
+    else {
+      $form['filters']['current'][] = array('#markup' => t('where %property is %value', $t_args));
+    }
+    if (in_array($type, array('type', 'language'))) {
+      // Remove the option if it is already being filtered on.
+      unset($filters[$type]);
+    }
+  }
+
+  $form['filters']['status'] = array(
+    '#type' => 'container',
+    '#attributes' => array('class' => array('clearfix')),
+    '#prefix' => ($i ? '<div class="additional-filters">' . t('and where') . '</div>' : ''),
+  );
+  $form['filters']['status']['filters'] = array(
+    '#type' => 'container',
+    '#attributes' => array('class' => array('filters')),
+  );
+  foreach ($filters as $key => $filter) {
+    $form['filters']['status']['filters'][$key] = array(
+      '#type' => 'select',
+      '#options' => $filter['options'],
+      '#title' => $filter['title'],
+      '#default_value' => '[any]',
+    );
+  }
+
+  $form['filters']['status']['actions'] = array(
+    '#type' => 'actions',
+    '#attributes' => array('class' => array('container-inline')),
+  );
+  $form['filters']['status']['actions']['submit'] = array(
+    '#type' => 'submit',
+    '#value' => count($session) ? t('Refine') : t('Filter'),
+  );
+
+  if (!empty($filters['language'])) {
+    $form['filters']['status']['#suffix'] = '<small>' . t('Note that the product language will not be filtered, only the language of the product display node.') . '</small>';
+  }
+
+  if (count($session)) {
+    $form['filters']['status']['actions']['undo'] = array('#type' => 'submit', '#value' => t('Undo'));
+    $form['filters']['status']['actions']['reset'] = array('#type' => 'submit', '#value' => t('Reset'));
+  }
+
+  drupal_add_js('misc/form.js');
+
+  return $form;
+}
+
+/**
+ * product_manager_filters.
+ */
+function product_manager_filters() {
+
+  $filters = array();
+  // Regular filters
+  $filters['status'] = array(
+    'title' => t('status'),
+    'options' => array(
+      '[any]' => t('any'),
+      'status-1' => t('published'),
+      'status-0' => t('not published'),
+      'promote-1' => t('promoted'),
+      'promote-0' => t('not promoted'),
+      'sticky-1' => t('sticky'),
+      'sticky-0' => t('not sticky'),
+    ),
+  );
+  // Include translation states if we have this module enabled
+  if (module_exists('translation')) {
+    $filters['status']['options'] += array(
+      'translate-0' => t('Up to date translation'),
+      'translate-1' => t('Outdated translation'),
+    );
+  }
+
+  $options = array();
+  foreach (commerce_product_types() as $type => $product) {
+    $options[$product['type']] = $product['name'];
+  }
+  $filters['type'] = array(
+    'title' => t('product type'),
+    'options' => array(
+      '[any]' => t('any'),
+    ) + $options,
+  );
+
+  // Language filter if there is a list of languages
+  if ($languages = module_invoke('locale', 'language_list')) {
+    $languages = array(LANGUAGE_NONE => t('Language neutral')) + $languages;
+    $filters['language'] = array(
+      'title' => t('language'),
+      'options' => array(
+        '[any]' => t('any'),
+      ) + $languages,
+    );
+  }
+
+  return $filters;
+}
+
+/**
+ * Process result from product display administration filter form.
+ */
+function product_manager_filter_form_submit($form, &$form_state) {
+
+  $filters = product_manager_filters();
+  switch ($form_state['values']['op']) {
+    case t('Filter'):
+    case t('Refine'):
+      // Apply every filter that has a choice selected other than 'any'.
+      foreach ($filters as $filter => $options) {
+        if (isset($form_state['values'][$filter]) && $form_state['values'][$filter] != '[any]') {
+          // Flatten the options array to accommodate hierarchical/nested options.
+          $flat_options = form_options_flatten($filters[$filter]['options']);
+          // Only accept valid selections offered on the dropdown, block bad input.
+          if (isset($flat_options[$form_state['values'][$filter]])) {
+            $_SESSION['products_overview_filter'][] = array($filter, $form_state['values'][$filter]);
+          }
+        }
+      }
+      break;
+    case t('Undo'):
+      array_pop($_SESSION['products_overview_filter']);
+      break;
+    case t('Reset'):
+      $_SESSION['products_overview_filter'] = array();
+      break;
+  }
+}
+
+/**
+ * Apply filters for node administration filters based on session.
+ *
+ * @param $query
+ *   A SelectQuery to which the filters should be applied.
+ * @param $product_fields
+ *   An Array with the reference fieldnames. E.g. field_data_{$field_name}
+ */
+function product_manager_build_filter_query(SelectQueryInterface &$query, $product_fields = array()) {
+  $filter_data = isset($_SESSION['products_overview_filter']) ? $_SESSION['products_overview_filter'] : array();
+  foreach ($filter_data as $index => $filter) {
+    list($key, $value) = $filter;
+    switch ($key) {
+      case 'status':
+        // Note: no exploitable hole as $key/$value have already been checked when submitted
+        list($key, $value) = explode('-', $value, 2);
+      case 'type':
+        if (!empty($product_fields)) {
+          foreach ($product_fields as $field_name) {
+            $query->condition('cp_' . $field_name . '.' . $key, $value);
+          }
+        }
+        else {
+          $query->condition('cp.' . $key, $value);
+        }
+        break;
+      case 'language':
+        if (!empty($product_fields)) {
+          $query->condition('n.' . $key, $value);
+        }
+        break;
+    }
+  }
+}
+
+/**
  * Creates the display manager form.
  */
 function commerce_pdm_product_display_manager_form($form, &$form_state) {
-  $form = array();
 
-  $form['#tree'] = TRUE;
+  $form = array('#tree' => TRUE);
+  $session = isset($_SESSION['products_overview_filter']) ? $_SESSION['products_overview_filter'] : array();
 
+  $current_path = $_GET['q'];
   $product_display_types = _commerce_pdm_get_product_display_types(FALSE);
-  $nodes_query = db_select('node', 'n')
-    ->fields('n', array('nid', 'title'))
-    ->orderBy('n.title')
-    ->addTag('node_access');
+
+  // Skip the rest if no product displays where found.
+  if (empty($product_display_types)) {
+    return array('no_product_displays' => array(
+      '#markup' => '<div style="margin-bottom:20px;">' . t('The store does not yet contain any product display nodes.') . '</div>',
+    ));
+  }
+  $product_fields = _commerce_pdm_get_product_reference_fields();
+
+  $nodes_query = db_select('node', 'n');
+
+  foreach ($product_fields as $field_name) {
+    $nodes_query->join('field_data_' . $field_name, 'fd_' . $field_name, 'fd_' . $field_name . '.entity_id = n.nid');
+    $nodes_query->join('commerce_product', 'cp_' . $field_name, 'cp_' . $field_name . '.product_id = fd_' . $field_name . '.' . $field_name . '_product_id');
+    $nodes_query->fields('cp_' . $field_name, array('type', 'product_id', 'sku', 'title', 'language'));
+  }
+
+  $nodes_query->fields('n', array('nid', 'title' => 'title', 'language', 'type'));
+
+  $nodes_query->orderBy('n.title');
+  $nodes_query->addTag('node_access');
+
+  product_manager_build_filter_query($nodes_query, $product_fields);
 
   $conditions = db_or();
   foreach ($product_display_types as $product_display_type) {
-    $conditions->condition('type', $product_display_type['machine_name']);
+    $conditions->condition('n.type', $product_display_type['machine_name']);
   }
   if ($conditions->count()) {
     $nodes_query->condition($conditions);
   }
+
   $nodes_query_result = $nodes_query->execute();
 
-  $current_path = $_GET['q'];
-  if ($nodes_query_result->rowCount() > 0) {
+  $product_list = array();
+  foreach ($nodes_query_result as $record) {
+    // Create the Product Display when first time.
+    if (!isset($product_list[$record->nid])) {
+      $object = new stdClass();
+      $object->nid = $record->nid;
+      $object->title = $record->n_title;
+      $object->type = $record->n_type;
+      $object->product_type = $record->type;
+      $object->language = $record->n_language;
+      $object->children = array();
+      $product_list[$record->nid] = $object;
+    }
+    // Add the product to the list.
+    $product_object = new stdClass();
+    $product_object->product_id = $record->product_id;
+    $product_object->sku = $record->sku;
+    $product_object->type = $record->type;
+    $product_object->title = $record->title;
+    $product_object->language = $record->language;
+    $product_list[$record->nid]->children[$record->product_id] = $product_object;
+  }
+
+  if (count($product_list) > 0) {
     // Add all display nodes and their referenced products to the form.
-    foreach($nodes_query_result as $node_obj) {
+    foreach ($product_list as $node_obj) {
       $form[] = array(
         'title' => array(
           '#type' => 'item',
           '#markup' => $node_obj->title,
+        ),
+        'language' => array(
+          '#type' => 'item',
+          '#markup' => $node_obj->language,
         ),
         'edit_link' => array(
           '#type' => 'link',
@@ -51,39 +326,33 @@ function commerce_pdm_product_display_manager_form($form, &$form_state) {
           '#type' => 'hidden',
           '#value' => $node_obj->nid,
         ),
+        '#type' => $node_obj->product_type,
       );
 
-      $products_referenced = _commerce_pdm_get_products_referenced($node_obj->nid);
-      if (!empty($products_referenced)) {
-        // Store db_or conditions for loading orphan products later.
-        if (!isset($orphan_conditions)) {
-          $orphan_conditions = db_and();
-        }
+      if (!empty($node_obj->children)) {
 
-        $products_query = db_select('commerce_product', 'cp')
-          ->fields('cp', array('product_id', 'sku', 'title'));
-        $cp_conditions = db_or();
-        foreach ($products_referenced as $product_id) {
-          $cp_conditions->condition('product_id', $product_id);
+        foreach ($node_obj->children as $key => $related_product) {
 
-          // Add a NOT condition for the orphan query.
-          $orphan_conditions->condition('product_id', $product_id, '!=');
-        }
-        $products_query->condition($cp_conditions);
-        $products_result = $products_query->execute();
-        $products_result_count = $products_result->rowCount();
-
-        foreach ($products_result as $key => $related_product) {
           $form[] = array(
             'title' => array(
               '#type' => 'item',
               '#markup' => $related_product->title,
+            ),
+            'language' => array(
+              '#type' => 'item',
+              '#markup' => $related_product->language,
             ),
             'edit_link' => array(
               '#type' => 'link',
               '#title' => t('Edit'),
               '#href' => 'admin/commerce/products/' . $related_product->product_id . '/edit',
               '#options' => array('query' => array('destination' => $current_path)),
+            ),
+            'clone_link' => array(
+              '#type' => 'link',
+              '#title' => t('Clone'),
+              '#href' => 'admin/commerce/products/clone/' . str_replace("_", "-", $related_product->type) . '/' . $related_product->product_id,
+              '#options' => array('query' => array('pdid' => $node_obj->nid, 'destination' => $current_path)),
             ),
             'delete_link' => array(
               '#type' => 'link',
@@ -108,13 +377,14 @@ function commerce_pdm_product_display_manager_form($form, &$form_state) {
     }
 
     // Load all products currently not referenced.
-    $orphans_query = db_select('commerce_product', 'cp')
-      ->fields('cp', array('product_id', 'sku', 'title'));
-    if (isset($orphan_conditions)) {
-      $orphans_query->condition($orphan_conditions);
+    $orphans_query = db_select('commerce_product', 'cp');
+    $orphans_query->fields('cp', array('product_id', 'sku', 'title', 'language'));
+    foreach ($product_fields as $field_name) {
+      $orphans_query->leftJoin('field_data_' . $field_name, 'fd' . $field_name, 'cp.product_id = fd' . $field_name . '.' . $field_name . '_product_id');
+      $orphans_query->condition('fd' . $field_name . '.entity_id', NULL);
     }
+    product_manager_build_filter_query($orphans_query);
     $orphans_result = $orphans_query->execute();
-    $orphans_result_count = $orphans_result->rowCount();
 
     $form[] = array(
       'title' => array(
@@ -125,15 +395,23 @@ function commerce_pdm_product_display_manager_form($form, &$form_state) {
         '#type' => 'hidden',
         '#value' => 0,
       ),
+      'language' => array(
+        '#type' => 'item',
+        '#markup' => '',
+      ),
     );
 
     // Add all orphan products to the table.
-    if ($orphans_result_count > 0) {
+    if ($orphans_result->rowCount() > 0) {
       foreach ($orphans_result as $orphan_key => $orphan_product) {
         $form[] = array(
           'title' => array(
             '#type' => 'item',
             '#markup' => $orphan_product->title,
+          ),
+          'language' => array(
+            '#type' => 'item',
+            '#markup' => $orphan_product->language,
           ),
           'edit_link' => array(
             '#type' => 'link',
@@ -164,11 +442,6 @@ function commerce_pdm_product_display_manager_form($form, &$form_state) {
       }
     }
   }
-  else { // Nothing to display.
-    $form['no_product_displays'] = array(
-      '#markup' => '<div style="margin-bottom:20px;">' . t('Your store does not yet contain any product display nodes.') . '</div>',
-    );
-  }
 
   $form['submit'] = array(
     '#type' => 'submit',
@@ -179,6 +452,7 @@ function commerce_pdm_product_display_manager_form($form, &$form_state) {
   $form['#after_build'] = array('_commerce_pdm_product_display_manager_form_attach');
 
   // Turns it into a table.
+  $form['#languages'] = module_invoke('locale', 'language_list');
   $form['#theme'] = 'commerce_pdm_product_display_manager_table';
 
   return $form;
@@ -188,6 +462,7 @@ function commerce_pdm_product_display_manager_form($form, &$form_state) {
  * Creates a batch operation that will update all display nodes.
  */
 function commerce_pdm_product_display_manager_form_validate($form, &$form_state) {
+
   $hierarchy = array();
   $current_display_node = NULL;
   foreach ($form_state['input'] as $input) {
@@ -219,6 +494,7 @@ function commerce_pdm_product_display_manager_form_validate($form, &$form_state)
  * Creates a batch operation that will update all display nodes.
  */
 function commerce_pdm_product_display_manager_form_submit($form, &$form_state) {
+
   $hierarchy = array();
   $current_display_node = NULL;
   foreach ($form_state['input'] as $input) {
@@ -260,11 +536,22 @@ function commerce_pdm_product_display_manager_form_submit($form, &$form_state) {
  */
 function theme_commerce_pdm_product_display_manager_table($variables) {
   $form = &$variables['form'];
+  $output = '';
 
   drupal_add_tabledrag('commerce_pdm_product_display_manager', 'order', 'sibling', 'delta');
 
+  $output .= drupal_render($form['filter']);
+
+  $links = array(
+    array(
+      'title' => t('Add product'),
+      'href' => 'admin/commerce/products/add'
+    ),
+  );
+  $output .= theme('links', array('links' => $links, 'attributes' => array('class' => array('action-links'))));
+
   $header = array (
-    t('Product Display Title / Product Title'), t('Edit'), t('Delete'), t('Delta'),
+    t('Product Display Title / Product Title'), t('Language'), t('Edit'), t('Delete'), t('Delta'),
   );
 
   $rows = array();
@@ -277,7 +564,9 @@ function theme_commerce_pdm_product_display_manager_table($variables) {
 
         $row = array();
         $row[] = drupal_render($form_element['title']) . drupal_render($form_element['nid']);
-        $row[] = ($form_element['title']['#markup'] == COMMERCE_PDM_ORPHANS_ROW_TITLE) ? '' : drupal_render($form_element['edit_link']);
+        $row[] = drupal_render($form_element['language']);
+        $row[] = ($form_element['title']['#markup'] == COMMERCE_PDM_ORPHANS_ROW_TITLE) ? '' : drupal_render($form_element['edit_link']) .
+          ' - ' . l(t('Add @type', array('@type' => $form_element['#type'])), 'admin/commerce/products/add/' . str_replace("_", "-", $form_element['#type']), array('query' => array('pdid' => $form_element['nid']['#value'], drupal_get_destination())));
         $row[] = ($form_element['title']['#markup'] == COMMERCE_PDM_ORPHANS_ROW_TITLE) ? '' : drupal_render($form_element['delete_link']);
         $row[] = '';
 
@@ -289,7 +578,8 @@ function theme_commerce_pdm_product_display_manager_table($variables) {
 
         $row = array();
         $row[] = theme('indentation', array('size' => 1)) . drupal_render($form_element['title']);
-        $row[] = drupal_render($form_element['edit_link']);
+        $row[] = drupal_render($form_element['language']);
+        $row[] = drupal_render($form_element['edit_link']) . ' - ' . drupal_render($form_element['clone_link']);
         $row[] = drupal_render($form_element['delete_link']);
         $row[] = drupal_render($form_element['delta']);
 
@@ -300,6 +590,7 @@ function theme_commerce_pdm_product_display_manager_table($variables) {
 
         $row = array();
         $row[] = theme('indentation', array('size' => 1)) . drupal_render($form_element['title']);
+        $row[] = drupal_render($form_element['language']);
         $row[] = drupal_render($form_element['edit_link']);
         $row[] = drupal_render($form_element['delete_link']);
         $row[] = drupal_render($form_element['delta']);
@@ -313,7 +604,7 @@ function theme_commerce_pdm_product_display_manager_table($variables) {
     $rows[0]['class'][] = 'first';
   }
 
-  $output = theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('id' => 'commerce_pdm_product_display_manager')));
+  $output .= theme('table', array('header' => $header, 'rows' => $rows, 'attributes' => array('id' => 'commerce_pdm_product_display_manager')));
   $output .= drupal_render_children($form);
 
   return $output;
