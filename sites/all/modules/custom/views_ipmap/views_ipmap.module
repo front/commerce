@@ -1,0 +1,131 @@
+<?php
+
+/**
+ * Implementation of hook_views_api().
+ */
+function views_ipmap_views_api() {
+  return array(
+    'api' => 2,
+  );
+}
+
+
+/**
+ * List all of the handlers
+ */
+function views_ipmap_get_handlers() {
+  return array();
+}
+
+
+/**
+ * Display a view as a table summary.
+ */
+function template_preprocess_views_ipmap_views_tableipmapd(&$vars) {
+//  xdebug_break();
+//  xdebug_break();
+  $vars['map_options'] = $options['map_options'];
+  $map_options = $vars['options']['map_options'];
+//  template_preprocess_views_view_table($vars);
+//  $handlers = views_ipmap_get_handlers();
+//
+//  if (!count($vars['rows'])) {
+//    return;
+//  }
+
+//  $opts =& $vars['view']->style_plugin->options['info'];
+//
+//  $vars['summary_only'] = $vars['view']->style_plugin->options['summary_only'];
+//
+//  $data = array();
+//  foreach ($vars['rows'] as $row) {
+//    foreach ($row as $field => $value) {
+//      $data[$field][] = $value;
+//    }
+//  }
+//
+//  $vars['ipmapd'] = array();
+//  foreach ($opts as $field => $settings) {
+//    if (isset($data[$field])) {
+//      $theme = 'views_ipmap_type_' . $settings['ipmap'];
+//      $vars['ipmapd'][$field] = theme($theme, array('data' => $data[$field]));
+//    }
+//  }
+}
+
+
+///**
+// * Theme the form for the table style plugin
+// *
+// * This is almost the same as theme_views_ui_style_plugin_table().
+// */
+function theme_views_ipmap_plugin_style_tableipmapd($variables) {
+  dpm($variables);
+//  $form = $variables['form'];
+//
+//  $output = drupal_render($form['description_markup']);
+//
+//  $header = array(
+//    t('Field'),
+//    t('Column'),
+//    t('Align'),
+//    t('ipmap'),
+//    t('Separator'),
+//    array(
+//      'data' => t('Sortable'),
+//      'align' => 'center',
+//    ),
+//    array(
+//      'data' => t('Default order'),
+//      'align' => 'center',
+//    ),
+//    array(
+//      'data' => t('Default sort'),
+//      'align' => 'center',
+//    ),
+//    array(
+//      'data' => t('Hide empty column'),
+//      'align' => 'center',
+//    ),
+//  );
+//  $rows = array();
+//  foreach (element_children($form['columns']) as $id) {
+//    $row = array();
+//    $row[] = drupal_render($form['info'][$id]['name']);
+//    $row[] = drupal_render($form['columns'][$id]);
+//    $row[] = drupal_render($form['info'][$id]['align']);
+//    $row[] = drupal_render($form['info'][$id]['ipmap']);
+//    $row[] = drupal_render($form['info'][$id]['separator']);
+//    if (!empty($form['info'][$id]['sortable'])) {
+//      $row[] = array(
+//        'data' => drupal_render($form['info'][$id]['sortable']),
+//        'align' => 'center',
+//      );
+//      $row[] = array(
+//        'data' => drupal_render($form['info'][$id]['default_sort_order']),
+//        'align' => 'center',
+//      );
+//      $row[] = array(
+//        'data' => drupal_render($form['default'][$id]),
+//        'align' => 'center',
+//      );
+//    }
+//    else {
+//      $row[] = '';
+//      $row[] = '';
+//      $row[] = '';
+//    }
+//    $row[] = array(
+//      'data' => drupal_render($form['info'][$id]['empty_column']),
+//      'align' => 'center',
+//    );
+//    $rows[] = $row;
+//  }
+//
+//  // Add the special 'None' row.
+//  $rows[] = array(t('None'), '', '', '', '', '', '', array('align' => 'center', 'data' => drupal_render($form['default'][-1])), '');
+//
+//  $output .= theme('table', array('header' => $header, 'rows' => $rows));
+//  $output .= drupal_render_children($form);
+//  return $output;
+}

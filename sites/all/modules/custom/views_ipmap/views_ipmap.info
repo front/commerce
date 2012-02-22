@@ -1,0 +1,9 @@
+name = Views IPmap
+description = Provides a style plugin for Views IP map
+core = 7.x
+package = Views
+php = 5.1
+dependencies[] = views
+dependencies[] = ip_geoloc
+
+files[] = views_ipmap_plugin_style_tableipmapd.inc
