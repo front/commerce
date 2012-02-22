@@ -1,5 +1,9 @@
 Commerce (Product Display Manager)
 
+7.x-1.x, 2012-01-21
+------------------------------
+Issue #1239368 by superstar: corrected permission in commerce_pdm_access_products_tab from "access content" to "access product display manager"
+
 7.x-1.x, 2011-07-05
 ------------------------------
 #1176966 by Nylin: Fixed an exception thrown when no display node types exist.
