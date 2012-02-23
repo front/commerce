@@ -1,0 +1,5 @@
+name = Commerce coffee integrations
+description = Provides rapid admin interface for commerce using coffee
+core = 7.x
+package = Commerce
+dependencies[] = coffee
