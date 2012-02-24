@@ -2,10 +2,10 @@
 
 /**
  * @file
- * Display Suite 2 column stacked form template.
+ * Display Suite 3 column stacked form template.
  */
 ?>
-<div class="ds-form-2col-stacked clearfix">
+<div class="ds-form-3col-stacked clearfix">
   <?php if ($header): ?>
     <div class="group-header<?php print $header_classes; ?>">
       <?php print $header; ?>
@@ -15,6 +15,12 @@
   <?php if ($left): ?>
     <div class="group-left<?php print $left_classes; ?>">
       <?php print $left; ?>
+    </div>
+  <?php endif; ?>
+
+  <?php if ($middle): ?>
+    <div class="group-middle<?php print $middle_classes; ?>">
+      <?php print $middle; ?>
     </div>
   <?php endif; ?>
 
