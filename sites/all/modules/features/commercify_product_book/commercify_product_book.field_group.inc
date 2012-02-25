@@ -24,7 +24,7 @@ function commercify_product_book_field_group_info() {
     'weight' => '4',
     'children' => array(
       0 => 'field_display_product',
-      1 => 'product:commerce_price',
+      1 => 'field_product_description',
     ),
     'format_type' => 'div',
     'format_settings' => array(
@@ -53,13 +53,15 @@ function commercify_product_book_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Detaljer',
-    'weight' => '5',
+    'weight' => '7',
     'children' => array(
-      0 => 'field_product_description',
-      1 => 'field_product_detail_year',
+      0 => 'field_product_author',
+      1 => 'field_product_description',
       2 => 'field_product_detail_publisher',
-      3 => 'field_product_pages',
+      3 => 'field_product_detail_year',
       4 => 'field_product_language',
+      5 => 'field_product_pages',
+      6 => 'field_product_series_num',
     ),
     'format_type' => 'tab',
     'format_settings' => array(
@@ -84,13 +86,8 @@ function commercify_product_book_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Produkt',
-    'weight' => '4',
-    'children' => array(
-      0 => 'field_product_weight',
-      1 => 'field_product_dimension',
-      2 => 'field_product_author',
-      3 => 'field_product_series_num',
-    ),
+    'weight' => '6',
+    'children' => array(),
     'format_type' => 'tab',
     'format_settings' => array(
       'formatter' => 'closed',
@@ -114,7 +111,7 @@ function commercify_product_book_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Pris',
-    'weight' => '6',
+    'weight' => '4',
     'children' => array(
       0 => 'commerce_price',
       1 => 'field_product_price_before',
@@ -142,12 +139,8 @@ function commercify_product_book_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Stock',
-    'weight' => '7',
-    'children' => array(
-      0 => 'commerce_stock',
-      1 => 'field_product_stock_min',
-      2 => 'field_product_stock_warning',
-    ),
+    'weight' => '8',
+    'children' => array(),
     'format_type' => 'tab',
     'format_settings' => array(
       'formatter' => 'closed',
@@ -173,15 +166,15 @@ function commercify_product_book_field_group_info() {
     'label' => 'Produkt',
     'weight' => '3',
     'children' => array(
-      0 => 'field_product_image',
-      1 => 'field_product_description',
-      2 => 'field_product_author',
-      3 => 'field_product_genre',
+      0 => 'field_product_price_before',
+      1 => 'field_product_image',
+      2 => 'field_product_description',
+      3 => 'field_product_author',
       4 => 'field_product_category_main',
     ),
-    'format_type' => 'fieldset',
+    'format_type' => 'tab',
     'format_settings' => array(
-      'formatter' => 'collapsible',
+      'formatter' => 'closed',
       'instance_settings' => array(
         'description' => '',
         'classes' => '',
@@ -202,15 +195,17 @@ function commercify_product_book_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Lager',
-    'weight' => '4',
+    'weight' => '5',
     'children' => array(
-      0 => 'commerce_stock',
-      1 => 'field_product_stock_min',
-      2 => 'field_product_stock_warning',
+      0 => 'field_product_weight',
+      1 => 'field_product_dimension',
+      2 => 'commerce_stock',
+      3 => 'field_product_stock_min',
+      4 => 'field_product_stock_warning',
     ),
-    'format_type' => 'fieldset',
+    'format_type' => 'tab',
     'format_settings' => array(
-      'formatter' => 'collapsible',
+      'formatter' => 'closed',
       'instance_settings' => array(
         'description' => '',
         'classes' => '',

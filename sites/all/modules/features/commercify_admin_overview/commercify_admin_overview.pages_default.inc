@@ -184,7 +184,24 @@ function commercify_admin_overview_default_page_manager_pages() {
   $page->admin_title = 'Commerce overview Exports';
   $page->admin_description = 'Overview of commerce entities and activity';
   $page->path = 'admin/commerce/overview/exports';
-  $page->access = array();
+  $page->access = array(
+    'plugins' => array(
+      0 => array(
+        'name' => 'role',
+        'settings' => array(
+          'rids' => array(
+            0 => 4,
+            1 => 3,
+            2 => 5,
+            3 => 6,
+          ),
+        ),
+        'context' => 'logged-in-user',
+        'not' => FALSE,
+      ),
+    ),
+    'logic' => 'and',
+  );
   $page->menu = array(
     'type' => 'tab',
     'title' => 'Dataeksport',
