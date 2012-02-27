@@ -240,12 +240,15 @@ function commercify_product_book_field_default_fields() {
     ),
     'field_instance' => array(
       'bundle' => 'publication',
+      'commerce_bpc' => array(
+        'show_field' => 1,
+      ),
       'default_value' => NULL,
       'deleted' => '0',
-      'description' => '',
+      'description' => 'Brukes kun i administrasjonssammenheng.',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'text',
           'settings' => array(),
           'type' => 'text_default',
@@ -268,18 +271,19 @@ function commercify_product_book_field_default_fields() {
       'entity_type' => 'commerce_product',
       'field_name' => 'field_product_description',
       'label' => 'Beskrivelse',
-      'required' => FALSE,
+      'required' => 0,
       'settings' => array(
-        'text_processing' => 0,
+        'text_processing' => '0',
         'user_register_form' => FALSE,
       ),
       'widget' => array(
+        'active' => 1,
         'module' => 'text',
         'settings' => array(
-          'rows' => 5,
+          'rows' => '5',
         ),
         'type' => 'text_textarea',
-        'weight' => '7',
+        'weight' => '13',
       ),
     ),
   );
@@ -369,25 +373,12 @@ function commercify_product_book_field_default_fields() {
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_product_detail_year',
-      'foreign keys' => array(
-        'format' => array(
-          'columns' => array(
-            'format' => 'format',
-          ),
-          'table' => 'filter_format',
-        ),
-      ),
-      'indexes' => array(
-        'format' => array(
-          0 => 'format',
-        ),
-      ),
-      'module' => 'text',
-      'settings' => array(
-        'max_length' => '255',
-      ),
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'module' => 'number',
+      'settings' => array(),
       'translatable' => '0',
-      'type' => 'text',
+      'type' => 'number_integer',
     ),
     'field_instance' => array(
       'bundle' => 'publication',
@@ -396,14 +387,19 @@ function commercify_product_book_field_default_fields() {
       ),
       'default_value' => NULL,
       'deleted' => '0',
-      'description' => 'Utgitt årstall',
+      'description' => 'Årstall for utgivelsen.',
       'display' => array(
         'default' => array(
           'label' => 'inline',
-          'module' => 'text',
-          'settings' => array(),
-          'type' => 'text_default',
-          'weight' => '13',
+          'module' => 'number',
+          'settings' => array(
+            'decimal_separator' => '.',
+            'prefix_suffix' => TRUE,
+            'scale' => 0,
+            'thousand_separator' => ' ',
+          ),
+          'type' => 'number_integer',
+          'weight' => '18',
         ),
         'line_item' => array(
           'label' => 'above',
@@ -415,7 +411,7 @@ function commercify_product_book_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '6',
+          'weight' => 0,
         ),
       ),
       'entity_type' => 'commerce_product',
@@ -423,17 +419,18 @@ function commercify_product_book_field_default_fields() {
       'label' => 'Årstall',
       'required' => 0,
       'settings' => array(
-        'text_processing' => '0',
+        'max' => '',
+        'min' => '0',
+        'prefix' => '',
+        'suffix' => '',
         'user_register_form' => FALSE,
       ),
       'widget' => array(
-        'active' => 1,
-        'module' => 'text',
-        'settings' => array(
-          'size' => '60',
-        ),
-        'type' => 'text_textfield',
-        'weight' => '9',
+        'active' => 0,
+        'module' => 'number',
+        'settings' => array(),
+        'type' => 'number',
+        'weight' => '14',
       ),
     ),
   );
@@ -588,7 +585,70 @@ function commercify_product_book_field_default_fields() {
           'progress_indicator' => 'throbber',
         ),
         'type' => 'image_image',
-        'weight' => '2',
+        'weight' => '3',
+      ),
+    ),
+  );
+
+  // Exported field: 'commerce_product-publication-field_product_isbn'
+  $fields['commerce_product-publication-field_product_isbn'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_product_isbn',
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'module' => 'isbn',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'isbn',
+    ),
+    'field_instance' => array(
+      'bundle' => 'publication',
+      'commerce_bpc' => array(
+        'show_field' => 1,
+      ),
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'ISBN-nummer for denne publikasjonen.',
+      'display' => array(
+        'default' => array(
+          'label' => 'inline',
+          'module' => 'isbn',
+          'settings' => array(),
+          'type' => 'isbn_default',
+          'weight' => '17',
+        ),
+        'line_item' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'node_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'entity_type' => 'commerce_product',
+      'field_name' => 'field_product_isbn',
+      'label' => 'ISBN',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'isbn',
+        'settings' => array(
+          'size' => '60',
+        ),
+        'type' => 'isbn_textfield',
+        'weight' => '1',
       ),
     ),
   );
@@ -661,7 +721,7 @@ function commercify_product_book_field_default_fields() {
           'size' => 60,
         ),
         'type' => 'text_textfield',
-        'weight' => '11',
+        'weight' => '10',
       ),
     ),
   );
@@ -683,12 +743,9 @@ function commercify_product_book_field_default_fields() {
     ),
     'field_instance' => array(
       'bundle' => 'publication',
-      'commerce_bpc' => array(
-        'show_field' => 1,
-      ),
       'default_value' => NULL,
       'deleted' => '0',
-      'description' => 'Bokens antall sider',
+      'description' => '',
       'display' => array(
         'default' => array(
           'label' => 'inline',
@@ -700,7 +757,7 @@ function commercify_product_book_field_default_fields() {
             'thousand_separator' => ' ',
           ),
           'type' => 'number_integer',
-          'weight' => '15',
+          'weight' => '19',
         ),
         'line_item' => array(
           'label' => 'above',
@@ -712,26 +769,25 @@ function commercify_product_book_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '9',
+          'weight' => 0,
         ),
       ),
       'entity_type' => 'commerce_product',
       'field_name' => 'field_product_pages',
       'label' => 'Antall sider',
-      'required' => 0,
+      'required' => FALSE,
       'settings' => array(
-        'max' => '300',
-        'min' => '1',
+        'max' => '',
+        'min' => '',
         'prefix' => '',
-        'suffix' => ' sider',
+        'suffix' => '',
         'user_register_form' => FALSE,
       ),
       'widget' => array(
-        'active' => 0,
         'module' => 'number',
         'settings' => array(),
         'type' => 'number',
-        'weight' => '10',
+        'weight' => '15',
       ),
     ),
   );
@@ -864,10 +920,10 @@ function commercify_product_book_field_default_fields() {
       ),
       'default_value' => NULL,
       'deleted' => '0',
-      'description' => 'Nummer i serien den hører til. Dette er viktig hvis flere bøker i samme bokserie skal vises på samme produkt.',
+      'description' => 'Bruk dette KUN hvis flere publikasjoner skal i samme produktvisning. Nummer i serien den hører til. Dette er viktig hvis flere bøker i samme bokserie skal vises på samme produkt.',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'inline',
           'module' => 'list',
           'settings' => array(),
           'type' => 'list_default',
@@ -898,7 +954,7 @@ function commercify_product_book_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '6',
+        'weight' => '12',
       ),
     ),
   );
@@ -1169,7 +1225,7 @@ function commercify_product_book_field_default_fields() {
             'show_quantity' => FALSE,
           ),
           'type' => 'commerce_cart_add_to_cart_form',
-          'weight' => '6',
+          'weight' => '5',
         ),
         'product_grid' => array(
           'label' => 'hidden',
@@ -1263,7 +1319,7 @@ function commercify_product_book_field_default_fields() {
           'module' => 'ds',
           'settings' => array(),
           'type' => 'taxonomy_author_info',
-          'weight' => '5',
+          'weight' => '10',
         ),
         'product_grid' => array(
           'label' => 'inline',
@@ -1342,7 +1398,7 @@ function commercify_product_book_field_default_fields() {
           'label' => 'above',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '29',
+          'weight' => '31',
         ),
         'product_grid' => array(
           'label' => 'above',
@@ -1414,7 +1470,7 @@ function commercify_product_book_field_default_fields() {
           'module' => 'text',
           'settings' => array(),
           'type' => 'text_default',
-          'weight' => '4',
+          'weight' => '9',
         ),
         'product_grid' => array(
           'label' => 'hidden',
@@ -1487,7 +1543,7 @@ function commercify_product_book_field_default_fields() {
           'label' => 'hidden',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '28',
+          'weight' => '30',
         ),
         'product_grid' => array(
           'label' => 'hidden',
@@ -1559,7 +1615,7 @@ function commercify_product_book_field_default_fields() {
           'label' => 'hidden',
           'settings' => array(),
           'type' => 'hidden',
-          'weight' => '13',
+          'weight' => '18',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -1593,7 +1649,8 @@ function commercify_product_book_field_default_fields() {
   t('Angir på hvilket nivå lagerbeholdningen må være før det skal settes opp ny bestilling.');
   t('Antall sider');
   t('Beskrivelse');
-  t('Bokens antall sider');
+  t('Bruk dette KUN hvis flere publikasjoner skal i samme produktvisning. Nummer i serien den hører til. Dette er viktig hvis flere bøker i samme bokserie skal vises på samme produkt.');
+  t('Brukes kun i administrasjonssammenheng.');
   t('Dimensjon');
   t('Dimensjonen på produktet.');
   t('En beskrivelse av produktet.');
@@ -1604,10 +1661,11 @@ function commercify_product_book_field_default_fields() {
   t('Forlag');
   t('Førpris');
   t('Hovedkategori');
+  t('ISBN');
+  t('ISBN-nummer for denne publikasjonen.');
   t('Lagervarsling');
   t('Lavt lagernivå');
   t('Nummer i serie');
-  t('Nummer i serien den hører til. Dette er viktig hvis flere bøker i samme bokserie skal vises på samme produkt.');
   t('Price');
   t('Produkt');
   t('Produktbilde');
@@ -1616,12 +1674,12 @@ function commercify_product_book_field_default_fields() {
   t('Produktets hovedkategori.');
   t('Språk');
   t('Stock');
-  t('Utgitt årstall');
   t('Utgivende forlag');
   t('Veiledende pris');
   t('Veiledende pris for produktet.');
   t('Vekt');
   t('Årstall');
+  t('Årstall for utgivelsen.');
 
   return $fields;
 }
