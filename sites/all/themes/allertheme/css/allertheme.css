@@ -91,10 +91,10 @@ body.ptf-gwf-bitter #nav-wrapper {
 /* line 98, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .field-name-field-product-image img {
   background: #FFF;
-  -moz-box-shadow: 0 0 10px rgba(37, 37, 37, 0);
-  -webkit-box-shadow: 0 0 10px rgba(37, 37, 37, 0);
-  -o-box-shadow: 0 0 10px rgba(37, 37, 37, 0);
-  box-shadow: 0 0 10px rgba(37, 37, 37, 0);
+  -moz-box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
+  -webkit-box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
+  -o-box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
+  box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
   display: block;
   padding: 10px;
 }
@@ -191,7 +191,7 @@ body.ptf-gwf-bitter #nav-wrapper {
 /* line 176, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-details {
   font-size: 1.417em;
-  line-height: 1.176em;
+  line-height: 1.206em;
 }
 /* line 179, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-details .commerce-product-field {
@@ -200,12 +200,12 @@ body.ptf-gwf-bitter #nav-wrapper {
   margin-left: 5px;
   margin-right: 5px;
   width: 190px;
-  margin: 0 0 10px;
+  margin: 0 0 16px;
 }
 /* line 184, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .field-name-field-product-description {
   font-size: 1.417em;
-  line-height: 1.176em;
+  line-height: 1.206em;
   margin-bottom: 37px;
 }
 /* line 189, sass/allertheme.scss */
@@ -225,11 +225,11 @@ form.commerce-add-to-cart input.form-submit,
 input#edit-checkout,
 input#edit-continue {
   font-size: 1em;
-  text-shadow: 0 1px 0 rgba(0, 0, 0, 0);
-  -moz-box-shadow: 0 1px 7px rgba(0, 0, 0, 0);
-  -webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, 0);
-  -o-box-shadow: 0 1px 7px rgba(0, 0, 0, 0);
-  box-shadow: 0 1px 7px rgba(0, 0, 0, 0);
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
+  -moz-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 7px rgba(0, 0, 0, 0.5);
   border: 2px solid #fff;
   -webkit-border-radius: 5px 6px;
   -moz-border-radius: 5px 5px / 6px 6px;
@@ -250,7 +250,7 @@ form.commerce-add-to-cart input.form-submit:hover,
 .add-to-cart #edit-actions input.form-submit:hover,
 input#edit-checkout:hover,
 input#edit-continue:hover {
-  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0);
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0 1px 5px #8c2764;
   -webkit-box-shadow: 0 1px 5px #8c2764;
   -o-box-shadow: 0 1px 5px #8c2764;
