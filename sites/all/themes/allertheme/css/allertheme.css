@@ -14,7 +14,7 @@
 /* Variables */
 /* Helpers */
 /* AT theme overrides */
-/* line 40, sass/allertheme.scss */
+/* line 41, sass/allertheme.scss */
 body.ptf-gwf-bitter #page-title,
 body.ptf-gwf-bitter .article-title,
 body.ptf-gwf-bitter .comment-title,
@@ -23,12 +23,12 @@ body.ptf-gwf-bitter #nav-wrapper {
   font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
 }
 
-/* line 45, sass/allertheme.scss */
+/* line 46, sass/allertheme.scss */
 .fs-small {
   font-size: 0.922509225em;
 }
 
-/* line 51, sass/allertheme.scss */
+/* line 52, sass/allertheme.scss */
 .block-inner, .region-help, .messages,
 #primary-nav, #secondary-nav, #breadcrumb,
 #main-content > header, #branding, #attribution {
@@ -37,33 +37,33 @@ body.ptf-gwf-bitter #nav-wrapper {
 }
 
 /* Base */
-/* line 58, sass/allertheme.scss */
+/* line 59, sass/allertheme.scss */
 #site-name a {
   font-size: 1.5em;
   color: #fff;
 }
 
-/* line 63, sass/allertheme.scss */
+/* line 64, sass/allertheme.scss */
 #menu-barrrr {
   margin: 0 -10px;
 }
 
 /* Produktvisning */
-/* line 71, sass/allertheme.scss */
+/* line 70, sass/allertheme.scss */
 .page-type-produktvisning {
   /* Content */
 }
-/* line 74, sass/allertheme.scss */
+/* line 73, sass/allertheme.scss */
 .page-type-produktvisning .block-system .block-inner {
   background-color: #e9e9e9;
 }
 
-/* line 79, sass/allertheme.scss */
+/* line 78, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full {
   padding: 40px 0;
   margin-bottom: 40px;
 }
-/* line 83, sass/allertheme.scss */
+/* line 82, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-left {
   display: inline;
   float: left;
@@ -74,7 +74,7 @@ body.ptf-gwf-bitter #nav-wrapper {
   padding-right: 40px;
   margin-left: 0;
 }
-/* line 89, sass/allertheme.scss */
+/* line 88, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-right {
   display: inline;
   float: left;
@@ -84,7 +84,21 @@ body.ptf-gwf-bitter #nav-wrapper {
   padding-right: 40px;
   margin-right: 0;
 }
-/* line 96, sass/allertheme.scss */
+/* line 95, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .field-name-field-product-image figure {
+  padding: 0;
+}
+/* line 98, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .field-name-field-product-image img {
+  background: #FFF;
+  -moz-box-shadow: 0 0 10px rgba(37, 37, 37, 0);
+  -webkit-box-shadow: 0 0 10px rgba(37, 37, 37, 0);
+  -o-box-shadow: 0 0 10px rgba(37, 37, 37, 0);
+  box-shadow: 0 0 10px rgba(37, 37, 37, 0);
+  display: block;
+  padding: 10px;
+}
+/* line 106, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .field-name-title h2 {
   font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
   font-size: 2.333em;
@@ -92,24 +106,153 @@ body.ptf-gwf-bitter #nav-wrapper {
   letter-spacing: -0.014em;
   margin-top: 36px;
 }
-/* line 104, sass/allertheme.scss */
+/* line 114, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .field-name-dynamic-field-forfatter {
   font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
   font-size: 1.5em;
   font-style: oblique;
+  margin-bottom: 15px;
+}
+/* line 120, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .group-cart {
+  margin-bottom: 23px;
+  padding-top: 1.583em;
+  padding-bottom: 0.5em;
+  -moz-box-shadow: 0 -1px 0 #d9d9d9, 0 1px 0 #b9b9b9;
+  -webkit-box-shadow: 0 -1px 0 #d9d9d9, 0 1px 0 #b9b9b9;
+  -o-box-shadow: 0 -1px 0 #d9d9d9, 0 1px 0 #b9b9b9;
+  box-shadow: 0 -1px 0 #d9d9d9, 0 1px 0 #b9b9b9;
+  border-top: 1px solid #b9b9b9;
+  border-bottom: 1px solid #d9d9d9;
+  overflow: hidden;
+  *zoom: 1;
+}
+/* line 129, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .group-cart .field-name-commerce-price {
+  font-size: 1.25em;
+  float: left;
+}
+/* line 133, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .group-cart table {
+  font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
+  font-style: oblique;
+  line-height: 1.067em;
+}
+/* line 139, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .group-cart table tbody,
+.article-type-produktvisning.view-mode-full .group-cart table tr {
+  border: none;
+}
+/* line 142, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .group-cart table td {
+  color: #333;
+  text-align: left;
+  float: left;
+  padding: 0 0.35em 0 0;
+}
+/* line 149, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .group-cart table td.price-label, .article-type-produktvisning.view-mode-full .group-cart table td.price-amount {
+  font-size: 1em;
+}
+/* line 153, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .group-cart table .commerce-price-savings-formatter-price td {
+  font-size: 1.867em;
+  line-height: 1;
+}
+/* line 157, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .group-cart table .commerce-price-savings-formatter-list td {
+  text-decoration: none;
+}
+/* line 161, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .group-cart .field-name-field-display-product {
+  float: right;
+  clear: both;
+}
+/* line 165, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .group-cart .field-name-field-display-product input.form-submit {
+  font-size: 1.25em;
+  background-image: url(../images/icon_addtocart.png), -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2668a), color-stop(100%, #8c2764));
+  background-image: url(../images/icon_addtocart.png), -webkit-linear-gradient(#a2668a, #8c2764);
+  background-image: url(../images/icon_addtocart.png), -moz-linear-gradient(#a2668a, #8c2764);
+  background-image: url(../images/icon_addtocart.png), -o-linear-gradient(#a2668a, #8c2764);
+  background-image: url(../images/icon_addtocart.png), -ms-linear-gradient(#a2668a, #8c2764);
+  background-image: url(../images/icon_addtocart.png), linear-gradient(#a2668a, #8c2764);
+  background-repeat: no-repeat;
+  background-position: 94.5% center;
+  padding: 11px 60px 11px 13px;
+  margin: 7px;
+  -webkit-border-radius: 14px 11px;
+  -moz-border-radius: 14px 14px / 11px 11px;
+  -o-border-radius: 14px 14px / 11px 11px;
+  -ms-border-radius: 14px 14px / 11px 11px;
+  -khtml-border-radius: 14px 14px / 11px 11px;
+  border-radius: 14px 14px / 11px 11px;
+}
+/* line 176, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .group-details {
+  font-size: 1.417em;
+  line-height: 1.176em;
+}
+/* line 179, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .group-details .commerce-product-field {
+  display: inline;
+  float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 190px;
+  margin: 0 0 10px;
+}
+/* line 184, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .field-name-field-product-description {
+  font-size: 1.417em;
+  line-height: 1.176em;
+  margin-bottom: 37px;
+}
+/* line 189, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .field-name-field-product-author {
+  font-size: 1.25em;
+  line-height: 1.2em;
+}
+/* line 193, sass/allertheme.scss */
+.article-type-produktvisning.view-mode-full .field-name-field-product-author h3 {
+  font-size: 1em;
+  margin-bottom: 10px;
 }
 
-/* line 113, sass/allertheme.scss */
-.article-type-produktvisning .field-name-field-product-image figure {
-  padding: 0;
+/* line 203, sass/allertheme.scss */
+form.commerce-add-to-cart input.form-submit,
+.add-to-cart #edit-actions input.form-submit,
+input#edit-checkout,
+input#edit-continue {
+  font-size: 1em;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0);
+  -moz-box-shadow: 0 1px 7px rgba(0, 0, 0, 0);
+  -webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, 0);
+  -o-box-shadow: 0 1px 7px rgba(0, 0, 0, 0);
+  box-shadow: 0 1px 7px rgba(0, 0, 0, 0);
+  border: 2px solid #fff;
+  -webkit-border-radius: 5px 6px;
+  -moz-border-radius: 5px 5px / 6px 6px;
+  -o-border-radius: 5px 5px / 6px 6px;
+  -ms-border-radius: 5px 5px / 6px 6px;
+  -khtml-border-radius: 5px 5px / 6px 6px;
+  border-radius: 5px 5px / 6px 6px;
+  background-clip: padding-box;
+  background: #a2668a, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2668a), color-stop(100%, #8c2764));
+  background: #a2668a, -webkit-linear-gradient(#a2668a, #8c2764);
+  background: #a2668a, -moz-linear-gradient(#a2668a, #8c2764);
+  background: #a2668a, -o-linear-gradient(#a2668a, #8c2764);
+  background: #a2668a, -ms-linear-gradient(#a2668a, #8c2764);
+  background: #a2668a, linear-gradient(#a2668a, #8c2764);
 }
-/* line 116, sass/allertheme.scss */
-.article-type-produktvisning .field-name-field-product-image img {
-  background: #FFF;
-  -moz-box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
-  -webkit-box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
-  -o-box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
-  box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
-  display: block;
-  padding: 10px;
+/* line 212, sass/allertheme.scss */
+form.commerce-add-to-cart input.form-submit:hover,
+.add-to-cart #edit-actions input.form-submit:hover,
+input#edit-checkout:hover,
+input#edit-continue:hover {
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0);
+  -moz-box-shadow: 0 1px 5px #8c2764;
+  -webkit-box-shadow: 0 1px 5px #8c2764;
+  -o-box-shadow: 0 1px 5px #8c2764;
+  box-shadow: 0 1px 5px #8c2764;
 }

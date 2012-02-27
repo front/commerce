@@ -11,8 +11,9 @@
  * Scout - http://mhs.github.com/scout-app/
  */
 
+@import "compass/utilities/general/clearfix";
 @import "960/grid";
-@import "compass/css3/box-shadow";
+@import "compass/css3";
 
 /* 960.gs configuration */
 $ninesixty-columns: 24;
@@ -64,8 +65,6 @@ body.ptf-gwf-bitter {
   margin: 0 -10px;
 }
 
-#columns {}
-
 
 /* Produktvisning */
 .page-type-produktvisning {
@@ -92,6 +91,17 @@ body.ptf-gwf-bitter {
     @include omega;
   }
 
+  .field-name-field-product-image {
+    figure {
+      padding: 0;
+    }
+    img {
+      background: #FFF;
+      @include box-shadow(0 0 10px rgba(37,37,37,0.51));
+      display: block;
+      padding: 10px;
+    }
+  }
   .field-name-title {
     h2 {
       font-family: $font-family-headings;
@@ -105,19 +115,102 @@ body.ptf-gwf-bitter {
     font-family: $font-family-headings;
     font-size: calc-em(18px, 12px);
     font-style: oblique;
+    margin-bottom: 15px;
+  }
+  .group-cart {
+    margin-bottom: 23px;
+    padding-top: calc-em(19px, 12px);
+    padding-bottom: calc-em(6px, 12px);
+    @include box-shadow(0 -1px 0 #d9d9d9, 0 1px 0 #b9b9b9);
+    border-top: 1px solid #b9b9b9;
+    border-bottom: 1px solid #d9d9d9;
+    @include clearfix;
+
+    .field-name-commerce-price {
+      font-size: calc-em(15px, 12px);
+      float: left;
+    }
+    table {
+      font-family: $font-family-headings;
+      font-style: oblique;
+      line-height: calc-em(16px, 15px);
+
+      tbody,
+      tr {
+        border: none;
+      }
+      td {
+        color: #333;
+        text-align: left;
+        float: left;
+        padding: 0 0.35em 0 0;
+
+        &.price-label,
+        &.price-amount {
+          font-size: 1em;
+        }
+      }
+      .commerce-price-savings-formatter-price td {
+        font-size: calc-em(28px, 15px);
+        line-height: 1;
+      }
+      .commerce-price-savings-formatter-list td {
+        text-decoration: none;
+      }
+    }
+    .field-name-field-display-product {
+      float: right;
+      clear: both;
+
+      input.form-submit {
+        font-size: calc-em(15px, 12px);
+        @include background-image(url(../images/icon_addtocart.png), linear-gradient(#A2668A, #8C2764));
+        background-repeat: no-repeat;
+        background-position: 94.5% center;
+        padding: 11px 60px 11px 13px;
+        margin: 7px;
+        @include border-radius(14px 14px, 11px 11px);
+      }
+    }
+  }
+  .group-details {
+    font-size: calc-em(17px, 12px);
+    line-height: calc-em(20.5px, 17px);
+    .commerce-product-field {
+      @include grid(5);
+      margin: 0 0 10px;
+    }
+  }
+  .field-name-field-product-description {
+    font-size: calc-em(17px, 12px);
+    line-height: calc-em(20.5px, 17px);
+    margin-bottom: 37px;
+  }
+  .field-name-field-product-author {
+    font-size: calc-em(15px, 12px);
+    line-height: calc-em(18px, 15px);
+
+    h3 {
+      font-size: 1em;
+      margin-bottom: 10px;
+    }
   }
 }
 
-.article-type-produktvisning {
-  .field-name-field-product-image {
-    figure {
-      padding: 0;
-    }
-    img {
-      background: #FFF;
-      @include box-shadow(0 0 10px rgba(37,37,37,0.51));
-      display: block;
-      padding: 10px;
-    }
+form.commerce-add-to-cart input.form-submit,
+.add-to-cart #edit-actions input.form-submit,
+input#edit-checkout,
+input#edit-continue {
+  font-size: 1em;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.75);
+  @include box-shadow(0 1px 7px rgba(0,0,0,0.5));
+  border: 2px solid #fff;
+  @include border-radius(5px 5px, 6px 6px);
+  background-clip: padding-box;
+  @include background-with-css2-fallback(#A2668A, linear-gradient(#A2668A, #8C2764));
+
+  &:hover {
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+    @include box-shadow(0 1px 5px #8C2764);
   }
 }
