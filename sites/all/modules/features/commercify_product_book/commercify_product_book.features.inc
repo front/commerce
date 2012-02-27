@@ -45,7 +45,7 @@ function commercify_product_book_node_info() {
       'base' => 'node_content',
       'description' => t('Standardvisning av produkter.'),
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Tittel'),
       'help' => '',
     ),
   );
