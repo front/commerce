@@ -1,0 +1,123 @@
+/**
+ * Aller Theme
+ *
+ * Use this file to add custom styles.
+ *
+ * Use:
+ * Compass - $ gem install compass
+ * Compass 960.gs plugin - $ gem install compass-960-plugin
+ *
+ * Recommended:
+ * Scout - http://mhs.github.com/scout-app/
+ */
+
+@import "960/grid";
+@import "compass/css3/box-shadow";
+
+/* 960.gs configuration */
+$ninesixty-columns: 24;
+$ninesixty-gutter-width: 10px;
+
+
+/* Variables */
+$font-family-serif: Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
+$font-family-headings: "Bitter", $font-family-serif;
+$font-size: 12;
+
+
+/* Helpers */
+@function calc-em($target-px, $context) {
+  @return ($target-px / $context) * 1em;
+}
+
+
+/* AT theme overrides */
+body.ptf-gwf-bitter {
+  #page-title,
+  .article-title,
+  .comment-title,
+  .block-title,
+  #nav-wrapper {
+    font-family: $font-family-headings;
+  }
+}
+
+.fs-small {
+  font-size: 0.922509225em;
+}
+
+.block-inner, .region-help, .messages,
+#primary-nav, #secondary-nav, #breadcrumb,
+#main-content > header, #branding, #attribution {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+
+/* Base */
+#site-name a {
+  font-size: 1.5em;
+  color: #fff;
+}
+
+#menu-barrrr {
+  margin: 0 -10px;
+}
+
+#columns {}
+
+
+/* Produktvisning */
+.page-type-produktvisning {
+
+  /* Content */
+  .block-system .block-inner {
+    background-color: #e9e9e9;
+  }
+}
+
+.article-type-produktvisning.view-mode-full {
+  padding: 40px 0;
+  margin-bottom: 40px;
+
+  .group-left {
+    @include grid(11);
+    @include grid-prefix(1);
+    @include grid-suffix(1);
+    @include alpha;
+  }
+  .group-right {
+    @include grid(10);
+    @include grid-suffix(1);
+    @include omega;
+  }
+
+  .field-name-title {
+    h2 {
+      font-family: $font-family-headings;
+      font-size: calc-em(28px, 12px);
+      font-weight: bold;
+      letter-spacing: -0.014em;
+      margin-top: 36px;
+    }
+  }
+  .field-name-dynamic-field-forfatter {
+    font-family: $font-family-headings;
+    font-size: calc-em(18px, 12px);
+    font-style: oblique;
+  }
+}
+
+.article-type-produktvisning {
+  .field-name-field-product-image {
+    figure {
+      padding: 0;
+    }
+    img {
+      background: #FFF;
+      @include box-shadow(0 0 10px rgba(37,37,37,0.51));
+      display: block;
+      padding: 10px;
+    }
+  }
+}
