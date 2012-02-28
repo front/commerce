@@ -28,7 +28,7 @@ function aller_store_views_rss_date_sources() {
  * Have a date popup.
  */
 function aller_store_form_alter(&$form, &$form_state, $form_id) {
-  if (module_exists('date_popup')) {
+  if (module_exists('date_popup') && isset($form_state['view']->name)) {
     if ($form_state['view']->name == 'c_dashboard_order_exports') {
       $form['created']['min']['#type'] = 'date_popup';
       $form['created']['min']['#date_format'] = 'Y-m-d';
