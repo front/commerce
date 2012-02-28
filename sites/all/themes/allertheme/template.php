@@ -14,7 +14,7 @@ function allertheme_preprocess_html(&$vars) {
     'allertheme.responsive.style.css',
     'allertheme.responsive.gpanels.css'
   );
-  load_subtheme_media_queries($media_queries_css, 'allertheme'); // Replace 'allertheme' with your themes name
+  load_subtheme_media_queries($media_queries_css, 'allertheme');
 
  /**
   * Load IE specific stylesheets
