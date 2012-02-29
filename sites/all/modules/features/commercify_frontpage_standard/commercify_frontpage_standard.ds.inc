@@ -49,12 +49,12 @@ function commercify_frontpage_standard_ds_field_settings_info() {
   $ds_fieldsetting->view_mode = 'teaser';
   $ds_fieldsetting->settings = array(
     'title' => array(
-      'weight' => '0',
+      'weight' => '1',
       'label' => 'hidden',
       'format' => 'default',
       'formatter_settings' => array(
-        'link' => '0',
-        'wrapper' => 'h4',
+        'link' => '1',
+        'wrapper' => 'h3',
         'class' => '',
       ),
     ),
@@ -82,16 +82,16 @@ function commercify_frontpage_standard_ds_layout_settings_info() {
     'hide_sidebars' => 0,
     'regions' => array(
       'ds_content' => array(
-        0 => 'title',
-        1 => 'product:field_product_image',
+        0 => 'product:field_product_image',
+        1 => 'title',
         2 => 'field_product_author',
         3 => 'product:commerce_price',
         4 => 'field_display_product',
       ),
     ),
     'fields' => array(
-      'title' => 'ds_content',
       'product:field_product_image' => 'ds_content',
+      'title' => 'ds_content',
       'field_product_author' => 'ds_content',
       'product:commerce_price' => 'ds_content',
       'field_display_product' => 'ds_content',
