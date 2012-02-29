@@ -14,7 +14,6 @@
 /* Variables */
 /* Helpers */
 /* AT theme overrides */
-/* line 46, sass/allertheme.scss */
 body.ptf-gwf-bitter #page-title,
 body.ptf-gwf-bitter .article-title,
 body.ptf-gwf-bitter .comment-title,
@@ -23,12 +22,10 @@ body.ptf-gwf-bitter #nav-wrapper {
   font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
 }
 
-/* line 51, sass/allertheme.scss */
 .fs-small {
   font-size: 0.922509225em;
 }
 
-/* line 57, sass/allertheme.scss */
 .block-inner, .region-help, .messages,
 #primary-nav, #secondary-nav,
 #main-content > header, #branding, #attribution {
@@ -37,18 +34,24 @@ body.ptf-gwf-bitter #nav-wrapper {
 }
 
 /* Base */
-/* line 64, sass/allertheme.scss */
-#site-name a {
-  font-size: 1.5em;
-  color: #fff;
+#branding {
+  margin-top: 10px;
+  margin-bottom: 2.083em;
+}
+#branding #logo img {
+  display: block;
+}
+#branding hgroup {
+  display: none;
 }
 
-/* line 69, sass/allertheme.scss */
 #header-wrapper {
   border-bottom: none;
 }
+#header-wrapper .region-header {
+  margin-top: 1em;
+}
 
-/* line 73, sass/allertheme.scss */
 #menu-bar {
   background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #cfcfcf), color-stop(100%, #e1e1e1));
   background-image: -webkit-linear-gradient(#cfcfcf, #e1e1e1);
@@ -62,7 +65,6 @@ body.ptf-gwf-bitter #nav-wrapper {
   top: 0;
   margin-top: 0.333em;
 }
-/* line 81, sass/allertheme.scss */
 #menu-bar nav {
   font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
   font-size: 1.25em;
@@ -70,122 +72,100 @@ body.ptf-gwf-bitter #nav-wrapper {
   margin-right: auto;
   width: 960px;
 }
-/* line 86, sass/allertheme.scss */
 #menu-bar nav .menu {
   margin: 0 5px;
 }
-/* line 88, sass/allertheme.scss */
 #menu-bar nav .menu li {
   line-height: 2.067em;
   border-right: 1px solid #cacaca;
 }
-/* line 91, sass/allertheme.scss */
 #menu-bar nav .menu li.first {
   border-left: 1px solid #cacaca;
 }
-/* line 95, sass/allertheme.scss */
 #menu-bar nav .menu a {
   color: #373737;
   line-height: 2.067em;
   text-transform: none;
   padding: 0 24px;
-  -moz-transition: all 0.35s ease-in-out;
-  -webkit-transition: all 0.35s ease-in-out;
-  -o-transition: all 0.35s ease-in-out;
-  transition: all 0.35s ease-in-out;
+  -moz-transition: all 0.3s ease-in-out;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
-/* line 104, sass/allertheme.scss */
 #menu-bar nav .menu a:focus, #menu-bar nav .menu a:hover, #menu-bar nav .menu a.active {
   color: #fff;
   background-color: #8d8d8d;
 }
 
-/* line 113, sass/allertheme.scss */
 #content-wrapper {
   padding: 1em 0 0;
   border: none;
 }
-/* line 117, sass/allertheme.scss */
 #content-wrapper.no-secondary {
   padding-top: 1em;
 }
 
-/* line 122, sass/allertheme.scss */
 .breadcrumb-wrapper {
   background-color: #f4f4f4;
   margin: 0 0 1.5em;
   padding: 6px 0;
 }
-/* line 127, sass/allertheme.scss */
 .breadcrumb-wrapper #breadcrumb {
   margin-left: auto;
   margin-right: auto;
   width: 960px;
   margin-bottom: 0;
 }
-/* line 131, sass/allertheme.scss */
 .breadcrumb-wrapper h2 {
   position: absolute !important;
   clip: rect(1px 1px 1px 1px);
   /* IE6, IE7 */
   clip: rect(1px, 1px, 1px, 1px);
 }
-/* line 134, sass/allertheme.scss */
 .breadcrumb-wrapper #crumbs {
   font-weight: bold;
   margin-left: 6px;
 }
-/* line 138, sass/allertheme.scss */
 .breadcrumb-wrapper #crumbs a {
   color: #333;
 }
-/* line 141, sass/allertheme.scss */
 .breadcrumb-wrapper #crumbs a:hover {
   color: #8C2764;
 }
-/* line 146, sass/allertheme.scss */
 .breadcrumb-wrapper #crumbs li span {
   padding: 0 10px;
 }
 
 /* Footer */
-/* line 153, sass/allertheme.scss */
 #page-footer {
   margin-top: 31px;
   border: none;
 }
-/* line 157, sass/allertheme.scss */
 #page-footer .block-title {
   font-size: 1.5em;
   line-height: 1;
   margin-bottom: 0.278em;
 }
-/* line 163, sass/allertheme.scss */
 #page-footer .block-content,
 #page-footer .content {
   font-size: 1.167em;
 }
-/* line 166, sass/allertheme.scss */
 #page-footer .block-content li,
 #page-footer .content li {
   margin-bottom: 0.214em;
 }
-/* line 170, sass/allertheme.scss */
 #page-footer .block-region-four-first {
   margin-left: 40px;
 }
-/* line 173, sass/allertheme.scss */
 #page-footer .block-region-four-fourth {
   margin-right: 40px;
 }
 
-/* line 177, sass/allertheme.scss */
 #footer-panels-wrapper {
   padding-top: 1px;
   border-top: 1px solid #a4a4a4;
   border-bottom: none;
 }
-/* line 182, sass/allertheme.scss */
 #footer-panels-wrapper .gpanel {
   background: #3d3d3d;
   margin: -33px 5px 0;
@@ -193,28 +173,23 @@ body.ptf-gwf-bitter #nav-wrapper {
   border-top: 1px solid #a4a4a4;
 }
 
-/* line 189, sass/allertheme.scss */
 #footer-wrapper {
   color: #fff;
   border-top: none;
 }
 
 /* Produktvisning */
-/* line 195, sass/allertheme.scss */
 .page-type-produktvisning {
   /* Content */
 }
-/* line 198, sass/allertheme.scss */
 .page-type-produktvisning #content .block-inner {
   background-color: #e9e9e9;
 }
 
-/* line 203, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full {
   padding: 40px 0;
   margin-bottom: 40px;
 }
-/* line 207, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-left {
   display: inline;
   float: left;
@@ -225,7 +200,6 @@ body.ptf-gwf-bitter #nav-wrapper {
   padding-right: 40px;
   margin-left: 0;
 }
-/* line 213, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-right {
   display: inline;
   float: left;
@@ -235,11 +209,9 @@ body.ptf-gwf-bitter #nav-wrapper {
   padding-right: 40px;
   margin-right: 0;
 }
-/* line 220, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .field-name-field-product-image figure {
   padding: 0;
 }
-/* line 223, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .field-name-field-product-image img {
   background: #FFF;
   -moz-box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
@@ -249,7 +221,6 @@ body.ptf-gwf-bitter #nav-wrapper {
   display: block;
   padding: 10px;
 }
-/* line 231, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .field-name-title h2 {
   font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
   font-size: 2.333em;
@@ -257,14 +228,12 @@ body.ptf-gwf-bitter #nav-wrapper {
   letter-spacing: -0.014em;
   margin-top: 36px;
 }
-/* line 239, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .field-name-dynamic-field-forfatter {
   font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
   font-size: 1.5em;
   font-style: oblique;
   margin-bottom: 15px;
 }
-/* line 245, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-cart {
   margin-bottom: 23px;
   padding-top: 1.583em;
@@ -278,48 +247,39 @@ body.ptf-gwf-bitter #nav-wrapper {
   overflow: hidden;
   *zoom: 1;
 }
-/* line 254, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-cart .field-name-commerce-price {
   font-size: 1.25em;
   float: left;
 }
-/* line 258, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-cart table {
   font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
   font-style: oblique;
   line-height: 1.067em;
 }
-/* line 264, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-cart table tbody,
 .article-type-produktvisning.view-mode-full .group-cart table tr {
   border: none;
 }
-/* line 267, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-cart table td {
   color: #333;
   text-align: left;
   float: left;
   padding: 0 0.35em 0 0;
 }
-/* line 274, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-cart table td.price-label, .article-type-produktvisning.view-mode-full .group-cart table td.price-amount {
   font-size: 1em;
 }
-/* line 278, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-cart table .commerce-price-savings-formatter-price td {
   font-size: 1.867em;
   line-height: 1;
 }
-/* line 282, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-cart table .commerce-price-savings-formatter-list td {
   text-decoration: none;
 }
-/* line 286, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-cart .field-name-field-display-product {
   float: right;
   clear: both;
 }
-/* line 290, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-cart .field-name-field-display-product input.form-submit {
   font-size: 1.25em;
   background-image: url(../images/icon_addtocart.png), -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2668a), color-stop(100%, #8c2764));
@@ -339,12 +299,10 @@ body.ptf-gwf-bitter #nav-wrapper {
   -khtml-border-radius: 14px 14px / 11px 11px;
   border-radius: 14px 14px / 11px 11px;
 }
-/* line 301, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-details {
   font-size: 1.417em;
   line-height: 1.206em;
 }
-/* line 304, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .group-details .commerce-product-field {
   display: inline;
   float: left;
@@ -353,24 +311,104 @@ body.ptf-gwf-bitter #nav-wrapper {
   width: 190px;
   margin: 0 0 16px;
 }
-/* line 309, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .field-name-field-product-description {
   font-size: 1.417em;
   line-height: 1.206em;
   margin-bottom: 37px;
 }
-/* line 314, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .field-name-field-product-author {
   font-size: 1.25em;
   line-height: 1.2em;
 }
-/* line 318, sass/allertheme.scss */
 .article-type-produktvisning.view-mode-full .field-name-field-product-author h3 {
   font-size: 1em;
   margin-bottom: 10px;
 }
 
-/* line 328, sass/allertheme.scss */
+/* Commerce */
+.region-header .block-search {
+  float: left;
+}
+.region-header .block-search form {
+  text-align: left;
+}
+.region-header .block-search form .form-item {
+  margin: 5px 0;
+}
+.region-header .block-search form .form-text {
+  font-size: 1.167em;
+  background: #fff;
+  background-clip: padding-box;
+  -moz-box-shadow: 0 0 3px rgba(107, 107, 107, 0.75);
+  -webkit-box-shadow: 0 0 3px rgba(107, 107, 107, 0.75);
+  -o-box-shadow: 0 0 3px rgba(107, 107, 107, 0.75);
+  box-shadow: 0 0 3px rgba(107, 107, 107, 0.75);
+  width: 19.143em;
+  height: calc(6px, 14px)1em;
+  margin-right: 7px;
+  padding: 6px 10px;
+  border: 2px solid #595959;
+  -moz-border-radius: 5px;
+  -webkit-border-radius: 5px;
+  -o-border-radius: 5px;
+  -ms-border-radius: 5px;
+  -khtml-border-radius: 5px;
+  border-radius: 5px;
+  -webkit-appearance: textfield;
+}
+.region-header .block-search form .form-submit {
+  font-size: 1.25em;
+  text-transform: uppercase;
+  background: #fff;
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  -o-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+  padding: 4px 15px;
+  border: none;
+  -moz-border-radius: 12px;
+  -webkit-border-radius: 12px;
+  -o-border-radius: 12px;
+  -ms-border-radius: 12px;
+  -khtml-border-radius: 12px;
+  border-radius: 12px;
+}
+
+.region-header .block-commerce-cart .block-content {
+  text-align: center;
+  background-color: #862560;
+  -moz-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.18), 0 0 1px rgba(212, 212, 212, 0.18);
+  -webkit-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.18), 0 0 1px rgba(212, 212, 212, 0.18);
+  -o-box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.18), 0 0 1px rgba(212, 212, 212, 0.18);
+  box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.18), 0 0 1px rgba(212, 212, 212, 0.18);
+  border: 1px solid rgba(212, 212, 212, 0.18);
+  -moz-border-radius: 7px;
+  -webkit-border-radius: 7px;
+  -o-border-radius: 7px;
+  -ms-border-radius: 7px;
+  -khtml-border-radius: 7px;
+  border-radius: 7px;
+  margin: 5px 0 1em;
+  padding: 3px 15px;
+}
+.region-header .block-commerce-cart .block-content .view-header div, .region-header .block-commerce-cart .block-content .view-header ul {
+  margin: 0;
+}
+.region-header .block-commerce-cart .block-content .view-content,
+.region-header .block-commerce-cart .block-content .cart-empty-block {
+  color: #fff;
+  font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
+  font-size: 1.5em;
+}
+.region-header .block-commerce-cart .block-content .view-content .views-field-quantity,
+.region-header .block-commerce-cart .block-content .cart-empty-block .views-field-quantity {
+  margin-right: 0.5em;
+}
+.region-header .block-commerce-cart .block-content .cart-empty-block {
+  font-size: 1em;
+  min-width: 19.167em;
+}
+
 form.commerce-add-to-cart input.form-submit,
 .add-to-cart #edit-actions input.form-submit,
 input#edit-checkout,
@@ -396,7 +434,6 @@ input#edit-continue {
   background: #a2668a, -ms-linear-gradient(#a2668a, #8c2764);
   background: #a2668a, linear-gradient(#a2668a, #8c2764);
 }
-/* line 337, sass/allertheme.scss */
 form.commerce-add-to-cart input.form-submit:hover,
 .add-to-cart #edit-actions input.form-submit:hover,
 input#edit-checkout:hover,

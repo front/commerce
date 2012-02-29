@@ -1,5 +1,4 @@
 <?php
-// Footheme by Adaptivethemes.com, a starter sub-sub-theme.
 
 /**
  * Override or insert variables into the html templates.
@@ -36,6 +35,16 @@ function allertheme_preprocess_html(&$vars) {
   load_subtheme_ie_styles($ie_files, 'allertheme'); // Replace 'allertheme' with your themes name
   // */
 
+}
+
+/**
+ * Preprocess variables for page.tpl.php
+ */
+function allertheme_preprocess_page(&$vars) {
+  // Hide breacrumb on frontpage
+  if ($vars['is_front']) {
+    $vars['breadcrumb'] = FALSE;
+  }
 }
 
 /**
@@ -86,4 +95,17 @@ function allertheme_commerce_price_savings_formatter_formatter($vars) {
   }
 
   return theme('table', array('rows' => $rows, 'attributes' => array('class' => array('commerce-price-savings-formatter-prices', 'commerce-price-savings-formatter-prices-count-' . $prices_count))));
+}
+
+/**
+ * Implements hook_form_alter().
+ */
+function allertheme_form_alter(&$form, &$form_state, $form_id) {
+  if ($form_id == 'search_block_form') {
+    if (isset($form['search_block_form'])) {
+      $title = $form['search_block_form']['#attributes']['title'];
+      $title = str_replace('.', '', $title);
+      $form['search_block_form']['#attributes']['placeholder'] = $title;
+    }
+  }
 }

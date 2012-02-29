@@ -61,13 +61,26 @@ body.ptf-gwf-bitter {
 
 
 /* Base */
-#site-name a {
-  font-size: 1.5em;
-  color: #fff;
+#branding {
+  margin-top: 10px;
+  margin-bottom: calc-em(25px, 12px);
+
+  #logo {
+    img {
+      display: block;
+    }
+  }
+  hgroup {
+    display: none;
+  }
 }
 
 #header-wrapper {
   border-bottom: none;
+
+  .region-header {
+    margin-top: 1em;
+  }
 }
 
 #menu-bar {
@@ -97,7 +110,7 @@ body.ptf-gwf-bitter {
         line-height: calc-em(31px, 15px);
         text-transform: none;
         padding: 0 24px;
-        @include transition(all 0.35s ease-in-out);
+        @include transition(all 0.3s ease-in-out);
 
         &:focus,
         &:hover,
@@ -318,6 +331,73 @@ body.ptf-gwf-bitter {
     h3 {
       font-size: 1em;
       margin-bottom: 10px;
+    }
+  }
+}
+
+/* Commerce */
+.block-search {
+  .region-header & {
+    float: left;
+
+    form {
+      text-align: left;
+      .form-item {
+        margin: 5px 0;
+      }
+      .form-text {
+        font-size: calc-em(14px, 12px);
+        background: #fff;
+        background-clip: padding-box;
+        @include box-shadow(0 0 3px rgba(107,107,107,0.75));
+        width: calc-em(268px, 14px);
+        height: calc(6px, 14px) + 1em;
+        margin-right: 7px;
+        padding: 6px 10px;
+        border: 2px solid #595959;
+        @include border-radius(5px);
+        -webkit-appearance: textfield;
+      }
+      .form-submit {
+        font-size: calc-em(15px, 12px);
+        text-transform: uppercase;
+        background: #fff;
+        @include box-shadow(0 1px 3px rgba(0,0,0,0.25));
+        padding: 4px 15px;
+        border: none;
+        @include border-radius(12px);
+      }
+    }
+  }
+}
+
+.block-commerce-cart {
+  .region-header & .block-content {
+    text-align: center;
+    background-color: #862560;
+    @include box-shadow(inset 0 1px 4px rgba(0,0,0,0.18), 0 0 1px rgba(212,212,212,0.18));
+    border: 1px solid rgba(212,212,212,0.18);
+    @include border-radius(7px);
+    margin: 5px 0 1em;
+    padding: 3px 15px;
+
+    .view-header {
+      div, ul {
+        margin: 0;
+      }
+    }
+    .view-content,
+    .cart-empty-block {
+      color: #fff;
+      font-family: $font-family-headings;
+      font-size: calc-em(18px, 12px);
+      .views-field-quantity {
+        margin-right: 0.5em;
+      }
+    }
+    .cart-empty-block {
+      font-size: 1em;
+      min-width: calc-em(230px, 12px);
     }
   }
 }
