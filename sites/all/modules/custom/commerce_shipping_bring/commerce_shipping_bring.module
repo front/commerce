@@ -253,10 +253,7 @@ function commerce_shipping_bring_calculate_shipping_callback($form, $form_state)
   foreach($order->shipping_rates as $shipping_name => $rate) {
     unset($form['commerce_shipping']['shipping_service'][$shipping_name]['#value']);
   }
-  
-  dsm($form);
-  dsm($order);
-  
+    
   $messages = theme_status_messages(array('display' => ''));  
   $form['commerce_shipping']['#prefix'] .= $messages;
   
@@ -317,12 +314,6 @@ function commerce_shipping_bring_add_shipping($form, $form_state, $order) {
   
   $rate_line_item = $order->shipping_rates[$shipping_service];     
   $unit_price = $rate_line_item->commerce_unit_price['und'][0];
-
-  /*
-  dsm($shipping_service);
-  dsm($form_state);
-  dsm($order);
-  */
     
   $line_item = commerce_shipping_line_item_new($shipping_service, $unit_price, $order->order_id, $rate_line_item->data, $rate_line_item->type);  
 
@@ -396,6 +387,9 @@ function commerce_shipping_bring_api_request($query_string) {
   $timeout = 20;
   
   $url = 'http://fraktguide.bring.no/fraktguide/products/price.xml?' . $query_string;
+  
+  watchdog('commerce_shipping_bring', $url);
+  
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
