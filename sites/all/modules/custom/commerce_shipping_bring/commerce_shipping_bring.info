@@ -1,0 +1,7 @@
+name = Commerce Shipping Bring
+description = Integrates Bring with Commerce Shipping.
+package = Commerce (shipping)
+dependencies[] = commerce
+dependencies[] = commerce_physical
+dependencies[] = commerce_shipping
+core = 7.x
