@@ -439,25 +439,36 @@ function commerce_shipping_bring_api_request($query_string) {
   curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
     
   $result = curl_exec($ch);
+  $info = curl_getinfo($ch);
+  
   curl_close($ch);
   if (!empty($result)) {
-    try {
-      $response = new SimpleXMLElement($result);
-      $response->asXML();
-    }
-    catch(Exception $e) {
-      $error = $result;
-      
+    
+    if ($info['content_type'] == 'text/html; charset=UTF-8') {            
       return array(
         'status' => 0,
         'message' => $result,
       );
     }
-    
-    return array(
-      'status' => 1,
-      'response' => $response,
-    );
+    else {    
+      try {
+        $response = new SimpleXMLElement($result);
+        $response->asXML();      
+      }
+      catch(Exception $e) {
+        $error = $result;
+        
+        return array(
+          'status' => 0,
+          'message' => $result,
+        );
+      }
+      
+      return array(
+        'status' => 1,
+        'response' => $response,
+      );      
+    }        
   }
   else {
     return array(
