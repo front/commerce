@@ -129,6 +129,10 @@ body.ptf-gwf-bitter {
 
   &.no-secondary {
     padding-top: 1em;
+
+    .page-home & {
+      padding-top: calc-em(24px, 12px);
+    }
   }
 }
 
@@ -203,6 +207,53 @@ body.ptf-gwf-bitter {
   color: #fff;
   border-top: none;
 }
+
+/* Hjem */
+.page-home {
+  #columns {
+    background-color: #e9e9e9;
+    margin: 0 5px;
+  }
+  .region-sidebar-second {
+    margin-top: calc-em(67px, 12px);
+    .block {
+      @include grid-suffix(1);
+    }
+  }
+}
+
+#hjem {
+  margin: 30px;
+
+  .pane-title {
+    font-family: $font-family-headings;
+    margin-left: 5px;
+    margin-bottom: 0.5em;
+    
+  }
+  .pane-content {
+    background: transparent url(../images/bg_pane-shadow.png) no-repeat 0 0;
+    border-top: 1px solid #d7d7d7;
+    padding-top: 26px;
+  }
+}
+
+.pane-product-display-teasers-latest-products {
+  .page-home & {
+    .views-row {
+      @include grid(4);
+
+      $i: 5;
+      @while $i < 30 {
+        &.views-row-#{$i} {
+          clear: both;
+        }
+        $i: $i + 4;
+      }
+    }
+  }
+}
+
 
 /* Produktvisning */
 .page-type-produktvisning {
@@ -335,6 +386,56 @@ body.ptf-gwf-bitter {
   }
 }
 
+.article-type-produktvisning.view-mode-teaser {
+  text-align: center;
+
+  .field-name-field-product-image {
+    vertical-align: top;
+    figure {
+      margin-bottom: 1em;
+      padding: 0;
+    }
+    img {
+      display: block;
+      @include box-shadow(0 0 10px rgba(37,37,37,0.51));
+      @include transition(box-shadow 0.25s ease-in-out);
+    }
+    a:hover img {
+      @include box-shadow(0 0 10px rgba(141,39,101,0.51));
+    }
+  }
+  .field-name-title {
+    font-family: $font-family-serif;
+    line-height: calc-em(17px, 14px);
+    margin-bottom: 2px;
+
+    a {
+      color: #8d2765;
+      &:hover {
+        color: darken(#8d2765, 10%);
+      }
+    }
+  }
+  .field-name-field-product-author {
+    font-family: $font-family-serif;
+    font-style: oblique;
+    font-size: calc-em(14px, 12px);
+
+    a {
+      color: #000;
+      &:hover {
+        color: darken(#8d2765, 10%);
+      }
+    }
+  }
+  .field-name-commerce-price {
+    color: #000;
+    font-family: $font-family-serif;
+    font-size: calc-em(16px, 12px);
+    margin-top: calc-em(9px, 16px);
+  }
+}
+
 /* Commerce */
 .block-search {
   .region-header & {
@@ -402,17 +503,76 @@ body.ptf-gwf-bitter {
   }
 }
 
+.block-menu {
+  .sidebar & .block-inner {
+    background-color: #3d3d3d;
+    margin: 0;
+    padding: 15px 20px;
+    @include border-radius(10px);
+
+    .menu {
+      font-family: $font-family-headings;
+      font-size: calc-em(15px, 12px);
+      line-height: calc-em(32px, 15px);
+      margin: 0;
+
+      li {
+        margin: 0 0 -1px;
+        padding: 0;
+        list-style: none;
+        list-style-image: none;
+      }
+      a {
+        color: #fff;
+        background: transparent url(../images/icon_sidebar-dropdown.png) no-repeat right center;
+        display: block;
+        padding-left: 1px;
+        border-top: 1px solid #868686;
+        border-bottom: 1px solid #868686;
+      }
+      .first a {
+        border-top: none;
+      }
+      .last a {
+        border-bottom: none;
+      }
+
+      ul {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: calc-em(12px, 15px);
+        margin-bottom: 0.5em;
+
+        li {
+          font-size: 1em;
+          font-style: normal;
+          margin-left: 10px;
+
+          &.dhtml-menu-cloned-leaf {
+            font-size: calc-em(13px, 12px);
+            margin-left: 0;
+          }
+        }
+        a {
+          background: none;
+          border: none;
+        }
+      }
+    }
+  }
+}
+
 form.commerce-add-to-cart input.form-submit,
 .add-to-cart #edit-actions input.form-submit,
 input#edit-checkout,
 input#edit-continue {
   font-size: 1em;
   text-shadow: 0 1px 0 rgba(0,0,0,0.75);
-  @include box-shadow(0 1px 7px rgba(0,0,0,0.5));
-  border: 2px solid #fff;
-  @include border-radius(5px 5px, 6px 6px);
   background-clip: padding-box;
   @include background-with-css2-fallback(#A2668A, linear-gradient(#A2668A, #8C2764));
+  @include box-shadow(0 1px 7px rgba(0,0,0,0.5));
+  border: 2px solid #fff;
+  @include border-radius(6px);
+  padding: 3px 5px 4px;
 
   &:hover {
     text-shadow: 0 -1px 0 rgba(0,0,0,0.5);

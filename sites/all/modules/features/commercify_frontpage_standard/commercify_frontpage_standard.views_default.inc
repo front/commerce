@@ -35,8 +35,7 @@ function commercify_frontpage_standard_views_default_views() {
   $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Synkende';
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['style_plugin'] = 'grid';
-  $handler->display->display_options['style_options']['fill_single_line'] = 1;
+  $handler->display->display_options['style_plugin'] = 'default';
   $handler->display->display_options['row_plugin'] = 'node';
   $handler->display->display_options['row_options']['links'] = 0;
   $handler->display->display_options['row_options']['comments'] = 0;
@@ -78,7 +77,7 @@ function commercify_frontpage_standard_views_default_views() {
   );
 
   /* Display: 4x3 latest products */
-  $handler = $view->new_display('panel_pane', '4x3 latest products', 'panel_pane_1');
+  $handler = $view->new_display('panel_pane', '4x3 latest products', 'latest_products');
   $handler->display->display_options['defaults']['pager'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '9';

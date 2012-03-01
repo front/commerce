@@ -32,21 +32,22 @@ function commercify_frontpage_standard_default_page_manager_pages() {
   $handler->handler = 'panel_context';
   $handler->weight = 0;
   $handler->conf = array(
-    'title' => 'Panel',
+    'title' => 'Default',
     'no_blocks' => 0,
     'pipeline' => 'standard',
-    'css_id' => '',
+    'css_id' => 'hjem',
     'css' => '',
     'contexts' => array(),
     'relationships' => array(),
   );
   $display = new panels_display;
-  $display->layout = 'flexible';
+  $display->layout = 'onecol';
   $display->layout_settings = array();
   $display->panel_settings = array(
     'style_settings' => array(
       'default' => NULL,
       'center' => NULL,
+      'middle' => NULL,
     ),
   );
   $display->cache = array();
@@ -55,13 +56,12 @@ function commercify_frontpage_standard_default_page_manager_pages() {
   $display->panels = array();
     $pane = new stdClass;
     $pane->pid = 'new-1';
-    $pane->panel = 'center';
+    $pane->panel = 'middle';
     $pane->type = 'views_panes';
-    $pane->subtype = 'product_display_teasers-panel_pane_1';
+    $pane->subtype = 'product_display_teasers-latest_products';
     $pane->shown = TRUE;
     $pane->access = array();
     $pane->configuration = array(
-      'items_per_page' => '10',
       'override_title' => 1,
       'override_title_text' => 'Anbefalte produkter',
     );
@@ -74,7 +74,7 @@ function commercify_frontpage_standard_default_page_manager_pages() {
     $pane->position = 0;
     $pane->locks = array();
     $display->content['new-1'] = $pane;
-    $display->panels['center'][0] = 'new-1';
+    $display->panels['middle'][0] = 'new-1';
   $display->hide_title = PANELS_TITLE_NONE;
   $display->title_pane = '0';
   $handler->conf['display'] = $display;
