@@ -117,11 +117,6 @@ function commerce_shipping_bring_service_rate_order($shipping_service, $order) {
 
   $order = commerce_order_load($order->order_id);
   
-  // Delete the shipping when we are on ajax.
-  if (arg(1) == 'ajax') {
-    commerce_shipping_delete_shipping_line_items($order, TRUE);
-  }  
-  
   // Get the zipcode from post and udate the order shipping profile.
   if (isset($_POST['customer_profile_shipping']['commerce_customer_address']['und'][0]['postal_code']) && $_POST['customer_profile_shipping']['commerce_customer_address']['und'][0]['postal_code']) {
     $to = $_POST['customer_profile_shipping']['commerce_customer_address']['und'][0]['postal_code'];   
@@ -172,7 +167,7 @@ function commerce_shipping_bring_service_rate_order($shipping_service, $order) {
 /**
  * Implementation of hook_form_alter().
  */
-function commerce_shipping_bring_form_alter(&$form, $form_state, $form_id) {
+function commerce_shipping_bring_form_alter(&$form, &$form_state, $form_id) {
   // Check if shipping is on /checkout form
   if ($form_id == 'commerce_checkout_form_checkout' && !empty($form['commerce_shipping'])) {
     // Add wrappers for cart_contents
@@ -209,6 +204,18 @@ function commerce_shipping_bring_form_alter(&$form, $form_state, $form_id) {
     
     $form['commerce_shipping']['#prefix'] = '<div id="commerce-shipping-bring-shipping">';
     $form['commerce_shipping']['#suffix'] = '</div>';
+    
+    if (isset($form_state['order']->commerce_customer_shipping['und'][0]['profile_id'])) {
+      $shipping_profile = commerce_customer_profile_load($form_state['order']->commerce_customer_shipping['und'][0]['profile_id']);
+      $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['#address']['postal_code'] = $shipping_profile->commerce_customer_address['und'][0]['postal_code'];  
+    }
+    
+    if (isset($form_state['order']->order_id)) {
+      $order = commerce_order_load($form_state['order']->order_id);
+      $form_state['order'] = $order;
+    }
+    
+    $form['#validate'][] = 'commerce_shipping_bring_validate_f';    
   } 
   
   if ($form_id == 'commerce_checkout_form_shipping') {
@@ -236,6 +243,14 @@ function commerce_shipping_bring_form_alter(&$form, $form_state, $form_id) {
   }
 }
 
+function commerce_shipping_bring_validate_f(&$form, &$form_state) {
+  if (arg(1)=='ajax' && isset($form_state['order']->order_id)) {
+    // rebuild the order when we get it from cache.
+    $order = commerce_order_load($form_state['order']->order_id);
+    $form_state['order'] = $order;
+  }
+}
+
 function commerce_shipping_bring_calculate_shipping_callback($form, $form_state) {
   // Ajax commands.
   $commands = array();  
@@ -243,7 +258,15 @@ function commerce_shipping_bring_calculate_shipping_callback($form, $form_state)
   // Re calculate the shipping services.
   $order = $form_state['order'];
   $order = commerce_order_load($order->order_id);
-    
+
+    // Delete the shipping when we are on ajax.
+  if (arg(1) == 'ajax') {
+    commerce_shipping_delete_shipping_line_items($order, FALSE);
+    commerce_order_save($order);
+  } 
+  
+  $form_state['order'] = $order;
+  
   // Rebuild the form with new shipping_profile.
   $form_id = $form['form_id']['#value'];  
   $form = drupal_rebuild_form($form_id, $form_state);  
@@ -269,16 +292,35 @@ function commerce_shipping_bring_calculate_shipping_callback($form, $form_state)
 function commerce_shipping_bring_pane_service_details_refresh_callback($form, $form_state) {  
   $order = $form_state['order'];
   $order = commerce_order_load($order->order_id);
-  
+    
   // Ajax commands.
   $commands = array();
-    
+
+  $form_state['order'] = $order;
+  
+  // Rebuild the form with new shipping_profile.
+  $form_id = $form['form_id']['#value'];  
+  $form = drupal_rebuild_form($form_id, $form_state);   
+  
+  // dsm($form);
+  
+  $messages = theme_status_messages(array('display' => '')); 
+  
   // Default command used by commerce_shipping.
-  $commands[] = ajax_command_replace("#commerce-shipping-service-details", render($form['commerce_shipping']['service_details']));
+  $commands[] = ajax_command_replace("#commerce-shipping-service-details", $messages . render($form['commerce_shipping']['service_details']));
     
   // Add the shipping line item.
   commerce_shipping_bring_add_shipping($form, $form_state, $order);
   $order = commerce_order_load($order->order_id);
+  
+  $form_build_id = $form['#build_id'];
+  $fstate = cache_get('form_state_' . $form_build_id, 'cache_form');
+  $fstate->data['order'] = $order;
+
+  // Add it to cache.
+  // cache_set('form_state_' . $form_build_id, $fstate->data, 'cache_form');
+  
+  cache_clear_all('form_state_' . $form_build_id, 'cache_form');
   
   // Get the cart contents.
   $pane_cart_contents = commerce_shipping_bring_get_cart_contents($order);
@@ -306,7 +348,8 @@ function commerce_shipping_bring_get_cart_contents($order) {
 
 function commerce_shipping_bring_add_shipping($form, $form_state, $order) {  
   // Delete the existing shipping.  
-  commerce_shipping_delete_shipping_line_items($order, TRUE);
+  commerce_shipping_delete_shipping_line_items($order, FALSE);
+  commerce_order_save($order);  
   
   // Add the shipping to order.   
   $shipping_service = $form_state['values']['commerce_shipping']['shipping_service'];
