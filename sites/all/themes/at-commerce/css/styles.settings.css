@@ -57,10 +57,6 @@ body.page-taxonomy.tpcc-8 #block-system-main article.article {
 }
 
 /* Draw */
-#draw {
-  display: none;
-  width: 100%;
-}
 .hl-l #toggle {
   float: right;
   margin-right: 20px;
@@ -282,7 +278,8 @@ body.bf-sss,
 .ptf-sss #page-title,
 .ntf-sss .article-title,
 .ctf-sss .comment-title,
-.btf-sss .block-title {
+.btf-sss .block-title,
+.mmf-sss #nav-wrapper {
   font-family: "Trebuchet MS", "Helvetica Neue", Arial, Helvetica, sans-serif;
 }
 /* sans-serif large */
@@ -293,7 +290,8 @@ body.bf-ssl,
 .ptf-ssl #page-title,
 .ntf-ssl .article-title,
 .ctf-ssl .comment-title,
-.btf-ssl .block-title {
+.btf-ssl .block-title,
+.mmf-ssl #nav-wrapper {
   font-family: Verdana, Geneva, Arial, Helvetica, sans-serif;
 }
 /* sans-serif arial/helvitica */
@@ -304,7 +302,8 @@ body.bf-a,
 .ptf-a #page-title,
 .ntf-a .article-title,
 .ctf-a .comment-title,
-.btf-a .block-title {
+.btf-a .block-title,
+.mmf-a #nav-wrapper {
   font-family: Arial, Helvetica, sans-serif;
 }
 /* calibri and candara windows fonts */
@@ -315,7 +314,8 @@ body.bf-cc,
 .ptf-cc #page-title,
 .ntf-cc .article-title,
 .ctf-cc .comment-title,
-.btf-cc .block-title {
+.btf-cc .block-title,
+.mmf-cc #nav-wrapper {
   font-family: Calibri, Candara, Arial, Helvetica, sans-serif;
 }
 /* serif small */
@@ -326,7 +326,8 @@ body.bf-ss,
 .ptf-ss #page-title,
 .ntf-ss .article-title,
 .ctf-ss .comment-title,
-.btf-ss .block-title {
+.btf-ss .block-title,
+.mmf-ss #nav-wrapper {
   font-family: Garamond, Perpetua, "Times New Roman", serif;
 }
 /* serif large */
@@ -337,7 +338,8 @@ body.bf-sl,
 .ptf-sl #page-title,
 .ntf-sl .article-title,
 .ctf-sl .comment-title,
-.btf-sl .block-title {
+.btf-sl .block-title,
+.mmf-sl #nav-wrapper {
   font-family: Georgia, Baskerville, Palatino, "Palatino Linotype", "Book Antiqua", "Times New Roman", serif;
 }
 /* Modern/Myriad */
@@ -348,7 +350,8 @@ body.bf-m,
 .ptf-m #page-title,
 .ntf-m .article-title,
 .ctf-m .comment-title,
-.btf-m .block-title {
+.btf-m .block-title,
+.mmf-m #nav-wrapper {
   font-family: "Segoe UI", "Myriad Pro", Myriad, Arial, Helvetica, sans-serif;
 }
 /* Lucida */
@@ -359,7 +362,8 @@ body.bf-l,
 .ptf-l #page-title,
 .ntf-l .article-title,
 .ctf-l .comment-title,
-.btf-l .block-title {
+.btf-l .block-title,
+.mmf-l #nav-wrapper {
   font-family: "Lucida Sans Unicode", "Lucida Sans", "Lucida Grande", Verdana, Geneva, sans-serif;
 }
 /* mono */
@@ -370,7 +374,8 @@ body.bf-ms,
 .ptf-ms #page-title,
 .ntf-ms .article-title,
 .ctf-ms .comment-title,
-.btf-ms .block-title {
+.btf-ms .block-title,
+.mmf-ms #nav-wrapper {
   font-family: Consolas, Monaco, "Courier New", Courier, monospace, serif;
 }
 
