@@ -4,7 +4,7 @@
   <?php if ($show_messages && $messages): ?>
     <div id='console' class='clear-block'><?php print $messages; ?></div>
   <?php endif; ?>
-  <div id='content'>
+  <div id='content' class="block-region">
     <?php if (!empty($page['content'])): ?>
       <div class='content-wrapper clear-block'><?php print render($page['content']); ?></div>
     <?php endif; ?>
@@ -12,7 +12,7 @@
   <div id='left' class='clear-block'>
     <?php print render($page['left']) ?>
   </div>
-  <div id='right' class='clear-block'>
+  <div id='right' class='block-region clear-block'>
     <?php print render($page['right']) ?>
   </div>
 </div>

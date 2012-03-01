@@ -123,6 +123,11 @@ a {
   font-size:11px;
 }
 
+#page-title ul.action-links li {
+  float:left;
+  margin:0 2px;
+}
+
 .action-links a {
     background-color: #77BBCC;
     text-shadow: 0 1px 0 #3388AA;
@@ -133,7 +138,7 @@ a {
  * Page elements ======================================================
  */
 div.pager,
-#header,
+#page-top,
 #footer,
 #page,
 #tabs .page-tabs {
@@ -145,7 +150,7 @@ div.pager,
   margin:10px auto;
   }
 
-#header {
+#page-top {
   width:950px;
   padding:5px;
   }
@@ -463,4 +468,28 @@ ul.primary, ul.secondary, .clear-block {
 ul.primary li, ul.primary li a,
 ul.secondary li, ul.secondary li a {
     float: left;
+}
+
+.page-admin-structure-block-demo .region {
+    background: none repeat scroll 0 0 #FFFF66;
+    border: 1px dotted #9F9E00;
+    color: #000000;
+    font: 90% "Lucida Grande","Lucida Sans Unicode",sans-serif;
+    margin: 5px;
+    padding: 5px;
+    text-align: center;
+    text-shadow: none;
+}
+
+a.block-demo-backlink, a.block-demo-backlink:link, a.block-demo-backlink:visited {
+    background-color: #CCCCCC;
+    border-radius: 0 0 10px 10px;
+    color: #000000;
+    font-family: "Lucida Grande",Verdana,sans-serif;
+    font-size: small;
+    left: 20px;
+    line-height: 20px;
+    padding: 5px 10px;
+    position: fixed;
+    z-index: 499;
 }
