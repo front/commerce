@@ -117,29 +117,6 @@ function commerce_shipping_bring_service_rate_order($shipping_service, $order) {
 
   $order = commerce_order_load($order->order_id);
   
-  // Get the zipcode from post and udate the order shipping profile.
-  if (isset($_POST['customer_profile_shipping']['commerce_customer_address']['und'][0]['postal_code']) && $_POST['customer_profile_shipping']['commerce_customer_address']['und'][0]['postal_code']) {
-    $to = $_POST['customer_profile_shipping']['commerce_customer_address']['und'][0]['postal_code'];   
-    
-    if (!isset($order->commerce_customer_shipping['und'])) {
-      // Create the customer_shipping_profile now.
-      $shipping_profile = commerce_customer_profile_new('shipping', $user->uid);
-      $shipping_profile->commerce_customer_address['und'][0]['postal_code'] = $to;
-      commerce_customer_profile_save($shipping_profile);
-      
-      $order->commerce_customer_shipping['und'][0]['profile_id'] = $shipping_profile->profile_id;
-      
-      commerce_order_save($order);    
-    }
-    else {
-      // Update profile.
-      $shipping_profile = commerce_customer_profile_load($order->commerce_customer_shipping['und'][0]['profile_id']);
-      $shipping_profile->commerce_customer_address['und'][0]['postal_code'] = $to;
-      commerce_customer_profile_save($shipping_profile);    
-    }  
-    
-  }
-  
   if (!$rates) {    
     $query_string = commerce_shipping_bring_build_query_string($order);
     if ($query_string) {
@@ -259,6 +236,28 @@ function commerce_shipping_bring_calculate_shipping_callback($form, $form_state)
   $order = $form_state['order'];
   $order = commerce_order_load($order->order_id);
 
+  // Get the zipcode from post and udate the order shipping profile.
+  if (isset($_POST['customer_profile_shipping']['commerce_customer_address']['und'][0]['postal_code']) && $_POST['customer_profile_shipping']['commerce_customer_address']['und'][0]['postal_code']) {
+    $to = $_POST['customer_profile_shipping']['commerce_customer_address']['und'][0]['postal_code'];   
+    
+    if (!isset($order->commerce_customer_shipping['und'])) {
+      // Create the customer_shipping_profile now.
+      $shipping_profile = commerce_customer_profile_new('shipping', $user->uid);
+      $shipping_profile->commerce_customer_address['und'][0]['postal_code'] = $to;
+      commerce_customer_profile_save($shipping_profile);
+      
+      $order->commerce_customer_shipping['und'][0]['profile_id'] = $shipping_profile->profile_id;
+      
+      commerce_order_save($order);    
+    }
+    else {
+      // Update profile.
+      $shipping_profile = commerce_customer_profile_load($order->commerce_customer_shipping['und'][0]['profile_id']);
+      $shipping_profile->commerce_customer_address['und'][0]['postal_code'] = $to;
+      commerce_customer_profile_save($shipping_profile);    
+    }    
+  }  
+  
     // Delete the shipping when we are on ajax.
   if (arg(1) == 'ajax') {
     commerce_shipping_delete_shipping_line_items($order, FALSE);
