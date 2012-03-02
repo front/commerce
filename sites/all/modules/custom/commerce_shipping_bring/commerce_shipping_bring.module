@@ -111,11 +111,28 @@ function commerce_shipping_bring_enabled_services() {
  */
 function commerce_shipping_bring_service_rate_order($shipping_service, $order) {    
   global $user;
+  
+  if ($_POST['_triggering_element_name'] == 'commerce_shipping[shipping_service]') {
+    // Get the rates from cache (1 minute).
+    $rates = commerce_shipping_bring_get_rates($order, 60);
+  }
+  else {
+    // Recover cached shipping rates for the current order.  
+    $rates = commerce_shipping_bring_get_rates($order, 15);
+  }
     
-  // Recover cached shipping rates for the current order.  
-  $rates = commerce_shipping_rates_cache_get('commerce_shipping_bring', $order, 0);
+  // Return the rate for the requested service or FALSE if not found.
+  return isset($rates[$shipping_service['name']]) ? $rates[$shipping_service['name']] : FALSE;
+}
 
-  $order = commerce_order_load($order->order_id);
+/**
+ * Get rates for given order.
+ */
+function commerce_shipping_bring_get_rates($order, $timeout = 0) {
+  // Recover cached shipping rates for the current order.  
+  $rates = commerce_shipping_rates_cache_get('commerce_shipping_bring', $order, $timeout);
+
+  $order = commerce_order_load($order->order_id);    
   
   if (!$rates) {    
     $query_string = commerce_shipping_bring_build_query_string($order);
@@ -136,9 +153,8 @@ function commerce_shipping_bring_service_rate_order($shipping_service, $order) {
     // Cache these rates.
     commerce_shipping_rates_cache_set('commerce_shipping_bring', $order, $rates);    
   }
-    
-  // Return the rate for the requested service or FALSE if not found.
-  return isset($rates[$shipping_service['name']]) ? $rates[$shipping_service['name']] : FALSE;
+
+  return $rates;
 }
 
 /**
@@ -151,21 +167,7 @@ function commerce_shipping_bring_form_alter(&$form, &$form_state, $form_id) {
     $form['cart_contents']['#prefix'] = '<div id="commerce-shipping-bring-cart-contents">';
     $form['cart_contents']['#suffix'] = '</div>';
 
-    // Ajax callback.
-    /*
-    if (!isset($form['commerce_shipping']['shipping_service']['#options'])) {
-      $form['commerce_shipping']['shipping_rates']['#value'] = commerce_shipping_bring_available_services();
-      
-      $form['commerce_shipping']['shipping_service'] = array(
-        '#type' => 'radios',
-        '#options' => commerce_shipping_bring_available_services(),
-        '#default_value' => '',
-        '#prefix' => '<div style="display:none">',
-        '#suffix' => '</div>',        
-      );      
-    }
-    */
-    
+    // Ajax callback.    
     // Alter the behavior for #ajax.
     $form['commerce_shipping']['shipping_service']['#ajax']['callback'] = 'commerce_shipping_bring_pane_service_details_refresh_callback';
     $form['commerce_shipping']['shipping_service']['#ajax']['effect'] = 'fade';
@@ -191,14 +193,6 @@ function commerce_shipping_bring_form_alter(&$form, &$form_state, $form_id) {
     $form['commerce_shipping']['#prefix'] = '<div id="commerce-shipping-bring-shipping">';
     $form['commerce_shipping']['#suffix'] = '</div>';
     
-    // Display the postalcode.
-    /*
-    if (isset($form_state['order']->commerce_customer_shipping['und'][0]['profile_id'])) {
-      $shipping_profile = commerce_customer_profile_load($form_state['order']->commerce_customer_shipping['und'][0]['profile_id']);
-      $form['customer_profile_shipping']['commerce_customer_address']['und'][0]['#address']['postal_code'] = $shipping_profile->commerce_customer_address['und'][0]['postal_code'];  
-    }
-    */
-    
     // Set the latest order in form state.
     if (isset($form_state['order']->order_id)) {
       $order = commerce_order_load($form_state['order']->order_id);
@@ -208,6 +202,8 @@ function commerce_shipping_bring_form_alter(&$form, &$form_state, $form_id) {
     // Hook a validate function.
     $form['#validate'][] = 'commerce_shipping_bring_validate_form';
     $form['buttons']['continue']['#validate'] = array_merge(array('commerce_shipping_bring_validate_form'), $form['buttons']['continue']['#validate']);
+
+    $form['#after_build'][] = 'commerce_shipping_bring_after_build';     
   } 
   
   if ($form_id == 'commerce_checkout_form_shipping') {
@@ -233,6 +229,24 @@ function commerce_shipping_bring_form_alter(&$form, &$form_state, $form_id) {
     // Ajax callback. 
     $form['commerce_shipping']['shipping_service']['#ajax']['callback'] = 'commerce_shipping_bring_pane_service_details_refresh_callback';
   }
+}
+
+function commerce_shipping_bring_after_build($form, &$form_state) {
+  // Add extra info to each shipping service.
+  $rates = commerce_shipping_bring_get_rates($form_state['order'], 60);
+  
+  $options = $form['commerce_shipping']['shipping_service']['#options'];
+  
+  if (count($options) && count($rates)) {
+    foreach($options as $service => $title) {
+      $days = $rates[$service]['data']['days'];
+      $description = '<b>' . $rates[$service]['data']['description'] . ' [' . $days . ' ' . t('days') .'] </b>';
+      $help = $rates[$service]['data']['help'];
+      $form['commerce_shipping']['shipping_service'][$service]['#description'] = $description . "<br/>" . $help;        
+    }
+  }     
+    
+  return $form;
 }
 
 function commerce_shipping_bring_validate_form(&$form, &$form_state) {
@@ -324,7 +338,7 @@ function commerce_shipping_bring_pane_service_details_refresh_callback(&$form, &
   // Add the shipping line item.
   commerce_shipping_bring_add_shipping($form, $form_state, $order);
   $order = commerce_order_load($order->order_id);  
-  
+    
   // Ajax commands.
   $commands = array();
 
@@ -344,7 +358,7 @@ function commerce_shipping_bring_pane_service_details_refresh_callback(&$form, &
   $form['#build_id'] = $form_build_id;
   form_set_cache($form_build_id, $form, $form_state);  
   
-  $messages = theme_status_messages(array('display' => '')); 
+  // $messages = theme_status_messages(array('display' => '')); 
   
   // Default command used by commerce_shipping.
   $commands[] = ajax_command_replace("#commerce-shipping-service-details", render($form['commerce_shipping']['service_details']));
@@ -378,8 +392,7 @@ function commerce_shipping_bring_add_shipping($form, $form_state, $order) {
   commerce_shipping_delete_shipping_line_items($order, FALSE);
   commerce_order_save($order);  
   
-  // Add the shipping to order.   
-  //$shipping_service = $form_state['values']['commerce_shipping']['shipping_service'];
+  // Add the shipping to order. We need to get it from "input" because the "value" is cached.
   $shipping_service = $form_state['input']['commerce_shipping']['shipping_service'];
   commerce_shipping_collect_rates($order);
   
@@ -395,7 +408,7 @@ function commerce_shipping_bring_add_shipping($form, $form_state, $order) {
   if ($callback = commerce_shipping_service_callback($shipping_service, 'details_form_submit')) {
     $callback($pane_form['service_details'], $pane_values['service_details'], $line_item);
   } 
-    
+
   // Save and add the line item to the order.
   commerce_shipping_add_shipping_line_item($line_item, $order, FALSE);
 }
@@ -470,9 +483,13 @@ function commerce_shipping_bring_api_request($query_string) {
   // Post the XML to the XML Processor.
   $timeout = 20;
   
-  $url = 'http://fraktguide.bring.no/fraktguide/products/price.xml?' . $query_string;
+  //$url = 'http://fraktguide.bring.no/fraktguide/products/price.xml?' . $query_string;
+  $url = 'http://fraktguide.bring.no/fraktguide/products/all.xml?' . $query_string;
   
   watchdog('commerce_shipping_bring', $url);
+  
+  $arg = arg();
+  watchdog('commerce_shipping_bring', implode("/", $arg));
   
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $url);
@@ -535,10 +552,19 @@ function commerce_shipping_bring_parse_rate_response($response) {
     $currency_code = $price['@attributes']['currencyIdentificationCode'];            
     $amount = $price['PackagePriceWithoutAdditionalServices']->AmountWithoutVAT * 100;
 
+    // Get Extra info.
+    $expected_delivery = (array) $product->ExpectedDelivery;    
+    $gui_information = (array) $product->GuiInformation;
+    
     $rates[$service_id] = array(
       'amount' => $amount,
       'currency_code' => $currency_code,
-      'data' => array(),
+      'data' => array(
+        'days' => $expected_delivery['WorkingDays'],
+        'name' => $gui_information['DisplayName'],
+        'description' => $gui_information['DescriptionText'],
+        'help' => $gui_information['HelpText'],
+      ),
     );
   }
   
