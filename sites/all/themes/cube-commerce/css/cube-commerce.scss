@@ -1,0 +1,336 @@
+@import "compass/css3";
+@import "compass/utilities/general/clearfix";
+
+$font-family-lucida: "Lucida","Lucida Grande","Trebuchet MS",Tahoma,Verdana,sans-serif;
+
+/* Helpers */
+@function calc-em($target-px, $context) {
+  @return ($target-px / $context) * 1em;
+}
+
+@mixin element-invisible {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+/* Forms elements */
+input.form-text,
+textarea {
+  @include box-shadow(inset 0 1px 4px rgba(0,0,0,0.075));
+  @include border-radius(2px);
+
+  &:hover,
+  &:focus {
+    @include box-shadow(0 0 5px #ace);
+  }
+}
+
+input.form-submit {
+  @include border-radius(2px);
+}
+
+select {
+  @include box-shadow(inset 0 1px 4px rgba(0,0,0,0.075));
+  @include border-radius(2px);
+}
+
+/* Commerce elements */
+.views-field-operations,
+.views-field-edit-customer-profile {
+  a {
+    color: #38A;
+    font-family: $font-family-lucida;
+    font-size: calc-em(11px, 13px);
+    background: lighten(#7BC, 25%);
+    display: inline-block;
+    margin: 0 1px 0 0;
+    padding: 2px 6px;
+    @include border-radius(4px);
+    @include transition(all 0.25s ease-in-out);
+
+    &:hover {
+      color: #fff;
+      background: #7BC;
+    }
+  }
+}
+
+.view .more-link {
+  clear: both;
+  margin-top: 3px;
+
+  a {
+    color: #fff;
+    font-size: calc-em(12px, 13px);
+    line-height: 1em;
+    vertical-align: middle;
+    background-color: #7BC;
+    display: inline-block;
+    padding: 4px 7px;
+    text-shadow: 0 1px 0 #3388AA;
+    @include border-radius(4px);
+    &:hover {
+      background-color: darken(#7BC, 7.5%);
+    }
+  }
+}
+
+.page-admin-commerce-overview-coupons,
+.page-admin-commerce-overview-users,
+.page-admin-commerce-overview-orders,
+.page-admin-commerce-overview-products,
+.page-admin-commerce-overview-ip-map,
+.page-admin-commerce-customer-profiles,
+.page-admin-commerce-products {
+  .view-filters form {
+    background: #fff;
+    margin-bottom: 1em;
+    border: 1px solid #ddd;
+
+    .views-exposed-widgets {
+      margin: 0;
+    }
+    .views-exposed-widget {
+      margin: 0 1em 0 0;
+      padding: 9px;
+    }
+    .form-item {
+      margin: 0;
+      padding: 0;
+      border: none;
+    }
+    label {
+      color: #666;
+      font-size: 10px;
+      font-weight: bold;
+      margin: 0;
+      padding: 0;
+      text-transform: uppercase;
+    }
+    .form-submit {
+      margin-top: calc-em(22px, 13px);
+    }
+  }
+}
+
+#edit-actions {
+  a {
+    display: inline-block;
+    margin-left: 0.5em;
+  }
+}
+
+/* Commerce Orders */
+.page-admin-commerce {
+  .view-commerce-orders {
+    #commerce-order-ui-redirect-form {
+      @include clearfix;
+      margin-bottom: 1em;
+      background: #fff;
+      border: 1px solid #ddd;
+
+      .form-item {
+        margin-right: 1em;
+        border: none;
+      }
+      .form-submit {
+        margin-top: calc-em(29px, 13px);
+      }
+    }
+    .view-content {
+      clear: both;
+    }
+  }
+}
+
+.page-admin-commerce-orders {
+  .field-name-commerce-customer-shipping,
+  .field-name-commerce-customer-billing,
+  .field-name-field-order-customer-comment {
+    margin-bottom: 1em;
+
+    .label-above {
+      color: #333;
+      font-size: calc-em(11px, 13px);
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+  .add-payment,
+  .add-line-item {
+    .form-item {
+      margin: 0 10px 10px 0;
+      padding: 0;
+      border: none;
+    }
+    .form-submit {
+      margin-top: 1px;
+    }
+  }
+}
+
+.page-admin-commerce-overview-orders {
+  .view-filters form {
+    .views-widget-filter-created {
+      .views-widget {
+        margin-top: -1px;
+      }
+      .container-inline-date {
+        float: left;
+        .date-padding label {
+          @include element-invisible;
+        }
+        label
+        .description {
+          margin: 0 0 -5px;
+        }
+      }
+    }
+    .form-submit {
+      margin-top: calc-em(21px, 13px);
+    }
+  }
+  .commerce-reports-accordion {
+    background: #fff;
+    background-clip: padding-box;
+    margin-bottom: 0.5em;
+    border: 1px solid #ddd;
+    border-top-color: #ccc;
+    @include border-radius(2px);
+
+    header h2 {
+      color: #666;
+      font-size: 1em;
+      font-weight: normal;
+      background-color: #eee;
+      padding-left: 10px;
+
+      a {
+        color: #fff;
+        font-weight: bold;
+        line-height: 1.115em;
+        text-align: center;
+        background: #bbb;
+        display: inline-block;
+        width: 1.25em;
+        height: 1.25em;
+        margin-top: 0.25em;
+        right: 10px;
+        @include border-radius(3px);
+      }
+    }
+    header.active {
+      margin-bottom: 0;
+    }
+    div {
+      text-align: center;
+    }
+    iframe {
+      margin: 50px auto 0;
+    }
+  }
+}
+
+/* Commerce Coupons */
+.view-c-dashboard-product-charts {
+  .view-filters form {
+    margin-bottom: 1.5em;
+
+    .views-exposed-widget {
+      padding-right: 0;
+    }
+    .form-item {
+      background: none;
+      padding: 0;
+      border: none;
+    }
+    .container-inline-date {
+      label {
+        @include element-invisible;
+      }
+      .description {
+        margin: 0 0 -5px;
+      }
+    }
+    .form-submit {
+      margin-top: calc-em(29px, 13px);
+    }
+  }
+}
+
+/* Commerce Products */
+.page-admin-commerce-products {
+  form {
+    ul.action-links {
+      margin: 1em 0;
+    }
+  }
+}
+
+.page-admin-commerce-overview-exports {
+  .views-exposed-form {
+    background-color: #fff;
+    padding: 9px;
+    border: 1px solid #ddd;
+    .form-item {
+      margin: 0 1em 0 0;
+      padding: 0;
+      border: none;
+    }
+    .views-exposed-widget {
+      padding: 0;
+    }
+    label {
+      color: #666;
+      font-size: 10px;
+      font-weight: bold;
+      margin: 0;
+      padding: 0;
+      text-transform: uppercase;
+    }
+    .form-item-created-max-date label {
+      @include element-invisible;
+    }
+  }
+}
+
+/* Node add/edit */
+.wysiwyg-toggle-wrapper a {
+  font-size: calc-em(11px, 13px);
+  padding-left: 1px;
+}
+.filter-wrapper {
+  div.fieldset-content {
+    padding-bottom: 6px;
+  }
+  select {
+    padding: 2px;
+  }
+}
+
+.node-form {
+  .field-name-field-display-product,
+  .field-name-field-display-products,
+  .field-name-field-product-category-main {
+    select {
+      width: 100%;
+      max-width: auto;
+    }
+  }
+  .field-name-field-product-description {
+    margin-bottom: 1em;
+    .description {
+      margin-top: -0.5em;
+      padding-left: 5px;
+    }
+  }
+  .field-group-div {
+    &>h3 {
+      color: #333;
+      text-transform: uppercase;
+      margin-left: 1px;
+      margin-bottom: 0.5em;
+    }
+  }
+}

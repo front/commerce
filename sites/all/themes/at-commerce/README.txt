@@ -12,9 +12,9 @@
    you can choose whatever you want, just make a note of it because we need that
    width later on in step 8.
 
-3. Add a content type called "Slideshow". You can leave the body field or
-   remove it if you want. If you leave it you should set it to "hidden"
-   in the field display settings.
+3. Add a content type called "Slideshow" (the machine name must be "slideshow").
+   You can leave the body field or remove it if you want. If you leave it you
+   should set it to "hidden" in the field display settings.
 
    Set up the content type with these setting:
    - Publishing option: Published
@@ -69,11 +69,11 @@
 
 ## Theming the Slideshow
 
-  AT Commerce comes with a CSS file called styles.slideshow.css - in here are most of the styles for 
-  the default styling. There is a small amount in at_commerce.responsive.style.css to re-position 
+  AT Commerce comes with a CSS file called styles.slideshow.css - in here are most of the styles for
+  the default styling. There is a small amount in at_commerce.responsive.style.css to re-position
   the directional navigation arrows when in small screens.
 
-  You can modify these CSS files directly, or subtheme AT Commerce using Footheme: 
+  You can modify these CSS files directly, or subtheme AT Commerce using Footheme:
   http://drupal.org/project/footheme
 
 

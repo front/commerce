@@ -1,0 +1,15 @@
+name        = Cube Commerce
+description = Commerce admin theme based on Cube/Rubik.
+base theme  = cube
+core        = 7.x
+version     = 7.x-1.0
+engine      = phptemplate
+
+; stylesheets[screen][] = css/style.css
+stylesheets[screen][] = css/cube-commerce.css
+
+; Regions
+regions[top]     = Page top
+regions[content] = Page content
+regions[left]    = Left
+regions[right]   = Right

@@ -7,40 +7,46 @@
         <div id="draw"><?php print render($page['draw']); ?></div>
       </div> 
     </div>
-    <div id="toggle-wrapper">
-      <div class="container clearfix">
-         <div id="toggle"><?php print $draw_link; ?></div>
-      </div>
-    </div>
   <?php endif; ?>
 
-  <div id="header-wrapper"><div class="container clearfix">
-    <header class="clearfix">
-
-      <div id="branding" class="clearfix<?php print $branding_classes ? ' ' . $branding_classes : ''; ?>">
-        <?php if ($linked_site_logo): ?>
-          <div id="logo"><?php print $linked_site_logo; ?></div>
-        <?php endif; ?>
-
-        <?php if ($site_name || $site_slogan): ?>
-          <hgroup<?php if (!$site_slogan && $hide_site_name): ?> class="<?php print $visibility; ?>"<?php endif; ?>>
-            <?php if ($site_name): ?>
-              <h1 id="site-name"<?php if ($hide_site_name): ?> class="<?php print $visibility; ?>"<?php endif; ?>><?php print $site_name; ?></h1>
-            <?php endif; ?>
-            <?php if ($site_slogan): ?>
-              <h2 id="site-slogan"><?php print $site_slogan; ?></h2>
-            <?php endif; ?>
-          </hgroup>
-        <?php endif; ?>
+  <div id="header-wrapper">
+    <?php if($page['draw']): ?>
+      <div id="toggle-wrapper">
+        <div class="container clearfix">
+           <div id="toggle"><?php print $draw_link; ?></div>
+        </div>
       </div>
+    <?php endif; ?>
 
-      <?php print render($page['header']); ?>
+    <div class="container clearfix">
+      <header class="clearfix">
 
-      <?php if ($page['menu_bar']): ?>
-        <?php print render($page['menu_bar']); ?>
-      <?php endif; ?>
-    </header>
-  </div></div>
+        <div id="branding" class="clearfix<?php print $branding_classes ? ' ' . $branding_classes : ''; ?>">
+          <?php if ($linked_site_logo): ?>
+            <div id="logo"><?php print $linked_site_logo; ?></div>
+          <?php endif; ?>
+
+          <?php if ($site_name || $site_slogan): ?>
+            <hgroup<?php if (!$site_slogan && $hide_site_name): ?> class="<?php print $visibility; ?>"<?php endif; ?>>
+              <?php if ($site_name): ?>
+                <h1 id="site-name"<?php if ($hide_site_name): ?> class="<?php print $visibility; ?>"<?php endif; ?>><?php print $site_name; ?></h1>
+              <?php endif; ?>
+              <?php if ($site_slogan): ?>
+                <h2 id="site-slogan"><?php print $site_slogan; ?></h2>
+              <?php endif; ?>
+            </hgroup>
+          <?php endif; ?>
+        </div>
+
+        <?php print render($page['header']); ?>
+
+        <?php if ($page['menu_bar']): ?>
+          <div id="nav-wrapper"><?php print render($page['menu_bar']); ?></div>
+        <?php endif; ?>
+
+      </header>
+    </div>
+  </div>
 
   <?php if ($page['secondary_content']): ?>
     <div id="secondary-content-wrapper"><div class="texture-overlay">

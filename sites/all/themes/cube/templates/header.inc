@@ -38,4 +38,4 @@
   </div>
   <?php endif; ?>
   
-  <?php if ($page['header']): ?><div id='header' class='limiter clear-block'><?php print render($page['header']) ?></div><?php endif; ?>
+  <?php if ($page['top']): ?><div id='page-top' class='limiter block-region clear-block'><?php print render($page['top']) ?></div><?php endif; ?>
