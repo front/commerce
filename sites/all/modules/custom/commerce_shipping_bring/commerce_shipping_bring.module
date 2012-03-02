@@ -297,11 +297,12 @@ function commerce_shipping_bring_calculate_shipping_callback($form, &$form_state
   // Add the form in cache, so ajax will load the new version of it.
   $form['#build_id'] = $form_build_id;
   form_set_cache($form_build_id, $form, $form_state);  
-    
+
   // Take off the checked value option;  
   commerce_shipping_collect_rates($order);
   foreach($order->shipping_rates as $shipping_name => $rate) {
-    unset($form['commerce_shipping']['shipping_service'][$shipping_name]['#value']);
+    //unset($form['commerce_shipping']['shipping_service'][$shipping_name]['#value']);
+    $form['commerce_shipping']['shipping_service'][$shipping_name]['#value'] = FALSE;
   }
   
   $messages = theme_status_messages(array('display' => ''));  
@@ -434,6 +435,14 @@ function commerce_shipping_bring_build_query_string($order) {
     '1' => "to=$to",
     '2' => "weightInGrams=" . $weight['weight'],    
   );
+
+  // Add the volume.
+  /*
+  $volume = commerce_physical_order_volume($order, 'dm');  
+  if ($volume['volume']) {
+    $qs['3'] = "volume=" . $volume['volume'];
+  }
+  */
   
   // Add the products.
   $services = commerce_shipping_bring_enabled_services();
