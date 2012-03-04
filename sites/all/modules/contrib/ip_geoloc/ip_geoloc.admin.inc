@@ -255,4 +255,3 @@ function _ip_geoloc_process_access_log_finished($success, $results, $operations,
     drupal_set_message($message);
   }
 }
-

@@ -7,15 +7,22 @@
  * and stores geographical and postal address information of your site visitors,
  * based on their IP addresses.
  * It stores this information in a form suitable for further processing,
- * reporting, exporting and display via the Views module.
+ * reporting, exporting and displaying via the Views module.
  * Ready-to-uses views, blocks and maps are provided. For programmers there is
  * also an API.
  */
-define('IP_GEOLOC_LOCATION_CHECK_INTERVAL', 60);
 define('IP_GEOLOC_CALLBACK_TIMEOUT', 60);
+define('IP_GEOLOC_LOCATION_CHECK_INTERVAL', 60);
+
+define('IP_GEOLOC_MAP_DIV_DEFAULT_STYLE', 'height:300px');
+define('IP_GEOLOC_CURRENT_VISITOR_MAP_OPTIONS', '{"mapTypeId":"roadmap", "disableDefaultUI":true, "zoom":15, "zoomControl":true}');
+define('IP_GEOLOC_RECENT_VISITORS_MAP_OPTIONS', '{"mapTypeId":"terrain", "disableDefaultUI":true, "zoom":2,  "zoomControl":true}');
+
+define('DOC_GOOGLE_MAP_OPTIONS', 'http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions');
 
 require_once 'ip_geoloc_api.inc';
 require_once 'ip_geoloc_blocks.inc';
+require_once 'theme/ip_geoloc_theme.inc';
 
 /**
  * Implements hook-help().
@@ -392,3 +399,4 @@ function ip_geoloc_smart_ip_get_location_alter(&$location) {
 function ip_geoloc_device_geolocation_detector_ajax_alter(&$location) {
   ip_geoloc_debug(t('IP Geolocation: Device Geolocation retrieved: !location', array('!location' => ip_geoloc_pretty_print($location))));
 }
+
