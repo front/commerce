@@ -5,12 +5,6 @@
  * Blocks available in IP Geolocation.
  */
 
-define('IP_GEOLOC_MAP_DIV_DEFAULT_STYLE', 'height:300px');
-define('IP_GEOLOC_CURRENT_VISITOR_MAP_OPTIONS', '{"mapTypeId":"roadmap", "disableDefaultUI":true, "zoom":15, "zoomControl":true}');
-define('IP_GEOLOC_RECENT_VISITORS_MAP_OPTIONS', '{"mapTypeId":"terrain", "disableDefaultUI":true, "zoom":2,  "zoomControl":true}');
-
-define('DOC_GOOGLE_MAP_OPTIONS', 'http://code.google.com/apis/maps/documentation/javascript/reference.html#MapOptions');
-
 /**
  * Implements hook_block_info().
  */
@@ -57,7 +51,7 @@ function ip_geoloc_block_configure($delta = '') {
     '#type' => 'textfield',
     '#title' => t('CSS style attribute(s) applied to the HTML DIV element that is placeholding the map'),
     '#default_value' => variable_get('ip_geoloc_' . $delta . '_div_style', IP_GEOLOC_MAP_DIV_DEFAULT_STYLE),
-    '#description' => t('The default %default_style results in a map of 300 pixels high, with a width bounded by the element that contains it. Do not enter quotes or equal signs and make sure your quotes match.',
+    '#description' => t('The default %default_style results in a map of 300 pixels high, with a width bounded by the element that contains it. Do not enter quotes or equal signs.',
       array('%default_style' => IP_GEOLOC_MAP_DIV_DEFAULT_STYLE))
   );
 
@@ -149,7 +143,13 @@ function ip_geoloc_block_view($delta = '') {
     case 'current_visitor_map':
       $block['subject'] = t('Your location');
       $map_options = variable_get('ip_geoloc_current_visitor_map_options', IP_GEOLOC_CURRENT_VISITOR_MAP_OPTIONS);
-      $block['content'] = ip_geoloc_output_map_current_location('ip-geoloc-block-current-visitor-map', drupal_json_decode($map_options), $map_style);
+      // @todo theme this
+      //$block['content'] = ip_geoloc_output_map_current_location('ip-geoloc-block-current-visitor-map', $map_options, $map_style);
+      $block['content'] = theme(array('ip_geoloc_map_current_visitor'), array(
+        'div_id' => 'ip-geoloc-block-current-visitor-map',
+        'map_options' => $map_options,
+        'map_style' => $map_style
+      ));
       break;
 
     case 'recent_visitors_map':
@@ -158,7 +158,12 @@ function ip_geoloc_block_view($delta = '') {
       if ($how_many > 0) {
         $locations = ip_geoloc_get_recent_visitor_locations($how_many);
         $map_options = variable_get('ip_geoloc_recent_visitors_map_options', IP_GEOLOC_RECENT_VISITORS_MAP_OPTIONS);
-        $block['content'] = ip_geoloc_output_map_multi_locations($locations, 'ip-geoloc-block-recent-visitors-map', drupal_json_decode($map_options), $map_style);
+        $block['content'] = theme(array('ip_geoloc_map'), array(
+          'locations' => $locations,
+          'div_id' => 'ip-geoloc-block-recent-visitors-map',
+          'map_options' => $map_options,
+          'map_style' => $map_style
+        ));
       }
       break;
 
@@ -166,7 +171,12 @@ function ip_geoloc_block_view($delta = '') {
       if (module_exists('views')) {
         $locations = ip_geoloc_get_view_output(variable_get('ip_geoloc_view_for_map'));
         $map_options = variable_get('ip_geoloc_recent_map_of_view_options', IP_GEOLOC_RECENT_VISITORS_MAP_OPTIONS);
-        $block['content'] = ip_geoloc_output_map_multi_locations($locations, 'ip-geoloc-block-map-of-view', drupal_json_decode($map_options), $map_style);
+        $block['content'] = theme(array('ip_geoloc_map'), array(
+          'locations' => $locations,
+          'div_id' => 'ip-geoloc-block-map-of-view',
+          'map_options' => $map_options,
+          'map_style' => $map_style
+        ));
       }
       else {
         $block['content'] = t('Views module must be enabled to show map of a view.');

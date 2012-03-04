@@ -55,22 +55,7 @@ function ip_geoloc_views_data() {
       'handler' => 'views_handler_sort',
     )
   );
-/*
-  $data['ip_geoloc']['id'] = array(
-    'title' => t('ID'),
-    'help' => t('db'),
-    'field' => array(
-      'handler' => 'views_handler_field_numeric',
-      'click sortable' => TRUE,
-    ),
-    'filter' => array(
-      'handler' => 'views_handler_filter_numeric',
-    ),
-    'sort' => array(
-      'handler' => 'views_handler_sort',
-    ),
-  );
- */
+
   $data['ip_geoloc']['latitude'] = array(
     'title' => t('Latitude'),
     'help' => t('Latitude'),
@@ -300,4 +285,31 @@ function ip_geoloc_views_data() {
   );
 
   return $data;
+}
+
+/**
+ * Implements hook_views_plugins().
+ */
+function ip_geoloc_views_plugins() {
+  $path = drupal_get_path('module', 'ip_geoloc');
+  $plugins = array(
+    'style' => array(
+      'ip_geoloc_map' => array(
+        'title' => t('Map (via IP Geolocation)'),
+        'help' => t('Displays the view as a map, showing location markers with balloon texts.'),
+        'help topic' => 'style-ip-geoloc-map',
+        'handler' => 'ip_geoloc_plugin_style_map',
+        'path' => $path . '/views',
+        'theme' => 'ip_geoloc_map',
+        'theme path' => $path . '/views',
+        'uses fields' => TRUE,
+        'uses options' => TRUE, // map style and map options
+        'uses grouping' => FALSE,
+        'uses row plugin' => FALSE,
+        'type' => 'normal',
+        'even empty' => TRUE, // render output, even if empty
+      )
+    )
+  );
+  return $plugins;
 }
