@@ -235,6 +235,24 @@ body.ptf-gwf-bitter {
   }
 }
 
+#secondary-content-wrapper {
+  background-color: #e8e8e8;
+  margin-top: 15px;
+
+  .region,
+  .block,
+  .texture-overlay {
+    margin: 0;
+    padding: 0;
+  }
+  .block-block {
+    p, img {
+      display: block;
+      margin: 0;
+    }
+  }
+}
+
 #content-wrapper {
   padding: 1em 0 0;
   border: none;

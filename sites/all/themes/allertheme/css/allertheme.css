@@ -209,6 +209,21 @@ body.ptf-gwf-bitter #nav-wrapper {
   color: #fe8f00;
 }
 
+#secondary-content-wrapper {
+  background-color: #e8e8e8;
+  margin-top: 15px;
+}
+#secondary-content-wrapper .region,
+#secondary-content-wrapper .block,
+#secondary-content-wrapper .texture-overlay {
+  margin: 0;
+  padding: 0;
+}
+#secondary-content-wrapper .block-block p, #secondary-content-wrapper .block-block img {
+  display: block;
+  margin: 0;
+}
+
 #content-wrapper {
   padding: 1em 0 0;
   border: none;
