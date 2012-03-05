@@ -125,6 +125,8 @@ body.ptf-gwf-bitter #nav-wrapper {
   margin-left: auto;
   margin-right: auto;
   width: 960px;
+  position: relative;
+  z-index: 10;
 }
 #menu-bar nav .menu {
   margin: 0 5px;
@@ -132,6 +134,7 @@ body.ptf-gwf-bitter #nav-wrapper {
 #menu-bar nav .menu li {
   line-height: 2.067em;
   border-right: 1px solid #cacaca;
+  position: relative;
 }
 #menu-bar nav .menu li.first {
   border-left: 1px solid #cacaca;
@@ -146,9 +149,64 @@ body.ptf-gwf-bitter #nav-wrapper {
   -o-transition: all 0.3s ease-in-out;
   transition: all 0.3s ease-in-out;
 }
-#menu-bar nav .menu a:focus, #menu-bar nav .menu a:hover, #menu-bar nav .menu a.active {
+#menu-bar nav .menu a:focus, #menu-bar nav .menu a:hover, #menu-bar nav .menu a.active, #menu-bar nav .menu a.active-trail {
   color: #fff;
   background-color: #8d8d8d;
+  background-color: #3d3d3d;
+}
+#menu-bar nav .menu ul {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #fff;
+  border: 4px solid #3d3d3d;
+  position: absolute;
+  margin-top: 2.067em;
+  margin-left: 0;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+#menu-bar nav .menu ul li {
+  font-size: 1em;
+  float: none;
+  display: block;
+  border: none;
+  overflow: hidden;
+}
+#menu-bar nav .menu ul li.first, #menu-bar nav .menu ul li.last {
+  border: none;
+}
+#menu-bar nav .menu ul li.dhtml-menu-cloned-leaf {
+  display: none;
+}
+#menu-bar nav .menu ul a,
+#menu-bar nav .menu ul a.active, #menu-bar nav .menu ul.active-trail {
+  color: #fe8f00;
+  font-weight: bold;
+  font-style: normal;
+  white-space: nowrap;
+  background: none;
+  display: block;
+  float: none;
+  min-width: 9em;
+  padding: 0 1em;
+}
+#menu-bar nav .menu ul a:hover,
+#menu-bar nav .menu ul a.active:hover, #menu-bar nav .menu ul.active-trail:hover {
+  color: #3d3d3d;
+  background: none;
+}
+#menu-bar nav .menu ul ul {
+  border: none;
+  position: relative;
+  margin: 0;
+  clear: both;
+}
+#menu-bar nav .menu ul ul a {
+  color: #3d3d3d;
+  font-size: 0.933em;
+  font-weight: normal;
+}
+#menu-bar nav .menu ul ul a:hover {
+  color: #fe8f00;
 }
 
 #content-wrapper {
