@@ -35,8 +35,12 @@ body.ptf-gwf-bitter #nav-wrapper {
 
 /* Base */
 #branding {
-  margin-top: 10px;
-  margin-bottom: 2.083em;
+  display: inline;
+  float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 310px;
+  margin: 10px 0 2.083em;
 }
 #branding #logo img {
   display: block;
@@ -49,7 +53,12 @@ body.ptf-gwf-bitter #nav-wrapper {
   border-bottom: none;
 }
 #header-wrapper .region-header {
-  margin-top: 1em;
+  display: inline;
+  float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 630px;
+  margin: 1em 0 0;
 }
 
 #menu-bar {
@@ -441,7 +450,12 @@ body.ptf-gwf-bitter #nav-wrapper {
 
 /* Commerce */
 .region-header .block-search {
+  display: inline;
   float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 350px;
+  margin: 0;
 }
 .region-header .block-search form {
   text-align: left;
@@ -457,7 +471,7 @@ body.ptf-gwf-bitter #nav-wrapper {
   -webkit-box-shadow: 0 0 3px rgba(107, 107, 107, 0.75);
   -o-box-shadow: 0 0 3px rgba(107, 107, 107, 0.75);
   box-shadow: 0 0 3px rgba(107, 107, 107, 0.75);
-  width: 19.143em;
+  width: 16.286em;
   height: calc(6px, 14px)1em;
   margin-right: 7px;
   padding: 6px 10px;
@@ -488,6 +502,15 @@ body.ptf-gwf-bitter #nav-wrapper {
   border-radius: 12px;
 }
 
+.region-header .block-commerce-cart {
+  display: inline;
+  float: left;
+  margin-left: 5px;
+  margin-right: 5px;
+  width: 230px;
+  margin: 0;
+  padding-left: 40px;
+}
 .region-header .block-commerce-cart .block-content {
   text-align: center;
   background-color: #862560;
@@ -531,7 +554,7 @@ body.ptf-gwf-bitter #nav-wrapper {
 }
 .region-header .block-commerce-cart .block-content .cart-empty-block {
   font-size: 1em;
-  min-width: 19.167em;
+  display: block;
 }
 .region-header .block-commerce-cart .block-content .cart-contents {
   background: transparent;

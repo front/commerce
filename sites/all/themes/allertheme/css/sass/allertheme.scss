@@ -62,8 +62,8 @@ body.ptf-gwf-bitter {
 
 /* Base */
 #branding {
-  margin-top: 10px;
-  margin-bottom: calc-em(25px, 12px);
+  @include grid(8);
+  margin: 10px 0 calc-em(25px, 12px);
 
   #logo {
     img {
@@ -79,7 +79,8 @@ body.ptf-gwf-bitter {
   border-bottom: none;
 
   .region-header {
-    margin-top: 1em;
+    @include grid(16);
+    margin: 1em 0 0;
   }
 }
 
@@ -439,7 +440,8 @@ body.ptf-gwf-bitter {
 /* Commerce */
 .block-search {
   .region-header & {
-    float: left;
+    @include grid(9);
+    margin: 0;
 
     form {
       text-align: left;
@@ -451,7 +453,7 @@ body.ptf-gwf-bitter {
         background: #fff;
         background-clip: padding-box;
         @include box-shadow(0 0 3px rgba(107,107,107,0.75));
-        width: calc-em(268px, 14px);
+        width: calc-em(228px, 14px);
         height: calc(6px, 14px) + 1em;
         margin-right: 7px;
         padding: 6px 10px;
@@ -473,49 +475,55 @@ body.ptf-gwf-bitter {
 }
 
 .block-commerce-cart {
-  .region-header & .block-content {
-    text-align: center;
-    background-color: #862560;
-    @include box-shadow(inset 0 1px 4px rgba(0,0,0,0.18), 0 0 1px rgba(212,212,212,0.18));
-    border: 1px solid rgba(212,212,212,0.18);
-    @include border-radius(7px);
-    margin: 5px 0 1em;
-    padding: 3px 15px;
+  .region-header & {
+    @include grid(6);
+    margin: 0;
+    @include grid-prefix(1);
 
-    .view-header {
-      div, ul {
-        text-align: center;
-        display: inline-block;
-        float: none;
-        margin: 0;
+    .block-content {
+      text-align: center;
+      background-color: #862560;
+      @include box-shadow(inset 0 1px 4px rgba(0,0,0,0.18), 0 0 1px rgba(212,212,212,0.18));
+      border: 1px solid rgba(212,212,212,0.18);
+      @include border-radius(7px);
+      margin: 5px 0 1em;
+      padding: 3px 15px;
+
+      .view-header {
+        div, ul {
+          text-align: center;
+          display: inline-block;
+          float: none;
+          margin: 0;
+        }
+        .line-item-summary {
+          width: 100%;
+          display: block;
+        }
+        ul {
+          font-size: calc-em(13px, 18px);
+        }
       }
-      .line-item-summary {
-        width: 100%;
+      .cart-contents,
+      .cart-empty-block {
+        color: #fff;
+        font-family: $font-family-headings;
+        font-size: calc-em(18px, 12px);
+        padding: 0;
+        .views-field-quantity {
+          margin-right: 0.5em;
+        }
+      }
+      .cart-empty-block {
+        font-size: 1em;
         display: block;
       }
-      ul {
-        font-size: calc-em(13px, 18px);
+      .cart-contents {
+        background: transparent;
       }
-    }
-    .cart-contents,
-    .cart-empty-block {
-      color: #fff;
-      font-family: $font-family-headings;
-      font-size: calc-em(18px, 12px);
-      padding: 0;
-      .views-field-quantity {
-        margin-right: 0.5em;
+      .view-content {
+        display: none;
       }
-    }
-    .cart-empty-block {
-      font-size: 1em;
-      min-width: calc-em(230px, 12px);
-    }
-    .cart-contents {
-      background: transparent;
-    }
-    .view-content {
-      display: none;
     }
   }
 }
