@@ -14,8 +14,8 @@ files[] = views/ip_geoloc_plugin_style_map.inc
 version = "7.x-1.x-dev"
 
 ; Information added by drupal.org packaging script on 2012-03-03
-version = "7.x-1.5"
+version = "7.x-1.5+0-dev"
 core = "7.x"
 project = "ip_geoloc"
-datestamp = "1330742742"
+datestamp = "1330777204"
 
