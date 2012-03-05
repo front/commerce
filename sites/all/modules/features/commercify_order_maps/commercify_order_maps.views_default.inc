@@ -37,7 +37,9 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '50';
   $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['style_plugin'] = 'tableipmapd';
+  $handler->display->display_options['style_plugin'] = 'ip_geoloc_map';
+  $handler->display->display_options['style_options']['ip_geoloc_map_of_view_div_style'] = 'height:600px';
+  $handler->display->display_options['style_options']['ip_geoloc_map_of_view_options'] = '{"mapTypeId":"terrain", "disableDefaultUI":true, "zoom":4, "zoomControl":true}';
   /* Footer: Global: Text area */
   $handler->display->display_options['footer']['area']['id'] = 'area';
   $handler->display->display_options['footer']['area']['table'] = 'views';

@@ -16,7 +16,10 @@ function commercify_admin_overview_default_page_manager_pages() {
   $page->admin_title = 'Commerce overview';
   $page->admin_description = 'Overview of commerce entities and activity';
   $page->path = 'admin/commerce/overview/summary';
-  $page->access = array();
+  $page->access = array(
+    'type' => 'none',
+    'settings' => NULL,
+  );
   $page->menu = array(
     'type' => 'default tab',
     'title' => 'Butikk-oversikt',
