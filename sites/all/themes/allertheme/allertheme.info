@@ -22,6 +22,10 @@
   stylesheets[all][] = color/colors.css
   stylesheets[all][] = css/allertheme.css
 
+  ; remove
+  stylesheets[all][] = css/allertheme.responsive.style.css
+  stylesheets[all][] = css/allertheme.responsive.style.css
+
 
 ;----------// Scripts
 
@@ -73,57 +77,6 @@
 
 
 ;----------// Theme Setting Defaults
-
-  ; Standard bigscreen
-  settings[bigscreen_layout]         = 'three-col-grail'
-  settings[bigscreen_page_unit]      = '%'
-  settings[bigscreen_sidebar_unit]   = '%'
-  settings[bigscreen_max_width_unit] = 'px'
-  settings[bigscreen_page_width]     = 100
-  settings[bigscreen_sidebar_first]  = 25
-  settings[bigscreen_sidebar_second] = 25
-  settings[bigscreen_set_max_width]  = 1
-  settings[bigscreen_max_width]      = 1140
-  settings[bigscreen_media_query]    = 'only screen and (min-width:1025px)'
-
-  ; Tablet landscape
-  settings[tablet_landscape_layout]         = 'three-col-grail'
-  settings[tablet_landscape_page_unit]      = '%'
-  settings[tablet_landscape_sidebar_unit]   = '%'
-  settings[tablet_landscape_max_width_unit] = 'px'
-  settings[tablet_landscape_page_width]     = 100
-  settings[tablet_landscape_sidebar_first]  = 20
-  settings[tablet_landscape_sidebar_second] = 20
-  settings[tablet_landscape_set_max_width]  = 0
-  settings[tablet_landscape_max_width]      = 960
-  settings[tablet_landscape_media_query]    = 'only screen and (min-width:769px) and (max-width:1024px)'
-
-  ; Tablet portrait
-  settings[tablet_portrait_layout]         = 'one-col-vert'
-  settings[tablet_portrait_page_unit]      = '%'
-  settings[tablet_portrait_sidebar_unit]   = '%'
-  settings[tablet_portrait_max_width_unit] = 'px'
-  settings[tablet_portrait_page_width]     = 100
-  settings[tablet_portrait_sidebar_first]  = 50
-  settings[tablet_portrait_sidebar_second] = 50
-  settings[tablet_portrait_set_max_width]  = 0
-  settings[tablet_portrait_max_width]      = 780
-  settings[tablet_portrait_media_query]    = 'only screen and (min-width:481px) and (max-width:768px)'
-
-  ; smartphone landscape
-  settings[smartphone_landscape_layout]         = 'one-col-vert'
-  settings[smartphone_landscape_page_unit]      = '%'
-  settings[smartphone_landscape_sidebar_unit]   = '%'
-  settings[smartphone_landscape_max_width_unit] = 'px'
-  settings[smartphone_landscape_page_width]     = 100
-  settings[smartphone_landscape_sidebar_first]  = 50
-  settings[smartphone_landscape_sidebar_second] = 50
-  settings[smartphone_landscape_set_max_width]  = 0
-  settings[smartphone_landscape_max_width]      = 520
-  settings[smartphone_landscape_media_query]    = 'only screen and (min-width:321px) and (max-width:480px)'
-
-  ; smartphone portrait
-  settings[smartphone_portrait_media_query] = 'only screen and (max-width:320px)'
 
   ; Fonts - type
   settings[base_font_type]          = 'wsf'
