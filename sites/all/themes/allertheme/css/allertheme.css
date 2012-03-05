@@ -449,7 +449,7 @@ body.ptf-gwf-bitter #nav-wrapper {
 }
 
 /* Commerce */
-.region-header .block-search {
+.region-header .block-search-api-page {
   display: inline;
   float: left;
   margin-left: 5px;
@@ -457,13 +457,14 @@ body.ptf-gwf-bitter #nav-wrapper {
   width: 350px;
   margin: 0;
 }
-.region-header .block-search form {
+.region-header .block-search-api-page form {
   text-align: left;
 }
-.region-header .block-search form .form-item {
+.region-header .block-search-api-page form .form-item {
+  display: inline;
   margin: 5px 0;
 }
-.region-header .block-search form .form-text {
+.region-header .block-search-api-page form .form-text {
   font-size: 1.167em;
   background: #fff;
   background-clip: padding-box;
@@ -484,7 +485,7 @@ body.ptf-gwf-bitter #nav-wrapper {
   border-radius: 5px;
   -webkit-appearance: textfield;
 }
-.region-header .block-search form .form-submit {
+.region-header .block-search-api-page form .form-submit {
   font-size: 1.25em;
   text-transform: uppercase;
   background: #fff;

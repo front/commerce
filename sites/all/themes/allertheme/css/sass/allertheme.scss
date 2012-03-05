@@ -438,7 +438,7 @@ body.ptf-gwf-bitter {
 }
 
 /* Commerce */
-.block-search {
+.block-search-api-page {
   .region-header & {
     @include grid(9);
     margin: 0;
@@ -446,6 +446,7 @@ body.ptf-gwf-bitter {
     form {
       text-align: left;
       .form-item {
+        display: inline;
         margin: 5px 0;
       }
       .form-text {
