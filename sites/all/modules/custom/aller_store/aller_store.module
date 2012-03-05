@@ -44,3 +44,15 @@ function aller_store_form_alter(&$form, &$form_state, $form_id) {
     }
   }
 }
+
+/**
+* Implements hook_commerce_currency_info_alter().
+*
+* Because the default display of AUD is awful
+*/
+function aller_store_commerce_currency_info_alter(&$currencies, $langcode) {
+  $currencies['NOK']['symbol'] = 'kr';
+  $currencies['NOK']['symbol_placement'] = 'after';
+  $currencies['NOK']['code_placement'] = '';
+}
+
