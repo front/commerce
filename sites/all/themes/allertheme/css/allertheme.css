@@ -522,6 +522,9 @@ body.ptf-gwf-bitter #nav-wrapper {
   font-size: 1em;
   min-width: 19.167em;
 }
+.region-header .block-commerce-cart .block-content .cart-contents {
+  background: none;
+}
 
 .sidebar .block-menu .block-inner {
   background-color: #3d3d3d;
