@@ -32,6 +32,7 @@
 ;----------// Regions
 
   regions[draw]              = Sliding Draw (top)
+  regions[top_bar]           = Top Bar
   regions[header]            = Header
   regions[menu_bar]          = Main Menu Bar
   regions[help]              = Help

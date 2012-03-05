@@ -34,13 +34,57 @@ body.ptf-gwf-bitter #nav-wrapper {
 }
 
 /* Base */
+#top-bar-wrapper {
+  border-bottom: 1px solid #d1a9c1;
+}
+#top-bar-wrapper a {
+  color: #000;
+}
+#top-bar-wrapper a:hover, #top-bar-wrapper a.active {
+  color: #8d2765;
+}
+#top-bar-wrapper .block {
+  float: left;
+  margin: 0;
+  padding: 9px 0;
+}
+#top-bar-wrapper #block-system-user-menu {
+  float: right;
+}
+#top-bar-wrapper .block-title {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}
+#top-bar-wrapper .content .menu {
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+}
+#top-bar-wrapper .content .menu li {
+  float: left;
+  margin: 0;
+  padding: 0 1em;
+  list-style: none;
+  list-style-image: none;
+  border-right: 2px solid #7f7f7f;
+}
+#top-bar-wrapper .content .menu li.first {
+  padding-left: 0.5em;
+}
+#top-bar-wrapper .content .menu li.last {
+  padding-right: 0.5em;
+  border-right: none;
+}
+
 #branding {
   display: inline;
   float: left;
   margin-left: 5px;
   margin-right: 5px;
   width: 310px;
-  margin: 10px 0 2.083em;
+  margin: 15px 0 2.083em;
 }
 #branding #logo img {
   display: block;
@@ -51,6 +95,7 @@ body.ptf-gwf-bitter #nav-wrapper {
 
 #header-wrapper {
   border-bottom: none;
+  padding-top: 1em;
 }
 #header-wrapper .region-header {
   display: inline;

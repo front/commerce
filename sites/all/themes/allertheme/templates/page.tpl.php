@@ -14,6 +14,14 @@
     </div>
   <?php endif; ?>
 
+  <?php if($page['top_bar']): ?>
+    <div id="top-bar-wrapper">
+      <div class="container clearfix">
+        <?php print render($page['top_bar']); ?>
+      </div>
+   </div>
+  <?php endif; ?>
+
   <div id="header-wrapper"><div class="container clearfix">
     <header class="clearfix">
 

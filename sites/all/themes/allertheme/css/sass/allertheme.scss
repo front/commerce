@@ -61,9 +61,56 @@ body.ptf-gwf-bitter {
 
 
 /* Base */
+#top-bar-wrapper {
+  border-bottom: 1px solid #d1a9c1;
+
+  a {
+    color: #000;
+    &:hover,
+    &.active {
+      color: #8d2765;
+    }
+  }
+  .block {
+    float: left;
+    margin: 0;
+    padding: 9px 0;
+  }
+  #block-system-user-menu {
+    float: right;
+  }
+  .block-title {
+    @include element-invisible;
+  }
+  .content {
+    .menu {
+      line-height: 1;
+      margin: 0;
+      padding: 0;
+
+      li {
+        float: left;
+        margin: 0;
+        padding: 0 1em;
+        list-style: none;
+        list-style-image: none;
+        border-right: 2px solid #7f7f7f;
+
+        &.first {
+          padding-left: 0.5em;
+        }
+        &.last {
+          padding-right: 0.5em;
+          border-right: none;
+        }
+      }
+    }
+  }
+}
+
 #branding {
   @include grid(8);
-  margin: 10px 0 calc-em(25px, 12px);
+  margin: 15px 0 calc-em(25px, 12px);
 
   #logo {
     img {
@@ -77,6 +124,7 @@ body.ptf-gwf-bitter {
 
 #header-wrapper {
   border-bottom: none;
+  padding-top: 1em;
 
   .region-header {
     @include grid(16);
