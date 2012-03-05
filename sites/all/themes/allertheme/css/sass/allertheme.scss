@@ -484,14 +484,25 @@ body.ptf-gwf-bitter {
 
     .view-header {
       div, ul {
+        text-align: center;
+        display: inline-block;
+        float: none;
         margin: 0;
       }
+      .line-item-summary {
+        width: 100%;
+        display: block;
+      }
+      ul {
+        font-size: calc-em(13px, 18px);
+      }
     }
-    .view-content,
+    .cart-contents,
     .cart-empty-block {
       color: #fff;
       font-family: $font-family-headings;
       font-size: calc-em(18px, 12px);
+      padding: 0;
       .views-field-quantity {
         margin-right: 0.5em;
       }
@@ -501,7 +512,10 @@ body.ptf-gwf-bitter {
       min-width: calc-em(230px, 12px);
     }
     .cart-contents {
-      background: none;
+      background: transparent;
+    }
+    .view-content {
+      display: none;
     }
   }
 }
