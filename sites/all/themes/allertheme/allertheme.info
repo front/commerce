@@ -23,6 +23,12 @@
   stylesheets[all][] = css/allertheme.css
 
 
+;----------// Scripts
+
+  scripts[] = js/equalheights.js
+  scripts[] = js/allertheme.js
+
+
 ;----------// Regions
 
   regions[draw]              = Sliding Draw (top)
