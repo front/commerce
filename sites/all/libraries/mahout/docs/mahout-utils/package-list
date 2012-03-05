@@ -1,0 +1,15 @@
+org.apache.mahout.benchmark
+org.apache.mahout.clustering.cdbw
+org.apache.mahout.clustering.conversion
+org.apache.mahout.clustering.conversion.meanshift
+org.apache.mahout.clustering.evaluation
+org.apache.mahout.clustering.lda
+org.apache.mahout.text
+org.apache.mahout.utils
+org.apache.mahout.utils.clustering
+org.apache.mahout.utils.eval
+org.apache.mahout.utils.vectors
+org.apache.mahout.utils.vectors.arff
+org.apache.mahout.utils.vectors.csv
+org.apache.mahout.utils.vectors.io
+org.apache.mahout.utils.vectors.lucene
