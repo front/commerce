@@ -64,6 +64,17 @@ class ip_geoloc_plugin_style_map extends views_plugin_style {
         }
         $locations[] = $location;
       }
+      if (!empty($row->commerce_order_commerce_line_item__ip_geoloc_longitude) && !empty($row->commerce_order_commerce_line_item__ip_geoloc_latitude)) {
+        $location = new stdClass();
+        $location->latitude = $row->commerce_order_commerce_line_item__ip_geoloc_latitude;
+        $location->longitude = $row->commerce_order_commerce_line_item__ip_geoloc_longitude;
+        if (!empty($this->rendered_fields)) {
+          // Remaining row values go into the balloon
+          $location->balloonText = implode('<br/>', $this->rendered_fields[$i]);
+        }
+        $locations[] = $location;
+      }
+      
     }
     $map_options = $this->options['ip_geoloc_map_of_view_options'];
     $map_style = $this->options['ip_geoloc_map_of_view_div_style'];
