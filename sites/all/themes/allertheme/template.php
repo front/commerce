@@ -101,11 +101,10 @@ function allertheme_commerce_price_savings_formatter_formatter($vars) {
  * Implements hook_form_alter().
  */
 function allertheme_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == 'search_block_form') {
-    if (isset($form['search_block_form'])) {
-      $title = $form['search_block_form']['#attributes']['title'];
-      $title = str_replace('.', '', $title);
-      $form['search_block_form']['#attributes']['placeholder'] = $title;
+  // TODO: move this to a custom module and make title context aware
+  if ($form_id == 'search_api_page_search_form_search_page') {
+    if (isset($form['keys_1'])) {
+      $form['keys_1']['#attributes']['#title'] = $form['keys_1']['#attributes']['placeholder'] = t('Search for book or author');
     }
   }
 }
