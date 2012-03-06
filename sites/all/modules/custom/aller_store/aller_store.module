@@ -6,6 +6,30 @@
  */
 
 /**
+ * Implements hook_menu().
+ */
+function aller_store_menu() {
+  $items['admin/commerce/overview/add/article'] = array(
+    'title' => 'Add article',
+    'page callback' => 'drupal_goto',
+    'page arguments' => array('node/add/article'),
+    'access arguments' => array('create article content'),
+    'type' => MENU_LOCAL_ACTION,
+    'weight' => 0,
+  );
+  $items['admin/commerce/overview/add/produktvisning'] = array(
+    'title' => 'Add new product',
+    'page callback' => 'drupal_goto',
+    'page arguments' => array('node/add/produktvisning'),
+    'access arguments' => array('create produktvisning content'),
+    'type' => MENU_LOCAL_ACTION,
+    'weight' => 1,
+  );
+
+  return $items;
+}
+
+/**
  * Implements hook_views_rss_date_sources().
  * 
  * Implements correct dates in views_rss when using commerce products

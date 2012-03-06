@@ -1239,6 +1239,12 @@ function commercify_product_book_field_default_fields() {
           'type' => 'commerce_cart_add_to_cart_form',
           'weight' => '3',
         ),
+        'search_result' => array(
+          'label' => 'hidden',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '13',
+        ),
         'teaser' => array(
           'label' => 'hidden',
           'module' => 'commerce_cart',
@@ -1327,6 +1333,12 @@ function commercify_product_book_field_default_fields() {
           'type' => 'hidden',
           'weight' => '16',
         ),
+        'search_result' => array(
+          'label' => 'hidden',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '18',
+        ),
         'teaser' => array(
           'label' => 'hidden',
           'module' => 'taxonomy',
@@ -1406,6 +1418,12 @@ function commercify_product_book_field_default_fields() {
           'type' => 'hidden',
           'weight' => '22',
         ),
+        'search_result' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '31',
+        ),
         'teaser' => array(
           'label' => 'above',
           'settings' => array(),
@@ -1477,6 +1495,12 @@ function commercify_product_book_field_default_fields() {
           'settings' => array(),
           'type' => 'hidden',
           'weight' => '5',
+        ),
+        'search_result' => array(
+          'label' => 'hidden',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '17',
         ),
         'teaser' => array(
           'label' => 'hidden',
@@ -1551,6 +1575,12 @@ function commercify_product_book_field_default_fields() {
           'type' => 'hidden',
           'weight' => '17',
         ),
+        'search_result' => array(
+          'label' => 'hidden',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '10',
+        ),
         'teaser' => array(
           'label' => 'hidden',
           'settings' => array(),
@@ -1616,6 +1646,12 @@ function commercify_product_book_field_default_fields() {
           'settings' => array(),
           'type' => 'hidden',
           'weight' => '18',
+        ),
+        'search_result' => array(
+          'label' => 'hidden',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => '19',
         ),
         'teaser' => array(
           'label' => 'above',
