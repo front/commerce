@@ -25,6 +25,14 @@ function aller_store_menu() {
     'type' => MENU_LOCAL_ACTION,
     'weight' => 1,
   );
+  $items['admin/commerce/overview/add/taxonomy/produkter'] = array(
+    'title' => 'Add category',
+    'page callback' => 'drupal_goto',
+    'page arguments' => array('admin/structure/taxonomy/produkter'),
+    'access arguments' => array('administer taxonomy'),
+    'type' => MENU_LOCAL_ACTION,
+    'weight' => 2,
+  );
 
   return $items;
 }
