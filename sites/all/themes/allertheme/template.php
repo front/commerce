@@ -5,16 +5,6 @@
  * Replace 'allertheme' with your themes name, i.e. mytheme_preprocess_html()
  */
 function allertheme_preprocess_html(&$vars) {
-
-  // Load the media queries styles
-  // If you change the names of these files they must match here - these files are
-  // in the /css/ directory of your subtheme - the names must be identical!
-  $media_queries_css = array(
-    'allertheme.responsive.style.css',
-    'allertheme.responsive.gpanels.css'
-  );
-  load_subtheme_media_queries($media_queries_css, 'allertheme');
-
  /**
   * Load IE specific stylesheets
   * AT automates adding IE stylesheets, simply add to the array using

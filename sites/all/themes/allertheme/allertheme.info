@@ -22,10 +22,6 @@
   stylesheets[all][] = color/colors.css
   stylesheets[all][] = css/allertheme.css
 
-  ; remove
-  stylesheets[all][] = css/allertheme.responsive.style.css
-  stylesheets[all][] = css/allertheme.responsive.style.css
-
 
 ;----------// Scripts
 
