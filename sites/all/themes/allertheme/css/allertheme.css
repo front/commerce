@@ -406,6 +406,18 @@ body.ptf-gwf-bitter #nav-wrapper {
   display: block;
   padding: 10px;
 }
+.article-type-produktvisning.view-mode-full .field-name-service-links-displays-group {
+  text-align: right;
+  height: 2.083em;
+  margin: -2px -20px -1.917em 0;
+}
+.article-type-produktvisning.view-mode-full .field-name-service-links-displays-group .service-links div, .article-type-produktvisning.view-mode-full .field-name-service-links-displays-group .service-links iframe {
+  text-align: right;
+  vertical-align: top;
+}
+.article-type-produktvisning.view-mode-full .field-name-service-links-displays-group .service-links div iframe {
+  vertical-align: baseline;
+}
 .article-type-produktvisning.view-mode-full .field-name-title h2 {
   font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
   font-size: 2.333em;

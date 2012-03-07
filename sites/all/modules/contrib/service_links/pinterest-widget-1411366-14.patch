@@ -1,0 +1,120 @@
+diff --git a/images/pinterest.png b/images/pinterest.png
+new file mode 100644
+index 0000000..61e546a
+Binary files /dev/null and b/images/pinterest.png differ
+diff --git a/js/pinterest_button.js b/js/pinterest_button.js
+new file mode 100644
+index 0000000..03bf6ae
+--- /dev/null
++++ b/js/pinterest_button.js
+@@ -0,0 +1,26 @@
++(function ($) {
++  $(document).ready(function(){
++    window.PinIt = window.PinIt || { loaded:false };
++    if (window.PinIt.loaded) return;
++    window.PinIt.loaded = true;
++    function async_load(){
++      var s = document.createElement("script");
++      s.type = "text/javascript";
++      s.async = true;
++      if (window.location.protocol == "https:") {
++        s.src = "https://assets.pinterest.com/js/pinit.js";
++      }
++      else {
++        s.src = "http://assets.pinterest.com/js/pinit.js";
++      }
++      var x = document.getElementsByTagName("script")[0];
++      x.parentNode.insertBefore(s, x);
++    }
++    if (window.attachEvent) {
++      window.attachEvent("onload", async_load);
++    }
++    else {
++      window.addEventListener("load", async_load, false);
++    }
++  });
++})(jQuery);
+diff --git a/services/widget_services.admin.inc b/services/widget_services.admin.inc
+index 33850e6..1303e5f 100644
+--- a/services/widget_services.admin.inc
++++ b/services/widget_services.admin.inc
+@@ -213,5 +213,22 @@ function  widget_services_admin() {
+     ),
+   );
+ 
++  $form['pinterest_button'] = array(
++    '#type' => 'fieldset',
++    '#collapsible' => TRUE,
++    '#collapsed' => FALSE,
++    '#title' => t('Pinterest Button'),
++  );
++  $form['pinterest_button']['service_links_pb_countlayout'] = array(
++    '#title' => t('Pin Count'),
++    '#type' => 'select',
++    '#default_value' => variable_get('service_links_pb_countlayout', 'horizontal'),
++    '#options' => array(
++      'horizontal' => t('Horizontal'),
++      'vertical' => t('Vertical'),
++      'none' => t('No Count'),
++    ),
++  );
++
+   return system_settings_form($form);
+ }
+diff --git a/services/widget_services.info b/services/widget_services.info
+index f5def49..a26627a 100644
+--- a/services/widget_services.info
++++ b/services/widget_services.info
+@@ -1,5 +1,5 @@
+ name = Widget Services
+-description = Provide the Widgets: Digg Smart Button, Facebook Like, Facebook Share, Google Plus One, Linkedin Share Button, Twitter
++description = Provide the Widgets: Digg Smart Button, Facebook Like, Facebook Share, Google Plus One, Linkedin Share Button, Twitter, Pinterest Button
+ core = 7.x
+ package = Service Links - Services
+ dependencies[] = service_links
+diff --git a/services/widget_services.module b/services/widget_services.module
+index ca5863a..19e4492 100644
+--- a/services/widget_services.module
++++ b/services/widget_services.module
+@@ -75,6 +75,19 @@ function widget_services_service_links() {
+     'style' => SERVICE_LINKS_STYLE_EMPTY,
+     'callback' => 'ws_linkedin_share_button_data',
+   );
++  $links['pinterest_button'] = array(
++    'name' => 'Pinterest',
++    'link' => 'http://pinterest.com/pin/create/button/?url=<raw-encoded-url>&description=<raw-encoded-description>',
++    'icon' => 'pinterest.png',
++    'description' => t('Pin It'),
++    'javascript' => array(
++      'http://assets.pinterest.com/js/pinit.js',
++      'pinterest_button.js',
++    ),
++    'style' => SERVICE_LINKS_STYLE_EMPTY,
++    'attributes' => array('class' => array('pin-it-button')),
++    'callback' => 'ws_pinterest_button_data',
++  );
+ 
+   return $links;
+ }
+@@ -206,6 +219,21 @@ function ws_linkedin_share_button_data(&$service, $subst) {
+ }
+ 
+ /**
++ * Callback function for Pinterest Button.
++ */
++function ws_pinterest_button_data(&$service, $subst) {
++  static $pb_settings;
++
++  if (!isset($pb_settings)) {
++    $pb_settings = array(
++      'countlayout' => check_plain(variable_get('service_links_pb_countlayout', 'horizontal')),
++    );
++
++    drupal_add_js(array('ws_pb' => $pb_settings), 'setting');
++  }
++}
++
++/**
+  * Implements hook_menu().
+  */
+ function widget_services_menu() {

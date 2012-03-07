@@ -421,6 +421,21 @@ body.ptf-gwf-bitter {
       padding: 10px;
     }
   }
+  .field-name-service-links-displays-group {
+    text-align: right;
+    height: calc-em(25px, 12px);
+    margin: -2px -20px calc-em(-23px, 12px) 0;
+
+    .service-links {
+      div, iframe {
+        text-align: right;
+        vertical-align: top;
+      }
+      div iframe {
+        vertical-align: baseline;
+      }
+    }
+  }
   .field-name-title {
     h2 {
       font-family: $font-family-headings;
