@@ -585,7 +585,7 @@ body.ptf-gwf-bitter {
 .block-search-api-page {
   .region-header & {
     @include grid(9);
-    margin: 0;
+    margin: 8px 0 0;
 
     form {
       text-align: left;
@@ -597,13 +597,15 @@ body.ptf-gwf-bitter {
         font-size: calc-em(14px, 12px);
         background: #fff;
         background-clip: padding-box;
-        @include box-shadow(0 0 3px rgba(107,107,107,0.75));
-        width: calc-em(228px, 14px);
+        /* @include box-shadow(0 0 3px rgba(107,107,107,0.75)); */
+        width: 228px;
         height: calc(6px, 14px) + 1em;
         margin-right: 7px;
         padding: 6px 10px;
-        border: 2px solid #595959;
-        @include border-radius(5px);
+        border: 2px solid #6f6f6f;
+        border-top-color: #686868;
+        border-bottom-color: #747474;
+        @include border-radius(6px);
         -webkit-appearance: textfield;
       }
       .form-submit {
@@ -613,7 +615,7 @@ body.ptf-gwf-bitter {
         @include box-shadow(0 1px 3px rgba(0,0,0,0.25));
         padding: 4px 15px;
         border: none;
-        @include border-radius(12px);
+        @include border-radius(15px);
       }
     }
   }
@@ -622,7 +624,7 @@ body.ptf-gwf-bitter {
 .block-commerce-cart {
   .region-header & {
     @include grid(6);
-    margin: 0;
+    margin: calc-em(-10px, 12px) 0 0;
     @include grid-prefix(1);
 
     .block-content {
@@ -631,7 +633,8 @@ body.ptf-gwf-bitter {
       @include box-shadow(inset 0 1px 4px rgba(0,0,0,0.18), 0 0 1px rgba(212,212,212,0.18));
       border: 1px solid rgba(212,212,212,0.18);
       @include border-radius(7px);
-      margin: 5px 0 1em;
+      min-height: calc-em(60px, 12px);
+      margin: 5px 0 calc-em(19px, 12px);
       padding: 3px 15px;
 
       .view-header {
@@ -662,6 +665,7 @@ body.ptf-gwf-bitter {
       .cart-empty-block {
         font-size: 1em;
         display: block;
+        margin-top: calc-em(21px, 12px);
       }
       .cart-contents {
         background: transparent;

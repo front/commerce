@@ -585,7 +585,7 @@ body.ptf-gwf-bitter #nav-wrapper {
   margin-left: 5px;
   margin-right: 5px;
   width: 350px;
-  margin: 0;
+  margin: 8px 0 0;
 }
 .region-header .block-search-api-page form {
   text-align: left;
@@ -598,21 +598,20 @@ body.ptf-gwf-bitter #nav-wrapper {
   font-size: 1.167em;
   background: #fff;
   background-clip: padding-box;
-  -moz-box-shadow: 0 0 3px rgba(107, 107, 107, 0.75);
-  -webkit-box-shadow: 0 0 3px rgba(107, 107, 107, 0.75);
-  -o-box-shadow: 0 0 3px rgba(107, 107, 107, 0.75);
-  box-shadow: 0 0 3px rgba(107, 107, 107, 0.75);
-  width: 16.286em;
+  /* @include box-shadow(0 0 3px rgba(107,107,107,0.75)); */
+  width: 228px;
   height: calc(6px, 14px)1em;
   margin-right: 7px;
   padding: 6px 10px;
-  border: 2px solid #595959;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
-  -o-border-radius: 5px;
-  -ms-border-radius: 5px;
-  -khtml-border-radius: 5px;
-  border-radius: 5px;
+  border: 2px solid #6f6f6f;
+  border-top-color: #686868;
+  border-bottom-color: #747474;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  -o-border-radius: 6px;
+  -ms-border-radius: 6px;
+  -khtml-border-radius: 6px;
+  border-radius: 6px;
   -webkit-appearance: textfield;
 }
 .region-header .block-search-api-page form .form-submit {
@@ -625,12 +624,12 @@ body.ptf-gwf-bitter #nav-wrapper {
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
   padding: 4px 15px;
   border: none;
-  -moz-border-radius: 12px;
-  -webkit-border-radius: 12px;
-  -o-border-radius: 12px;
-  -ms-border-radius: 12px;
-  -khtml-border-radius: 12px;
-  border-radius: 12px;
+  -moz-border-radius: 15px;
+  -webkit-border-radius: 15px;
+  -o-border-radius: 15px;
+  -ms-border-radius: 15px;
+  -khtml-border-radius: 15px;
+  border-radius: 15px;
 }
 
 .region-header .block-commerce-cart {
@@ -639,7 +638,7 @@ body.ptf-gwf-bitter #nav-wrapper {
   margin-left: 5px;
   margin-right: 5px;
   width: 230px;
-  margin: 0;
+  margin: -0.833em 0 0;
   padding-left: 40px;
 }
 .region-header .block-commerce-cart .block-content {
@@ -656,7 +655,8 @@ body.ptf-gwf-bitter #nav-wrapper {
   -ms-border-radius: 7px;
   -khtml-border-radius: 7px;
   border-radius: 7px;
-  margin: 5px 0 1em;
+  min-height: 5em;
+  margin: 5px 0 1.583em;
   padding: 3px 15px;
 }
 .region-header .block-commerce-cart .block-content .view-header div, .region-header .block-commerce-cart .block-content .view-header ul {
@@ -686,6 +686,7 @@ body.ptf-gwf-bitter #nav-wrapper {
 .region-header .block-commerce-cart .block-content .cart-empty-block {
   font-size: 1em;
   display: block;
+  margin-top: 1.75em;
 }
 .region-header .block-commerce-cart .block-content .cart-contents {
   background: transparent;
