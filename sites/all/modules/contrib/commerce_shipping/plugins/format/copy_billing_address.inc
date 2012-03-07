@@ -27,7 +27,7 @@ function commerce_shipping_copy_billing_address(&$format, $address, $context = a
         ),
         '#weight' => 100,
         '#attached' => array(
-          'css' => array(drupal_get_path('module', 'commerce_shipping') . '/commerce_shipping.base.css'),
+          'css' => array(drupal_get_path('module', 'commerce_shipping') . '/theme/commerce_shipping.base.css'),
         ),
       );
     }
