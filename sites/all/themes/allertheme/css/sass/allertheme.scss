@@ -749,3 +749,35 @@ input#edit-continue {
     @include box-shadow(0 1px 5px #8C2764);
   }
 }
+
+/* Pager */
+
+.item-list .pager {
+  margin-left: 0;
+  margin-bottom: 15px;
+  list-style: none;
+  text-align: center;
+  @include clearfix;
+
+  li {
+    display: inline;
+    &.pager-current {
+      margin: 0 0.5em;
+    }
+  }
+  a,
+  li.pager-current {
+    display: inline-block;
+    padding: 5px 14px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    @include border-radius(15px);
+  }
+  a {
+    color: #8D2765;
+    &:hover {
+      text-decoration: none;
+      background-color: #f5f5f5;
+    }
+  }
+}
