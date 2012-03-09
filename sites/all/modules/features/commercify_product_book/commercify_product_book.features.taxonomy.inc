@@ -36,7 +36,7 @@ function commercify_product_book_taxonomy_default_vocabularies() {
       'name' => 'Forfattere',
       'machine_name' => 'forfattere',
       'description' => '',
-      'hierarchy' => '0',
+      'hierarchy' => '1',
       'module' => 'taxonomy',
       'weight' => '0',
       'rdf_mapping' => array(
