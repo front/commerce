@@ -1,0 +1,111 @@
+<?php
+/**
+ * @file
+ * Commercify module.
+ * Holds code applied to the Commercify admin.
+ */
+
+/**
+ * Implements hook_menu().
+ * Adds menu action links.
+ */
+function commercify_menu() {
+  $items = array();
+  // Check if Commercify Suppliers feature is enabled
+  if (module_exists('commercify_suppliers')) {
+    $items['admin/commerce/overview/suppliers/add-supplier'] = array(
+        'title' => 'Ny leverandør',
+        'page callback' => 'drupal_goto',
+        'page arguments' => array('node/add/supplier', commercify_link_dest('admin/commerce/overview/suppliers')),
+        'access arguments' => array('create supplier content'),
+        'type' => MENU_LOCAL_ACTION,
+    );
+  }
+
+  // Commerce coupon links...
+  if (module_exists('commerce_coupon')) {
+    foreach (commerce_coupon_get_types() as $type => $info) {
+      $entity = entity_create('commerce_coupon', array('type' => $type));
+      $type_arg = strtr($type, '_', '-');
+      $items['admin/commerce/overview/coupons/add-' . $type_arg] = array(
+          'title' => 'Create @name',
+          'title arguments' => array('@name' => $info->label),
+          'page callback' => 'drupal_goto',
+          'page arguments' => array('node/add/supplier', commercify_link_dest('admin/commerce/overview/coupons')),
+          'access callback' => 'commerce_coupon_access',
+          'access arguments' => array('create', $type),
+          //'module' => 'commerce_coupon',
+          'type' => MENU_LOCAL_ACTION,
+      );
+    }
+  }
+
+  // Transplant a user link...
+  $items['admin/commerce/overview/users/new'] = array(
+      'title' => 'Ny brukerkonto',
+      'description' => t('Add a new user to the system'),
+      'page callback' => 'drupal_goto',
+      'page arguments' => array('admin/people/create', commercify_link_dest('admin/commerce/overview/users')),
+      'access arguments' => array('administer users'),
+      'type' => MENU_LOCAL_ACTION,
+  );
+
+  // Add new order...
+  $items['admin/commerce/overview/orders/new'] = array(
+      'title' => 'Create an order',
+      'description' => 'Create a new order.',
+      'page callback' => 'drupal_goto',
+      'page arguments' => array('admin/people/create', commercify_link_dest('admin/commerce/overview/users')),
+      'access callback' => 'commerce_order_access',
+      'access arguments' => array('create'),
+      'weight' => 10,
+      'type' => MENU_LOCAL_ACTION,
+  );
+
+  // Add link for each product type..
+  foreach (commerce_product_types() as $type => $product_type) {
+    $items['admin/commerce/overview/products/add/' . strtr($type, array('_' => '-'))] = array(
+        'title' => 'Ny !name',
+        'title arguments' => array('!name' => $product_type['name']),
+        'description' => $product_type['description'],
+        'page callback' => 'drupal_goto',
+        'page arguments' => array('admin/commerce/products/add/' . strtr($type, array('_' => '-')), commercify_link_dest('admin/commerce/overview')),
+        'access callback' => 'commerce_product_access',
+        'access arguments' => array('create', commerce_product_new($type)),
+        'type' => MENU_LOCAL_ACTION,
+    );
+  }
+  // Menu action for node types with product reference fields, AKA product displays.
+  $entities = array();
+  foreach (field_info_fields() as $name => $field) {
+    if ($field['type'] == 'commerce_product_reference' && !empty($field['bundles']['node'])) {
+      $entities = array_merge($field['bundles']['node'], $entities);
+    }
+  }
+  foreach ($entities AS $key => $entity) {
+    $items['admin/commerce/overview/products/displays/add-' . $entity] = array(
+        'title' => 'Ny ' . $entity,
+        'page callback' => 'drupal_goto',
+        'page arguments' => array('node/add/' . $entity, commercify_link_dest('admin/commerce/overview/products/displays')),
+        'access arguments' => array('create ' . $entity . ' content'),
+        'type' => MENU_LOCAL_ACTION,
+        'weight' => 1,
+    );
+  }
+  return $items;
+  
+}
+
+/**
+ * Format a url destination to feed into drupal_goto().
+ * 
+ * @param string $url
+ * @return array 
+ */
+function commercify_link_dest($url) {
+  return array(
+      'query' => array(
+          'destination' => $url
+      )
+  );
+}
