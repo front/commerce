@@ -38,6 +38,11 @@ function commercify_frontpage_standard_ds_field_settings_info() {
         'class' => '',
       ),
     ),
+    'service_links_displays_group' => array(
+      'weight' => '0',
+      'label' => 'hidden',
+      'format' => 'sld_group_image',
+    ),
   );
   $export['node|produktvisning|default'] = $ds_fieldsetting;
 
