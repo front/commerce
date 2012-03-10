@@ -23,6 +23,10 @@ function views_rss_core_views_rss_namespaces() {
     'prefix' => 'xml',
     'uri' => trim($GLOBALS['base_url'], '/') . '/',
   );
+  $namespaces['atom'] = array(
+    'prefix' => 'xmlns',
+    'uri' => 'http://www.w3.org/2005/Atom',
+  );
   return $namespaces;
 }
 
@@ -32,7 +36,10 @@ function views_rss_core_views_rss_namespaces() {
 function views_rss_core_views_rss_channel_elements() {
   $elements['title'] = array(
     'configurable' => FALSE,
-    'preprocess functions' => array('views_rss_core_preprocess_channel_title'),
+    'preprocess functions' => array(
+      'views_rss_core_preprocess_channel_title',
+      'views_rss_htmlspecialchars',
+    ),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-title',
   );
   $elements['description'] = array(
@@ -40,6 +47,7 @@ function views_rss_core_views_rss_channel_elements() {
     'settings form' => array('#type' => 'textarea', '#rows' => 3),
     'preprocess functions' => array(
       'views_rss_core_preprocess_channel_description',
+      'views_rss_rewrite_relative_paths',
       'views_rss_htmlspecialchars',
     ),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-description',
@@ -48,6 +56,11 @@ function views_rss_core_views_rss_channel_elements() {
     'configurable' => FALSE,
     'preprocess functions' => array('views_rss_core_preprocess_channel_link'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-link',
+  );
+  $elements['atom:link'] = array(
+    'configurable' => FALSE,
+    'preprocess functions' => array('views_rss_core_preprocess_channel_atom_link'),
+    'help' => 'http://www.rssboard.org/rss-profile#namespace-elements-atom-link',
   );
   $elements['language'] = array(
     'description' => t('The language the channel is written in. This allows aggregators to group all Italian language sites, for example, on a single page. See list of <a href="@w3c_url">allowable values</a> for this element defined by the W3C.', array(
@@ -62,6 +75,11 @@ function views_rss_core_views_rss_channel_elements() {
       'views_rss_core_preprocess_category',
     ),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-category',
+  );
+  $elements['image'] = array(
+    'description' => t('Path to the image to be used as the artwork for your feed, for example <em>sites/default/files/AllAboutEverything.jpg</em>. Allowed image formats are GIF, JPEG or PNG. Maximum image width is 144 pixels, maximum height 400 pixels.'),
+    'preprocess functions' => array('views_rss_core_preprocess_channel_image'),
+    'help' => 'http://www.rssboard.org/rss-profile#element-channel-image',
   );
   $elements['copyright'] = array(
     'description' => t('Copyright notice for content in the channel.'),
@@ -116,7 +134,6 @@ function views_rss_core_views_rss_channel_elements() {
     'preprocess functions' => array('views_rss_core_preprocess_channel_date'),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-lastbuilddate',
   );
-  // @TODO: add 'image', ignore 'textInput'.
   return $elements;
 }
 
@@ -136,8 +153,8 @@ function views_rss_core_views_rss_item_elements() {
   $elements['description'] = array(
     'description' => t('The item synopsis. Required by RSS specification.'),
     'preprocess functions' => array(
-      'views_rss_htmlspecialchars',
       'views_rss_rewrite_relative_paths',
+      'views_rss_htmlspecialchars',
     ),
     'help' => 'http://www.rssboard.org/rss-profile#element-channel-item-description',
   );
@@ -355,4 +372,44 @@ function views_rss_core_field_formatter_view($entity_type, $entity, $field, $ins
     )));
   }
   return $element;
+}
+
+/**
+ * Implements hook_views_rss_options_form_validate().
+ */
+function views_rss_core_views_rss_options_form_validate($form, &$form_state) {
+
+  // Validate channel <image> element.
+  if (!empty($form_state['values']['style_options']['channel']['core']['views_rss_core']['image'])) {
+    // Check that image exists and is in acceptable format.
+    $image = image_load($form_state['values']['style_options']['channel']['core']['views_rss_core']['image']);
+    if (empty($image)) {
+      form_set_error('style_options][channel][core][views_rss_core][image', t('Unable to find %image or incorrect image format.', array(
+        '%image' => $form_state['values']['style_options']['channel']['core']['views_rss_core']['image'],
+      )));
+    }
+    else {
+      // Check image width.
+      if ($image->info['width'] > 144) {
+        form_set_error('style_options][channel][core][views_rss_core][image', t("Maximum allowed width of an image for feed channel's &lt;image&gt; element is 144 pixels. Specified %image is !width pixels wide.", array(
+          '%image' => $form_state['values']['style_options']['channel']['core']['views_rss_core']['image'],
+          '!width' => $image->info['width'],
+        )));
+      }
+      // Check image height.
+      if ($image->info['height'] > 400) {
+        form_set_error('style_options][channel][core][views_rss_core][image', t("Maximum allowed height of an image for feed channel's &lt;image&gt; element is 400 pixels. Specified %image is !height pixels high.", array(
+          '%image' => $form_state['values']['style_options']['channel']['core']['views_rss_core']['image'],
+          '!height' => $image->info['height'],
+        )));
+      }
+    }
+  }
+
+  // Validate channel <docs> element.
+  if (!empty($form_state['values']['style_options']['channel']['core']['views_rss_core']['docs'])) {
+    if (!valid_url($form_state['values']['style_options']['channel']['core']['views_rss_core']['docs'], TRUE)) {
+      form_set_error('style_options][channel][core][views_rss_core][docs', t("Not a valid URL."));
+    }
+  }
 }
