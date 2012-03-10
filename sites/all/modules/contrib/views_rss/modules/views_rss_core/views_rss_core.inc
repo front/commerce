@@ -17,14 +17,87 @@ function views_rss_core_preprocess_channel_title(&$variables) {
  * Preprocess function for channel <description> element.
  */
 function views_rss_core_preprocess_channel_description(&$variables) {
-  $variables['value'] = ($variables['value']) ? $variables['value'] : variable_get('site_mission', '');
+  $variables['value'] = ($variables['value']) ? $variables['value'] : variable_get('site_slogan', '');
 }
 
 /**
  * Preprocess function for channel <link> element.
  */
 function views_rss_core_preprocess_channel_link(&$variables) {
-  $variables['value'] = trim($GLOBALS['base_url'], '/') . '/';
+  $variables['value'] = url('<front>', array('absolute' => TRUE));
+}
+
+/**
+ * Preprocess function for channel <atom:link> element.
+ */
+function views_rss_core_preprocess_channel_atom_link(&$variables) {
+  $url_options = array('absolute' => TRUE);
+  $input = $variables['view']->get_exposed_input();
+  if ($input) {
+    $url_options['query'] = $input;
+  }
+  $url = url($variables['view']->get_url(), $url_options);
+
+  $variables['value'] = array(
+    'arguments' => array(
+      'rel' => 'self',
+      'href' => $url,
+    ),
+  );
+}
+
+/**
+ * Preprocess function for channel <image> element.
+ */
+function views_rss_core_preprocess_channel_image(&$variables) {
+  if (!empty($variables['value'])) {
+    $path = $variables['value'];
+    // Get value of channel <title> element from its preprocess function.
+    views_rss_core_preprocess_channel_title($variables);
+    $title = $variables['value'];
+    // Get value of channel <title> element from its preprocess function.
+    views_rss_core_preprocess_channel_link($variables);
+    $link = $variables['value'];
+    // Create subelements array.
+    $subelements = array(
+      'url' => array(
+        'element' => 'url',
+        'value' => file_create_url($path),
+      ),
+      'title' => array(
+        'element' => 'title',
+        'value' => $title,
+      ),
+      'link' => array(
+        'element' => 'link',
+        'value' => $link,
+      ),
+    );
+    // Try to get image description from website's mission.
+    $site_slogan = variable_get('site_slogan', '');
+    if (!empty($site_slogan)) {
+      $subelements['description'] = array(
+        'element' => 'description',
+        'value' => $site_slogan,
+      );
+    }
+    // Get image width and height.
+    $image = image_load($path);
+    if (!empty($image)) {
+      $subelements['width'] = array(
+        'element' => 'width',
+        'value' => $image->info['width'],
+      );
+      $subelements['height'] = array(
+        'element' => 'height',
+        'value' => $image->info['height'],
+      );
+    }
+    // Assign generated subelements array back to $variables.
+    $variables['value'] = array(
+      'subelements' => $subelements,
+    );
+  }
 }
 
 /**
@@ -126,16 +199,17 @@ function views_rss_core_preprocess_item_guid(&$variables) {
  * Preprocess function for channel <source> element.
  */
 function views_rss_core_preprocess_item_source(&$variables) {
-  $value = array(
+  $url_options = array('absolute' => TRUE);
+  $input = $variables['view']->get_exposed_input();
+  if ($input) {
+    $url_options['query'] = $input;
+  }
+  $url = url($variables['view']->get_url(), $url_options);
+
+  $variables['value'] = array(
     'value' => $variables['view']->get_title(),
     'arguments' => array(
-      'url' => trim($GLOBALS['base_url'], '/') . '/' . $variables['view']->get_url(),
+      'url' => $url,
     ),
   );
-  // Add exposed filter values if enabled.
-  $exposed_input = $variables['view']->get_exposed_input();
-  if ($variables['view']->style_plugin->options['feed_settings']['exposed_in_source'] && $exposed_input) {
-    $value['arguments']['url'] .= '?' . http_build_query($exposed_input, '', '&');
-  }
-  $variables['value'] = $value;
 }

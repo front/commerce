@@ -6,9 +6,9 @@ core = 7.x
 files[] = views/views_rss_plugin_style_fields.inc
 files[] = views/views_rss_handler_field_user_mail.inc
 
-; Information added by drupal.org packaging script on 2012-02-16
-version = "7.x-2.x-dev"
+; Information added by drupal.org packaging script on 2012-03-08
+version = "7.x-2.0-rc2"
 core = "7.x"
 project = "views_rss"
-datestamp = "1329353118"
+datestamp = "1331210164"
 

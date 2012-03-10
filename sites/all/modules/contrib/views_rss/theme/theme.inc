@@ -49,20 +49,26 @@ function template_preprocess_views_view_views_rss(&$variables) {
       if (!is_array($value)) {
         $value = array('value' => $value);
       }
+      // There are cases when an element is really a set of elements
+      // (for example core <category> element). So let's just convert
+      // each element into array of elements, which in most cases
+      // would containt just a single element.
+      if (empty($value['elements'])) {
+        $value = array('elements' => array($value));
+      }
       // Theme channel element value.
       // If theme definition was provided by hook_views_rss_channel_elements_alter()
       // implementation, but theme value was set to FALSE, it means that such
       // element should not be themed here.
-      $theme_function = isset($definition['theme']) ? $definition['theme'] : 'views_view_views_rss_field';
-      if ($theme_function) {
+      $theme_function = !empty($definition['theme']) ? $definition['theme'] : 'views_view_views_rss_field';
+      foreach ($value['elements'] as $single_element) {
         $item_variables = array_merge(array(
           'element' => $element,
           'item' => $view->style_plugin->options['channel'],
           'view' => $view,
-        ), $value);
-        $value = theme($theme_function, $item_variables);
+        ), $single_element);
+        $variables['channel'] .= theme($theme_function, $item_variables);
       }
-      $variables['channel'] .= $value;
     }
   }
 
@@ -115,7 +121,7 @@ function template_preprocess_views_view_views_rss(&$variables) {
           $value = array('elements' => array($value));
         }
         // Theme item element value(s).
-        $theme_function = isset($item_elements[$module][$element]['theme']) ? $item_elements[$module][$element]['theme'] : 'views_view_views_rss_field';
+        $theme_function = !empty($item_elements[$module][$element]['theme']) ? $item_elements[$module][$element]['theme'] : 'views_view_views_rss_field';
         foreach ($value['elements'] as $single_element) {
           $item_variables = array_merge(array(
             'element' => $element,

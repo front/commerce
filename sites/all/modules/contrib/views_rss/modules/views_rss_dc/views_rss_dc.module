@@ -22,6 +22,7 @@ function views_rss_dc_views_rss_namespaces() {
 function views_rss_dc_views_rss_item_elements() {
   $elements['dc:title'] = array(
     'description' => t('A name given to the resource. Typically, a Title will be a name by which the resource is formally known.'),
+    'preprocess functions' => array('views_rss_htmlspecialchars'),
     'help' => 'http://dublincore.org/documents/1999/07/02/dces/#title',
   );
   $elements['dc:creator'] = array(
@@ -30,10 +31,15 @@ function views_rss_dc_views_rss_item_elements() {
   );
   $elements['dc:subject'] = array(
     'description' => t('The topic of the content of the resource. Typically, a Subject will be expressed as keywords, key phrases or classification codes that describe a topic of the resource. Recommended best practice is to select a value from a controlled vocabulary or formal classification scheme.'),
+    'preprocess functions' => array('views_rss_htmlspecialchars'),
     'help' => 'http://dublincore.org/documents/1999/07/02/dces/#subject',
   );
   $elements['dc:description'] = array(
     'description' => t('An account of the content of the resource. Description may include but is not limited to: an abstract, table of contents, reference to a graphical representation of content or a free-text account of the content.'),
+    'preprocess functions' => array(
+      'views_rss_rewrite_relative_paths',
+      'views_rss_htmlspecialchars',
+    ),
     'help' => 'http://dublincore.org/documents/1999/07/02/dces/#description',
   );
   $elements['dc:publisher'] = array(

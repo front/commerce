@@ -8,7 +8,7 @@
 /**
  * Module build version.
  */
-define('VIEWS_RSS_BUILD', '7.x-2.x-dev-20120215_2');
+define('VIEWS_RSS_BUILD', '7.x-2.x-dev-20120306');
 
 /**
  * Module installation path.
@@ -156,28 +156,25 @@ function views_rss_extract_element_names($element, $core_namespace = '') {
 }
 
 /**
+ * Preprocess callback.
  * Replaces relative paths in element value with absolute URLs.
- * Based on the code by Gerd Riesselmann from "RSS doesn't know a base-URL":
- * http://www.gerd-riesselmann.net/archives/2005/11/rss-doesnt-know-a-base-url
+ * Based on preg_match from rel_to_abs module by lourenzo,
+ * with added patch from issue #1335734 by joelstein.
+ * @see http://drupal.org/project/rel_to_abs
+ * @see http://drupal.org/node/1335734
  */
-function views_rss_rewrite_relative_paths($element) {
+function views_rss_rewrite_relative_paths(&$element) {
   // Rewriting relative paths should be enabled by default,
   // so rewrite relative paths even if option value is not set.
   if (
     !isset($element['view']->style_plugin->options['feed_settings']['absolute_paths'])
     || !empty($element['view']->style_plugin->options['feed_settings']['absolute_paths'])
   ) {
-    $baseurl = trim($GLOBALS['base_url'], '/') . '/';
-    // Replace link paths.
-    $pattern = "/<a([^>]*) href=\"[^http|ftp|https]([^\"]*)\"/";
-    $replacement = "<a\${1} href=\"" . $baseurl . "\${2}\"";
-    $element['value'] = preg_replace($pattern, $replacement, $element['value']);
-    // Replace image paths.
-    $pattern = "/<img([^>]*) src=\"[^http|ftp|https]([^\"]*)\"/";
-    $replacement = "<img\${1} src=\"" . $baseurl . "\${2}\"";
+    global $base_path;
+    $pattern = '/(src|href)=(\'|")' . preg_quote($base_path, '/') . '/';
+    $replacement = '$1=$2' . url('<front>', array('absolute' => TRUE));
     $element['value'] = preg_replace($pattern, $replacement, $element['value']);
   }
-  return $element['value'];
 }
 
 /**
@@ -192,10 +189,11 @@ function views_rss_map_assoc($array) {
 }
 
 /**
+ * Preprocess callback.
  * Converts XML special characters to HTML entities.
  */
-function views_rss_htmlspecialchars(&$variables) {
-  if (isset($variables['value']) && !is_array($variables['value'])) {
-    $variables['value'] = htmlspecialchars(htmlspecialchars_decode($variables['value'], ENT_QUOTES), ENT_QUOTES, NULL, FALSE);
+function views_rss_htmlspecialchars(&$element) {
+  if (isset($element['value']) && !is_array($element['value'])) {
+    $element['value'] = check_plain(htmlspecialchars_decode($element['value'], ENT_QUOTES));
   }
 }
