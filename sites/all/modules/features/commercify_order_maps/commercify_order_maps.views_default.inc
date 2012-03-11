@@ -15,7 +15,7 @@ function commercify_order_maps_views_default_views() {
   $view->description = '';
   $view->tag = 'ip_geoloc';
   $view->base_table = 'commerce_order';
-  $view->human_name = 'C Dashboard Map Overview';
+  $view->human_name = 'C-admin Map Overview';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -262,6 +262,46 @@ function commercify_order_maps_views_default_views() {
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
   $handler->display->display_options['exposed_block'] = TRUE;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Commerce Order: Order state */
+  $handler->display->display_options['filters']['state']['id'] = 'state';
+  $handler->display->display_options['filters']['state']['table'] = 'commerce_order';
+  $handler->display->display_options['filters']['state']['field'] = 'state';
+  $handler->display->display_options['filters']['state']['value'] = array(
+    'pending' => 'pending',
+    'completed' => 'completed',
+  );
+  $handler->display->display_options['filters']['state']['group'] = 1;
+  $handler->display->display_options['filters']['state']['expose']['operator_id'] = 'state_op';
+  $handler->display->display_options['filters']['state']['expose']['label'] = 'Ordrestatus';
+  $handler->display->display_options['filters']['state']['expose']['operator'] = 'state_op';
+  $handler->display->display_options['filters']['state']['expose']['identifier'] = 'state';
+  $handler->display->display_options['filters']['state']['expose']['multiple'] = 1;
+  $handler->display->display_options['filters']['state']['expose']['reduce'] = 0;
+  /* Filter criterion: Commerce Order: Created date */
+  $handler->display->display_options['filters']['created']['id'] = 'created';
+  $handler->display->display_options['filters']['created']['table'] = 'commerce_order';
+  $handler->display->display_options['filters']['created']['field'] = 'created';
+  $handler->display->display_options['filters']['created']['operator'] = '<=';
+  $handler->display->display_options['filters']['created']['group'] = 1;
+  $handler->display->display_options['filters']['created']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['created']['expose']['operator_id'] = 'created_op';
+  $handler->display->display_options['filters']['created']['expose']['label'] = 'Fra DD-MM-ÅÅÅÅ';
+  $handler->display->display_options['filters']['created']['expose']['operator'] = 'created_op';
+  $handler->display->display_options['filters']['created']['expose']['identifier'] = 'created';
+  $handler->display->display_options['filters']['created']['expose']['multiple'] = FALSE;
+  /* Filter criterion: Commerce Order: Created date */
+  $handler->display->display_options['filters']['created_1']['id'] = 'created_1';
+  $handler->display->display_options['filters']['created_1']['table'] = 'commerce_order';
+  $handler->display->display_options['filters']['created_1']['field'] = 'created';
+  $handler->display->display_options['filters']['created_1']['operator'] = '<=';
+  $handler->display->display_options['filters']['created_1']['group'] = 1;
+  $handler->display->display_options['filters']['created_1']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['created_1']['expose']['operator_id'] = 'created_1_op';
+  $handler->display->display_options['filters']['created_1']['expose']['label'] = 'Til DD-MM-ÅÅÅÅ';
+  $handler->display->display_options['filters']['created_1']['expose']['operator'] = 'created_1_op';
+  $handler->display->display_options['filters']['created_1']['expose']['identifier'] = 'created_1';
+  $handler->display->display_options['filters']['created_1']['expose']['multiple'] = FALSE;
   $translatables['c_dashboard_map_overview'] = array(
     t('Master'),
     t('Order Locations'),

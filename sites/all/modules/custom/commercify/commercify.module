@@ -108,4 +108,91 @@ function commercify_link_dest($url) {
           'destination' => $url
       )
   );
+ }
+
+
+
+/**
+ * Implements hook_block_info();
+ */
+function commercify_block_info() {
+  $blocks['order-state-modify'] = array(
+      'info' => t('Change order state'),
+  );
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view();
+ */
+function commercify_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'order-state-modify':
+      $order = menu_get_object('commerce_order', 3);
+      if (!empty($order)) {
+        $block['subject'] = t('Modify order status');
+        $block['content'] = drupal_render(drupal_get_form('commercify_moderate_form', $order));
+      }
+      break;
+  }
+  return $block;
+}
+
+/**
+ * Adds a block for quickly setting status on the admin order page.
+ */
+function commercify_moderate_form($form, &$form_state, $order) {
+  $form = array();
+  $form_state['order'] = $order;
+  // Build an array of order status options grouped by order state.
+  $options = array();
+
+  foreach (commerce_order_state_get_title() as $name => $title) {
+    foreach (commerce_order_statuses(array('state' => $name)) as $order_status) {
+      $options[check_plain($title)][$order_status['name']] = check_plain($order_status['title']);
+    }
+  }
+  $form['moderation'] = array(
+      '#type' => 'fieldset',
+      '#title' => 'Status: ' . commerce_order_status_get_title($form_state['order']->status),
+      '#collapsible' => TRUE,
+      '#collapsed' => TRUE
+  );
+  $form['moderation']['moderate_status'] = array(
+      '#type' => 'select',
+      '#title' => t('Ordrestatus'),
+      '#options' => $options,
+      '#default_value' => $order->status,
+      '#description' => t('Set the status for this order.'),
+  );
+  
+  global $user;
+  $default_msg = 'Oppdatert av ' . $user->name;
+  $form['moderation']['log'] = array(
+      '#type' => 'textarea',
+      '#title' => 'Log message',
+      '#default_value' => $default_msg,
+  );
+  $form['moderation']['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Change status'),
+  );
+  return $form;
+}
+
+function commercify_moderate_form_validate($form, &$form_state) {
+  $order = commerce_order_load($form_state['order']->order_id);
+  if ($order->status != $form_state['order']->status) {
+    form_set_error('moderation', t('Form is outdated. Please reload page and try again.'));
+  }
+}
+
+function commercify_moderate_form_submit($form, &$form_state) {
+  // Check that nothin's happened with the state in the meantime.
+  drupal_set_message(
+          t("Status changed from @before to @now.", array(
+              '@before' => commerce_order_status_get_title($form_state['order']->status),
+              '@now' => commerce_order_status_get_title($form_state['values']['moderate_status']))));
+  commerce_order_status_update($form_state['order'], $form_state['values']['moderate_status']);
 }

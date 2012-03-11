@@ -24,7 +24,7 @@ function commercify_suppliers_node_info() {
       'base' => 'node_content',
       'description' => t('A supplier of goods, referenced to from products'),
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Tittel'),
       'help' => '',
     ),
   );
