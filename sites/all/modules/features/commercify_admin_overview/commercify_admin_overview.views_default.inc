@@ -12,10 +12,10 @@ function commercify_admin_overview_views_default_views() {
 
   $view = new view;
   $view->name = 'c_dashboard_coupons';
-  $view->description = 'Display a list of coupons for the store admin.';
+  $view->description = 'Commerce Admin: Display a list of coupons for the store admin.';
   $view->tag = 'commerce';
   $view->base_table = 'commerce_coupon';
-  $view->human_name = 'C Dashboard coupons';
+  $view->human_name = 'C-admin Coupons';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -38,8 +38,14 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['query']['options']['distinct'] = TRUE;
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nullstill';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér på';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Synkende';
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '50';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer per side';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'coupon_id' => 'coupon_id',
@@ -165,6 +171,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['commerce_coupon_code']['id'] = 'commerce_coupon_code';
   $handler->display->display_options['fields']['commerce_coupon_code']['table'] = 'field_data_commerce_coupon_code';
   $handler->display->display_options['fields']['commerce_coupon_code']['field'] = 'commerce_coupon_code';
+  $handler->display->display_options['fields']['commerce_coupon_code']['label'] = 'Din kupongkode';
   $handler->display->display_options['fields']['commerce_coupon_code']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['commerce_coupon_code']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['commerce_coupon_code']['alter']['absolute'] = 0;
@@ -523,16 +530,16 @@ function commercify_admin_overview_views_default_views() {
     t('Sist brukte kuponger'),
     t('Vis alle'),
     t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
+    t('Nullstill'),
+    t('Sortér på'),
+    t('Stigende'),
+    t('Synkende'),
+    t('Elementer per side'),
+    t('- Alle -'),
     t('Offset'),
     t('Commerce Coupon Log'),
     t('Commerce Coupon'),
-    t('Coupon Code'),
+    t('Din kupongkode'),
     t('Type'),
     t('Handlinger'),
     t('Fixed Amount'),
@@ -559,7 +566,7 @@ function commercify_admin_overview_views_default_views() {
   $view->description = 'Lists ofrecent purchased products';
   $view->tag = 'default';
   $view->base_table = 'commerce_line_item';
-  $view->human_name = 'C Dashboard Line items';
+  $view->human_name = 'C-admin Line items';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -753,7 +760,7 @@ function commercify_admin_overview_views_default_views() {
   $view->description = 'Display a list of orders for the store admin.';
   $view->tag = 'commerce';
   $view->base_table = 'commerce_order';
-  $view->human_name = 'C Dashboard Order Exports';
+  $view->human_name = 'C-admin Order Exports';
   $view->core = 0;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -775,10 +782,16 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Eksporter';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nullstill';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér på';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Synkende';
   $handler->display->display_options['exposed_form']['options']['autosubmit'] = 0;
   $handler->display->display_options['exposed_form']['options']['autosubmit_hide'] = 1;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = 50;
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer per side';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'order_number' => 'order_number',
@@ -891,7 +904,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'commerce_order';
   $handler->display->display_options['fields']['created']['field'] = 'created';
-  $handler->display->display_options['fields']['created']['label'] = 'Created';
+  $handler->display->display_options['fields']['created']['label'] = 'Opprettet';
   $handler->display->display_options['fields']['created']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['created']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['created']['alter']['absolute'] = 0;
@@ -916,7 +929,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['commerce_customer_address']['table'] = 'field_data_commerce_customer_address';
   $handler->display->display_options['fields']['commerce_customer_address']['field'] = 'commerce_customer_address';
   $handler->display->display_options['fields']['commerce_customer_address']['relationship'] = 'commerce_customer_billing_profile_id';
-  $handler->display->display_options['fields']['commerce_customer_address']['label'] = 'Name';
+  $handler->display->display_options['fields']['commerce_customer_address']['label'] = 'Navn';
   $handler->display->display_options['fields']['commerce_customer_address']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['commerce_customer_address']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['commerce_customer_address']['alter']['absolute'] = 0;
@@ -948,7 +961,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['name']['table'] = 'users';
   $handler->display->display_options['fields']['name']['field'] = 'name';
   $handler->display->display_options['fields']['name']['relationship'] = 'uid';
-  $handler->display->display_options['fields']['name']['label'] = 'User';
+  $handler->display->display_options['fields']['name']['label'] = 'Bruker';
   $handler->display->display_options['fields']['name']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['name']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['name']['alter']['absolute'] = 0;
@@ -969,7 +982,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['commerce_order_total']['id'] = 'commerce_order_total';
   $handler->display->display_options['fields']['commerce_order_total']['table'] = 'field_data_commerce_order_total';
   $handler->display->display_options['fields']['commerce_order_total']['field'] = 'commerce_order_total';
-  $handler->display->display_options['fields']['commerce_order_total']['label'] = 'Total';
+  $handler->display->display_options['fields']['commerce_order_total']['label'] = 'Totalt';
   $handler->display->display_options['fields']['commerce_order_total']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['commerce_order_total']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['commerce_order_total']['alter']['absolute'] = 0;
@@ -1317,23 +1330,23 @@ function commercify_admin_overview_views_default_views() {
     t('Ordre for siste 7 dager'),
     t('Ordreliste'),
     t('Eksporter'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
+    t('Nullstill'),
+    t('Sortér på'),
+    t('Stigende'),
+    t('Synkende'),
+    t('Elementer per side'),
+    t('- Alle -'),
     t('Offset'),
     t('Order owner'),
     t('Customer profile'),
     t('Line Item'),
     t('Product'),
     t('Order number'),
-    t('Created'),
-    t('Name'),
+    t('Opprettet'),
+    t('Navn'),
     t('-'),
-    t('User'),
-    t('Total'),
+    t('Bruker'),
+    t('Totalt'),
     t('Order status'),
     t('Created date'),
     t('Order state'),
@@ -1355,10 +1368,10 @@ function commercify_admin_overview_views_default_views() {
 
   $view = new view;
   $view->name = 'c_dashboard_orders';
-  $view->description = 'Display a list of orders for the store admin.';
+  $view->description = 'Commercify admin: Display a list of orders for the store admin.';
   $view->tag = 'commerce';
   $view->base_table = 'commerce_order';
-  $view->human_name = 'C Dashboard Orders';
+  $view->human_name = 'C-admin Orders';
   $view->core = 0;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -1778,6 +1791,299 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer per side';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all'] = 0;
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
+  $handler->display->display_options['defaults']['fields'] = FALSE;
+  /* Field: Bulk operations: Commerce Order */
+  $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['table'] = 'commerce_order';
+  $handler->display->display_options['fields']['views_bulk_operations']['field'] = 'views_bulk_operations';
+  $handler->display->display_options['fields']['views_bulk_operations']['label'] = 'Operasjoner';
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['entity_load_capacity'] = '10';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['operations'] = array(
+    'action::views_bulk_operations_delete_item' => array(
+      'selected' => 1,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 1,
+      'label' => 'Slett ordre',
+    ),
+    'action::views_bulk_operations_script_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'rules_component::rules_apply_a_percentage_coupon_amount_cloned_' => array(
+      'selected' => 1,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_modify_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+      'settings' => array(
+        'show_all_tokens' => 1,
+        'display_values' => array(
+          '_all_' => '_all_',
+        ),
+      ),
+    ),
+    'action::views_bulk_operations_argument_selector_action' => array(
+      'selected' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+      'settings' => array(
+        'url' => '',
+      ),
+    ),
+    'rules_component::commerce_shipping_service_BPAKKE_DOR-DOR' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'rules_component::commerce_shipping_service_EKSPRESS07' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'rules_component::commerce_shipping_service_EKSPRESS09' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'rules_component::commerce_shipping_service_PA_DOREN' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'rules_component::commerce_shipping_service_SERVICEPAKKE' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::system_send_email_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::system_goto_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::system_message_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+  );
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['enable_select_all_pages'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['display_type'] = '0';
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['display_result'] = 1;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['merge_single_action'] = 0;
+  $handler->display->display_options['fields']['views_bulk_operations']['vbo']['force_single'] = 0;
+  /* Field: Commerce Order: Order number */
+  $handler->display->display_options['fields']['order_number']['id'] = 'order_number';
+  $handler->display->display_options['fields']['order_number']['table'] = 'commerce_order';
+  $handler->display->display_options['fields']['order_number']['field'] = 'order_number';
+  $handler->display->display_options['fields']['order_number']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['order_number']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['order_number']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['order_number']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['order_number']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['order_number']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['order_number']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['order_number']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['order_number']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['order_number']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['order_number']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['order_number']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['order_number']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['order_number']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['order_number']['link_to_order'] = 'admin';
+  /* Field: Commerce Order: Created date */
+  $handler->display->display_options['fields']['created']['id'] = 'created';
+  $handler->display->display_options['fields']['created']['table'] = 'commerce_order';
+  $handler->display->display_options['fields']['created']['field'] = 'created';
+  $handler->display->display_options['fields']['created']['label'] = 'Opprettet';
+  $handler->display->display_options['fields']['created']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['created']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['created']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['created']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['created']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['created']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['created']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['created']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['created']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['created']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['created']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['created']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['created']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['created']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['created']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['created']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['created']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['created']['date_format'] = 'custom';
+  $handler->display->display_options['fields']['created']['custom_date_format'] = 'd-m-h:i';
+  /* Field: Commerce Customer profile: Address */
+  $handler->display->display_options['fields']['commerce_customer_address']['id'] = 'commerce_customer_address';
+  $handler->display->display_options['fields']['commerce_customer_address']['table'] = 'field_data_commerce_customer_address';
+  $handler->display->display_options['fields']['commerce_customer_address']['field'] = 'commerce_customer_address';
+  $handler->display->display_options['fields']['commerce_customer_address']['relationship'] = 'commerce_customer_billing_profile_id';
+  $handler->display->display_options['fields']['commerce_customer_address']['label'] = 'Navn';
+  $handler->display->display_options['fields']['commerce_customer_address']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address']['empty'] = '-';
+  $handler->display->display_options['fields']['commerce_customer_address']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address']['hide_alter_empty'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address']['click_sort_column'] = 'country';
+  $handler->display->display_options['fields']['commerce_customer_address']['settings'] = array(
+    'use_widget_handlers' => 0,
+    'format_handlers' => array(
+      'name-oneline' => 'name-oneline',
+    ),
+  );
+  $handler->display->display_options['fields']['commerce_customer_address']['field_api_classes'] = 0;
+  /* Field: User: Name */
+  $handler->display->display_options['fields']['name']['id'] = 'name';
+  $handler->display->display_options['fields']['name']['table'] = 'users';
+  $handler->display->display_options['fields']['name']['field'] = 'name';
+  $handler->display->display_options['fields']['name']['relationship'] = 'uid';
+  $handler->display->display_options['fields']['name']['label'] = 'Bruker';
+  $handler->display->display_options['fields']['name']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['name']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['name']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['name']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['name']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['name']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['name']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['name']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['name']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['name']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['name']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['name']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['name']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['name']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['name']['link_to_user'] = 1;
+  $handler->display->display_options['fields']['name']['overwrite_anonymous'] = 0;
+  /* Field: Commerce Order: Order total */
+  $handler->display->display_options['fields']['commerce_order_total']['id'] = 'commerce_order_total';
+  $handler->display->display_options['fields']['commerce_order_total']['table'] = 'field_data_commerce_order_total';
+  $handler->display->display_options['fields']['commerce_order_total']['field'] = 'commerce_order_total';
+  $handler->display->display_options['fields']['commerce_order_total']['label'] = 'Totalt';
+  $handler->display->display_options['fields']['commerce_order_total']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['commerce_order_total']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['commerce_order_total']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['commerce_order_total']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['commerce_order_total']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['commerce_order_total']['click_sort_column'] = 'amount';
+  $handler->display->display_options['fields']['commerce_order_total']['type'] = 'commerce_price_prefix_suffix';
+  $handler->display->display_options['fields']['commerce_order_total']['settings'] = array(
+    'calculation' => TRUE,
+    'prefix' => '',
+    'suffix' => '',
+  );
+  $handler->display->display_options['fields']['commerce_order_total']['field_api_classes'] = 0;
+  /* Field: Commerce Order: Order status */
+  $handler->display->display_options['fields']['status']['id'] = 'status';
+  $handler->display->display_options['fields']['status']['table'] = 'commerce_order';
+  $handler->display->display_options['fields']['status']['field'] = 'status';
+  $handler->display->display_options['fields']['status']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['status']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['status']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['status']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['status']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['status']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['status']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['status']['empty_zero'] = 0;
+  /* Field: Commerce Order: Operations links */
+  $handler->display->display_options['fields']['operations']['id'] = 'operations';
+  $handler->display->display_options['fields']['operations']['table'] = 'commerce_order';
+  $handler->display->display_options['fields']['operations']['field'] = 'operations';
+  $handler->display->display_options['fields']['operations']['label'] = 'Handlinger';
+  $handler->display->display_options['fields']['operations']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['operations']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['operations']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['operations']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['operations']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['operations']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['operations']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['operations']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['operations']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['operations']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['operations']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['operations']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['operations']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['operations']['empty_zero'] = 0;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Commerce Order: Order state */
   $handler->display->display_options['filters']['state']['id'] = 'state';
@@ -1907,6 +2213,10 @@ function commercify_admin_overview_views_default_views() {
 
   /* Display: Block */
   $handler = $view->new_display('block', 'Block', 'block_1');
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '5';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: Commerce Order: Order number */
   $handler->display->display_options['fields']['order_number']['id'] = 'order_number';
@@ -1999,6 +2309,13 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['operations']['element_default_classes'] = 1;
   $handler->display->display_options['fields']['operations']['hide_empty'] = 0;
   $handler->display->display_options['fields']['operations']['empty_zero'] = 0;
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: Commerce Order: Created date */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'commerce_order';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
+  $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['granularity'] = 'hour';
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Commerce Order: Order state */
   $handler->display->display_options['filters']['state']['id'] = 'state';
@@ -2157,19 +2474,24 @@ function commercify_admin_overview_views_default_views() {
   $view->description = '';
   $view->tag = 'default';
   $view->base_table = 'commerce_line_item';
-  $view->human_name = 'C Dashboard Product charts';
+  $view->human_name = 'C-admin Product charts';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
+  $handler->display->display_options['use_more_text'] = 'mer';
   $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['access']['type'] = 'none';
   $handler->display->display_options['cache']['type'] = 'none';
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nullstill';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér på';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Synkende';
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'table';
@@ -2198,6 +2520,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['relationships']['order_id']['id'] = 'order_id';
   $handler->display->display_options['relationships']['order_id']['table'] = 'commerce_line_item';
   $handler->display->display_options['relationships']['order_id']['field'] = 'order_id';
+  $handler->display->display_options['relationships']['order_id']['label'] = 'Rekkefølge';
   $handler->display->display_options['relationships']['order_id']['required'] = 1;
   /* Relationship: Commerce Line item: Referenced product */
   $handler->display->display_options['relationships']['commerce_product_product_id']['id'] = 'commerce_product_product_id';
@@ -2266,6 +2589,8 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['created_1']['field'] = 'created';
   $handler->display->display_options['filters']['created_1']['relationship'] = 'order_id';
   $handler->display->display_options['filters']['created_1']['operator'] = '<';
+  $handler->display->display_options['filters']['created_1']['value']['value'] = 'last day of this month';
+  $handler->display->display_options['filters']['created_1']['value']['type'] = 'offset';
   $handler->display->display_options['filters']['created_1']['exposed'] = TRUE;
   $handler->display->display_options['filters']['created_1']['expose']['operator_id'] = 'created_1_op';
   $handler->display->display_options['filters']['created_1']['expose']['label'] = 'Til (Dato)';
@@ -2326,6 +2651,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['relationships']['order_id']['id'] = 'order_id';
   $handler->display->display_options['relationships']['order_id']['table'] = 'commerce_line_item';
   $handler->display->display_options['relationships']['order_id']['field'] = 'order_id';
+  $handler->display->display_options['relationships']['order_id']['label'] = 'Rekkefølge';
   $handler->display->display_options['relationships']['order_id']['required'] = 1;
   /* Relationship: Commerce Line item: Referenced product */
   $handler->display->display_options['relationships']['commerce_product_product_id']['id'] = 'commerce_product_product_id';
@@ -2416,6 +2742,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['relationships']['order_id']['id'] = 'order_id';
   $handler->display->display_options['relationships']['order_id']['table'] = 'commerce_line_item';
   $handler->display->display_options['relationships']['order_id']['field'] = 'order_id';
+  $handler->display->display_options['relationships']['order_id']['label'] = 'Rekkefølge';
   $handler->display->display_options['relationships']['order_id']['required'] = 1;
   /* Relationship: Commerce Line item: Referenced product */
   $handler->display->display_options['relationships']['commerce_product_product_id']['id'] = 'commerce_product_product_id';
@@ -2461,13 +2788,15 @@ function commercify_admin_overview_views_default_views() {
 
   /* Display: Att: Beste kunder */
   $handler = $view->new_display('attachment', 'Att: Beste kunder', 'attachment_3');
-  $handler->display->display_options['pager']['type'] = 'none';
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '5';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['relationships'] = FALSE;
   /* Relationship: Commerce Line Item: Order ID */
   $handler->display->display_options['relationships']['order_id']['id'] = 'order_id';
   $handler->display->display_options['relationships']['order_id']['table'] = 'commerce_line_item';
   $handler->display->display_options['relationships']['order_id']['field'] = 'order_id';
+  $handler->display->display_options['relationships']['order_id']['label'] = 'Rekkefølge';
   $handler->display->display_options['relationships']['order_id']['required'] = 1;
   /* Relationship: Commerce Line item: Referenced product */
   $handler->display->display_options['relationships']['commerce_product_product_id']['id'] = 'commerce_product_product_id';
@@ -2540,6 +2869,13 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['name']['link_to_user'] = 1;
   $handler->display->display_options['fields']['name']['overwrite_anonymous'] = 0;
   $handler->display->display_options['fields']['name']['format_username'] = 1;
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sort criterion: SUM(Commerce Line item: Total (commerce_total:amount)) */
+  $handler->display->display_options['sorts']['commerce_total_amount']['id'] = 'commerce_total_amount';
+  $handler->display->display_options['sorts']['commerce_total_amount']['table'] = 'field_data_commerce_total';
+  $handler->display->display_options['sorts']['commerce_total_amount']['field'] = 'commerce_total_amount';
+  $handler->display->display_options['sorts']['commerce_total_amount']['group_type'] = 'sum';
+  $handler->display->display_options['sorts']['commerce_total_amount']['order'] = 'DESC';
   $handler->display->display_options['displays'] = array(
     'panel_pane_1' => 'panel_pane_1',
     'default' => 0,
@@ -2560,7 +2896,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['style_plugin'] = FALSE;
   $handler->display->display_options['style_plugin'] = 'ip_geoloc_map';
-  $handler->display->display_options['style_options']['ip_geoloc_map_of_view_div_style'] = 'height:450px';
+  $handler->display->display_options['style_options']['ip_geoloc_map_of_view_div_style'] = 'height:550px';
   $handler->display->display_options['style_options']['ip_geoloc_map_of_view_options'] = '{"mapTypeId":"terrain", "disableDefaultUI":true, "zoom"8, "zoomControl":true}';
   $handler->display->display_options['defaults']['style_options'] = FALSE;
   $handler->display->display_options['defaults']['row_plugin'] = FALSE;
@@ -2570,6 +2906,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['relationships']['order_id']['id'] = 'order_id';
   $handler->display->display_options['relationships']['order_id']['table'] = 'commerce_line_item';
   $handler->display->display_options['relationships']['order_id']['field'] = 'order_id';
+  $handler->display->display_options['relationships']['order_id']['label'] = 'Rekkefølge';
   $handler->display->display_options['relationships']['order_id']['required'] = 1;
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Field: COUNT(DISTINCT Commerce Line Item: Order ID) */
@@ -2646,7 +2983,6 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['created']['table'] = 'commerce_order';
   $handler->display->display_options['fields']['created']['field'] = 'created';
   $handler->display->display_options['fields']['created']['relationship'] = 'order_id';
-  $handler->display->display_options['fields']['created']['label'] = 'Dato opprettet';
   $handler->display->display_options['fields']['created']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['created']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['created']['alter']['absolute'] = 0;
@@ -2731,8 +3067,8 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['latitude']['relationship'] = 'order_id';
   $handler->display->display_options['filters']['latitude']['operator'] = 'not empty';
   $handler->display->display_options['displays'] = array(
-    'panel_pane_1' => 'panel_pane_1',
     'default' => 0,
+    'panel_pane_1' => 0,
     'panel_pane_2' => 0,
     'panel_pane_3' => 0,
   );
@@ -2740,19 +3076,20 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['inherit_exposed_filters'] = 1;
   $translatables['c_dashboard_product_charts'] = array(
     t('Master'),
-    t('more'),
+    t('mer'),
     t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
-    t('Order'),
+    t('Nullstill'),
+    t('Sortér på'),
+    t('Stigende'),
+    t('Synkende'),
+    t('Rekkefølge'),
     t('Product'),
     t('Totalomsetning (inkl MVA)'),
     t('[order_id] : [commerce_total]'),
     t('Fra (Dato)'),
     t('Til (Dato)'),
     t('Total omsetning'),
+    t('more'),
     t('View panes'),
     t('Gjennomsnittlig bestilling'),
     t('Gjennomsnittlig bestilling (inkl MVA)'),
@@ -2773,7 +3110,7 @@ function commercify_admin_overview_views_default_views() {
     t('Order ID'),
     t('Ordrenummer'),
     t('Longitude'),
-    t('Dato opprettet'),
+    t('Created date'),
     t('Latitude'),
   );
   $export['c_dashboard_product_charts'] = $view;
@@ -2783,7 +3120,7 @@ function commercify_admin_overview_views_default_views() {
   $view->description = '';
   $view->tag = 'default';
   $view->base_table = 'node';
-  $view->human_name = 'C Dashboard Product displays';
+  $view->human_name = 'C-admin Product displays';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -3180,17 +3517,18 @@ function commercify_admin_overview_views_default_views() {
 
   $view = new view;
   $view->name = 'c_dashboard_product_exports';
-  $view->description = 'Display a list of products for store admin.';
+  $view->description = 'Commercify Admin: Display a list of products for store admin.';
   $view->tag = 'commerce';
   $view->base_table = 'commerce_product';
-  $view->human_name = 'C Dashboard Product Exports';
+  $view->human_name = 'C-admin Product Exports';
   $view->core = 0;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Defaults */
   $handler = $view->new_display('default', 'Defaults', 'default');
-  $handler->display->display_options['title'] = 'Products';
+  $handler->display->display_options['title'] = 'Produkter';
+  $handler->display->display_options['use_more_text'] = 'mer';
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
     3 => '3',
@@ -3203,6 +3541,10 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['submit_button'] = 'Eksporter';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nullstill';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér på';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Synkende';
   $handler->display->display_options['exposed_form']['options']['autosubmit'] = 0;
   $handler->display->display_options['exposed_form']['options']['autosubmit_hide'] = 1;
   $handler->display->display_options['pager']['type'] = 'none';
@@ -3336,6 +3678,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['commerce_price']['id'] = 'commerce_price';
   $handler->display->display_options['fields']['commerce_price']['table'] = 'field_data_commerce_price';
   $handler->display->display_options['fields']['commerce_price']['field'] = 'commerce_price';
+  $handler->display->display_options['fields']['commerce_price']['label'] = 'Pris';
   $handler->display->display_options['fields']['commerce_price']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['commerce_price']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['commerce_price']['alter']['absolute'] = 0;
@@ -3376,50 +3719,6 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['status']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['status']['type'] = 'active-disabled';
   $handler->display->display_options['fields']['status']['not'] = 0;
-  /* Field: Commerce Product: Status */
-  $handler->display->display_options['fields']['status_1']['id'] = 'status_1';
-  $handler->display->display_options['fields']['status_1']['table'] = 'commerce_product';
-  $handler->display->display_options['fields']['status_1']['field'] = 'status';
-  $handler->display->display_options['fields']['status_1']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['status_1']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['status_1']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['status_1']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['status_1']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['status_1']['alter']['trim_whitespace'] = 0;
-  $handler->display->display_options['fields']['status_1']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['status_1']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['status_1']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['status_1']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['status_1']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['status_1']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['status_1']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['status_1']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['status_1']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['status_1']['empty_zero'] = 0;
-  $handler->display->display_options['fields']['status_1']['hide_alter_empty'] = 1;
-  $handler->display->display_options['fields']['status_1']['type'] = 'active-disabled';
-  $handler->display->display_options['fields']['status_1']['not'] = 0;
-  /* Field: Commerce Product: Edit link */
-  $handler->display->display_options['fields']['edit_product']['id'] = 'edit_product';
-  $handler->display->display_options['fields']['edit_product']['table'] = 'commerce_product';
-  $handler->display->display_options['fields']['edit_product']['field'] = 'edit_product';
-  $handler->display->display_options['fields']['edit_product']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['edit_product']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['edit_product']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['edit_product']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['edit_product']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['edit_product']['alter']['trim_whitespace'] = 0;
-  $handler->display->display_options['fields']['edit_product']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['edit_product']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['edit_product']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['edit_product']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['edit_product']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['edit_product']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['edit_product']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['edit_product']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['edit_product']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['edit_product']['empty_zero'] = 0;
-  $handler->display->display_options['fields']['edit_product']['hide_alter_empty'] = 1;
   /* Field: Commerce Product: Stock */
   $handler->display->display_options['fields']['commerce_stock']['id'] = 'commerce_stock';
   $handler->display->display_options['fields']['commerce_stock']['table'] = 'field_data_commerce_stock';
@@ -3475,6 +3774,16 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['status']['expose']['identifier'] = 'status';
   $handler->display->display_options['filters']['status']['expose']['remember'] = 1;
   $handler->display->display_options['filters']['status']['expose']['multiple'] = FALSE;
+  /* Filter criterion: Commerce Product: Leverandør (field_product_supplier) */
+  $handler->display->display_options['filters']['field_product_supplier_nid']['id'] = 'field_product_supplier_nid';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['table'] = 'field_data_field_product_supplier';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['field'] = 'field_product_supplier_nid';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_product_supplier_nid']['expose']['operator_id'] = 'field_product_supplier_nid_op';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['expose']['label'] = 'Leverandør';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['expose']['operator'] = 'field_product_supplier_nid_op';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['expose']['identifier'] = 'field_product_supplier_nid';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['expose']['reduce'] = 0;
 
   /* Display: Data export */
   $handler = $view->new_display('views_data_export', 'Data export', 'views_data_export_1');
@@ -3482,6 +3791,13 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
   $handler->display->display_options['exposed_block'] = TRUE;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relationship: Commerce Product: Leverandør (field_product_supplier) */
+  $handler->display->display_options['relationships']['field_product_supplier_nid']['id'] = 'field_product_supplier_nid';
+  $handler->display->display_options['relationships']['field_product_supplier_nid']['table'] = 'field_data_field_product_supplier';
+  $handler->display->display_options['relationships']['field_product_supplier_nid']['field'] = 'field_product_supplier_nid';
+  $handler->display->display_options['relationships']['field_product_supplier_nid']['required'] = 0;
+  $handler->display->display_options['relationships']['field_product_supplier_nid']['delta'] = '0';
   $handler->display->display_options['path'] = 'admin/commerce/overview/products/export/csv';
 
   /* Display: Product exports total */
@@ -3542,25 +3858,26 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['defaults']['filters'] = FALSE;
   $translatables['c_dashboard_product_exports'] = array(
     t('Defaults'),
-    t('Products'),
-    t('more'),
+    t('Produkter'),
+    t('mer'),
     t('Eksporter'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
+    t('Nullstill'),
+    t('Sortér på'),
+    t('Stigende'),
+    t('Synkende'),
     t('<a href="/admin/commerce/products/add">Nytt produkt >>'),
     t('SKU'),
     t('Title'),
     t('Type'),
-    t('Price'),
+    t('Pris'),
     t('Status'),
-    t('Edit link'),
     t('På lager'),
     t('Aktiv'),
+    t('Leverandør'),
     t('Data export'),
+    t('more'),
+    t('field_product_supplier'),
     t('Product exports total'),
-    t('Produkter'),
     t('Aller produkter'),
     t('admin/commerce/overview/products/export/csv'),
     t('View panes'),
@@ -3569,17 +3886,18 @@ function commercify_admin_overview_views_default_views() {
 
   $view = new view;
   $view->name = 'c_dashboard_products';
-  $view->description = 'Display a list of products for store admin.';
+  $view->description = 'Commercify admin: Display a list of products for store admin.';
   $view->tag = 'commerce';
   $view->base_table = 'commerce_product';
-  $view->human_name = 'C Dashboard Products';
+  $view->human_name = 'C-admin Products';
   $view->core = 0;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
 
   /* Display: Defaults */
   $handler = $view->new_display('default', 'Defaults', 'default');
-  $handler->display->display_options['title'] = 'Products';
+  $handler->display->display_options['title'] = 'Produkter';
+  $handler->display->display_options['use_more_text'] = 'mer';
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
     3 => '3',
@@ -3594,13 +3912,19 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
   $handler->display->display_options['exposed_form']['options']['reset_button'] = TRUE;
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nullstill';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér på';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Synkende';
   $handler->display->display_options['exposed_form']['options']['autosubmit'] = 0;
   $handler->display->display_options['exposed_form']['options']['autosubmit_hide'] = 1;
   $handler->display->display_options['pager']['type'] = 'full';
   $handler->display->display_options['pager']['options']['items_per_page'] = '100';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer per side';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all'] = 0;
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'table';
   $handler->display->display_options['style_options']['columns'] = array(
     'sku' => 'sku',
@@ -3808,6 +4132,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['commerce_price']['id'] = 'commerce_price';
   $handler->display->display_options['fields']['commerce_price']['table'] = 'field_data_commerce_price';
   $handler->display->display_options['fields']['commerce_price']['field'] = 'commerce_price';
+  $handler->display->display_options['fields']['commerce_price']['label'] = 'Pris';
   $handler->display->display_options['fields']['commerce_price']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['commerce_price']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['commerce_price']['alter']['absolute'] = 0;
@@ -3852,7 +4177,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['operations']['id'] = 'operations';
   $handler->display->display_options['fields']['operations']['table'] = 'commerce_product';
   $handler->display->display_options['fields']['operations']['field'] = 'operations';
-  $handler->display->display_options['fields']['operations']['label'] = 'Operations';
+  $handler->display->display_options['fields']['operations']['label'] = 'Handlinger';
   $handler->display->display_options['fields']['operations']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['absolute'] = 0;
@@ -3979,6 +4304,17 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['commerce_stock_value']['expose']['operator'] = 'commerce_stock_value_op';
   $handler->display->display_options['filters']['commerce_stock_value']['expose']['identifier'] = 'commerce_stock_value';
   $handler->display->display_options['filters']['commerce_stock_value']['expose']['multiple'] = FALSE;
+  /* Filter criterion: Commerce Product: Leverandør (field_product_supplier) */
+  $handler->display->display_options['filters']['field_product_supplier_nid']['id'] = 'field_product_supplier_nid';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['table'] = 'field_data_field_product_supplier';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['field'] = 'field_product_supplier_nid';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['exposed'] = TRUE;
+  $handler->display->display_options['filters']['field_product_supplier_nid']['expose']['operator_id'] = 'field_product_supplier_nid_op';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['expose']['label'] = 'Leverandør';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['expose']['operator'] = 'field_product_supplier_nid_op';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['expose']['identifier'] = 'field_product_supplier_nid';
+  $handler->display->display_options['filters']['field_product_supplier_nid']['expose']['multiple'] = 1;
+  $handler->display->display_options['filters']['field_product_supplier_nid']['expose']['reduce'] = 0;
 
   /* Display: Admin page */
   $handler = $view->new_display('page', 'Admin page', 'page_1');
@@ -4130,6 +4466,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['commerce_price']['id'] = 'commerce_price';
   $handler->display->display_options['fields']['commerce_price']['table'] = 'field_data_commerce_price';
   $handler->display->display_options['fields']['commerce_price']['field'] = 'commerce_price';
+  $handler->display->display_options['fields']['commerce_price']['label'] = 'Pris';
   $handler->display->display_options['fields']['commerce_price']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['commerce_price']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['commerce_price']['alter']['absolute'] = 0;
@@ -4174,7 +4511,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['operations']['id'] = 'operations';
   $handler->display->display_options['fields']['operations']['table'] = 'commerce_product';
   $handler->display->display_options['fields']['operations']['field'] = 'operations';
-  $handler->display->display_options['fields']['operations']['label'] = 'Operations';
+  $handler->display->display_options['fields']['operations']['label'] = 'Handlinger';
   $handler->display->display_options['fields']['operations']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['operations']['alter']['absolute'] = 0;
@@ -4364,7 +4701,9 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['pager']['options']['items_per_page'] = '10';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer per side';
   $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all'] = 0;
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['defaults']['footer'] = FALSE;
   /* Footer: Global: Text area */
   $handler->display->display_options['footer']['area']['id'] = 'area';
@@ -4532,34 +4871,40 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['style_plugin'] = 'rss_fields';
   $handler->display->display_options['style_options']['channel'] = array(
     'core' => array(
-      'description' => '',
-      'language' => '',
-      'category' => '',
-      'copyright' => '',
-      'managingEditor' => '',
-      'webMaster' => '',
-      'generator' => '',
-      'docs' => '',
-      'cloud' => '',
-      'ttl' => '',
-      'skipHours' => '',
-      'skipDays' => '',
+      'views_rss_core' => array(
+        'description' => '',
+        'language' => '',
+        'category' => '',
+        'image' => '',
+        'copyright' => '',
+        'managingEditor' => '',
+        'webMaster' => '',
+        'generator' => '',
+        'docs' => '',
+        'cloud' => '',
+        'ttl' => '',
+        'skipHours' => '',
+        'skipDays' => '',
+      ),
     ),
   );
   $handler->display->display_options['style_options']['item'] = array(
     'core' => array(
-      'title' => '',
-      'link' => '',
-      'description' => '',
-      'author' => '',
-      'category' => '',
-      'comments' => '',
-      'enclosure' => '',
-      'guid' => '',
-      'pubDate' => '',
+      'views_rss_core' => array(
+        'title' => 'sku',
+        'link' => '',
+        'description' => 'title',
+        'author' => '',
+        'category' => '',
+        'comments' => '',
+        'enclosure' => '',
+        'guid' => '',
+        'pubDate' => '',
+      ),
     ),
   );
   $handler->display->display_options['style_options']['feed_settings'] = array(
+    'absolute_paths' => 1,
     'feed_in_links' => 0,
   );
   $handler->display->display_options['defaults']['fields'] = FALSE;
@@ -4612,30 +4957,32 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['path'] = 'feeds/low-stock';
   $translatables['c_dashboard_products'] = array(
     t('Defaults'),
-    t('Products'),
-    t('more'),
+    t('Produkter'),
+    t('mer'),
     t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
+    t('Nullstill'),
+    t('Sortér på'),
+    t('Stigende'),
+    t('Synkende'),
+    t('Elementer per side'),
+    t('- Alle -'),
     t('Offset'),
     t('<a href="/admin/commerce/products/add">Nytt produkt >>'),
     t('Commerce Product'),
     t('SKU'),
     t('Title'),
     t('Type'),
-    t('Price'),
+    t('Pris'),
     t('Status'),
-    t('Operations'),
+    t('Handlinger'),
     t('Edit link'),
     t('På lager'),
     t('Produkt-type'),
     t('SKU-kode (begynner med)'),
     t('Beholdning (lavere enn)'),
+    t('Leverandør'),
     t('Admin page'),
+    t('more'),
     t('Varelager'),
     t('Lavt lagernivå'),
     t('N / A'),
@@ -4650,10 +4997,10 @@ function commercify_admin_overview_views_default_views() {
 
   $view = new view;
   $view->name = 'c_dashboard_users';
-  $view->description = '';
+  $view->description = 'Commerce admin: User accounts';
   $view->tag = 'default';
   $view->base_table = 'users';
-  $view->human_name = 'C Dashboard Users';
+  $view->human_name = 'C-admin Users';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -4661,6 +5008,7 @@ function commercify_admin_overview_views_default_views() {
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'C Dashboard Users';
+  $handler->display->display_options['use_more_text'] = 'mer';
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
     3 => '3',
@@ -4672,8 +5020,17 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nullstill';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér på';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Synkende';
   $handler->display->display_options['pager']['type'] = 'full';
-  $handler->display->display_options['pager']['options']['items_per_page'] = '10';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '80';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
+  $handler->display->display_options['pager']['options']['id'] = '0';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_label'] = 'Elementer per side';
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all'] = 0;
+  $handler->display->display_options['pager']['options']['expose']['items_per_page_options_all_label'] = '- Alle -';
   $handler->display->display_options['style_plugin'] = 'table';
   /* Field: Bulk operations: User */
   $handler->display->display_options['fields']['views_bulk_operations']['id'] = 'views_bulk_operations';
@@ -4773,7 +5130,6 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';
   $handler->display->display_options['fields']['name']['field'] = 'name';
-  $handler->display->display_options['fields']['name']['label'] = 'Navn';
   $handler->display->display_options['fields']['name']['alter']['alter_text'] = 0;
   $handler->display->display_options['fields']['name']['alter']['make_link'] = 0;
   $handler->display->display_options['fields']['name']['alter']['absolute'] = 0;
@@ -4865,7 +5221,7 @@ function commercify_admin_overview_views_default_views() {
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
   $handler->display->display_options['defaults']['title'] = FALSE;
-  $handler->display->display_options['title'] = 'Users';
+  $handler->display->display_options['title'] = 'Brukere';
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: User: Active */
   $handler->display->display_options['filters']['status']['id'] = 'status';
@@ -4915,23 +5271,24 @@ function commercify_admin_overview_views_default_views() {
   $translatables['c_dashboard_users'] = array(
     t('Master'),
     t('C Dashboard Users'),
-    t('more'),
+    t('mer'),
     t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
-    t('Items per page'),
-    t('- All -'),
+    t('Nullstill'),
+    t('Sortér på'),
+    t('Stigende'),
+    t('Synkende'),
+    t('Elementer per side'),
+    t('- Alle -'),
     t('Offset'),
     t('User'),
-    t('Navn'),
+    t('Name'),
     t('E-mail'),
     t('Kunderabatt'),
     t('[field_user_discount-value] %'),
     t('Epost'),
     t('Page'),
-    t('Users'),
+    t('Brukere'),
+    t('more'),
     t('Rabatt (%)'),
     t('Block'),
     t('Siste brukere'),
@@ -4940,10 +5297,10 @@ function commercify_admin_overview_views_default_views() {
 
   $view = new view;
   $view->name = 'c_dashboard_users_orders_';
-  $view->description = '';
+  $view->description = 'Commerce admin: Users retrieved with Line items as base table.';
   $view->tag = 'default';
   $view->base_table = 'commerce_line_item';
-  $view->human_name = 'C Dashboard Users (Orders)';
+  $view->human_name = 'C-admin Users (Orders)';
   $view->core = 7;
   $view->api_version = '3.0';
   $view->disabled = FALSE; /* Edit this to true to make a default view disabled initially */
@@ -4951,6 +5308,7 @@ function commercify_admin_overview_views_default_views() {
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
   $handler->display->display_options['title'] = 'Kunder';
+  $handler->display->display_options['use_more_text'] = 'mer';
   $handler->display->display_options['group_by'] = TRUE;
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
@@ -4963,6 +5321,10 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nullstill';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér på';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Synkende';
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'table';
@@ -5002,6 +5364,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['relationships']['order_id']['id'] = 'order_id';
   $handler->display->display_options['relationships']['order_id']['table'] = 'commerce_line_item';
   $handler->display->display_options['relationships']['order_id']['field'] = 'order_id';
+  $handler->display->display_options['relationships']['order_id']['label'] = 'Rekkefølge';
   $handler->display->display_options['relationships']['order_id']['required'] = 1;
   /* Relationship: Commerce Order: Owner */
   $handler->display->display_options['relationships']['uid']['id'] = 'uid';
@@ -5279,13 +5642,13 @@ function commercify_admin_overview_views_default_views() {
   $translatables['c_dashboard_users_orders_'] = array(
     t('Master'),
     t('Kunder'),
-    t('more'),
+    t('mer'),
     t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
-    t('Order'),
+    t('Nullstill'),
+    t('Sortér på'),
+    t('Stigende'),
+    t('Synkende'),
+    t('Rekkefølge'),
     t('Order owner'),
     t('User'),
     t('Name'),
@@ -5296,6 +5659,7 @@ function commercify_admin_overview_views_default_views() {
     t('Kundens epost'),
     t('Kunderabatt'),
     t('Page'),
+    t('more'),
   );
   $export['c_dashboard_users_orders_'] = $view;
 
