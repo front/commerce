@@ -45,6 +45,38 @@ function commercify_product_book_field_group_info() {
   $field_group = new stdClass;
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
+  $field_group->identifier = 'group_design|node|produktvisning|form';
+  $field_group->group_name = 'group_design';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'produktvisning';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Design',
+    'weight' => '3',
+    'children' => array(
+      0 => 'field_product_special_css',
+      1 => 'field_product_sub_header',
+    ),
+    'format_type' => 'div',
+    'format_settings' => array(
+      'formatter' => 'open',
+      'instance_settings' => array(
+        'description' => '',
+        'show_label' => 1,
+        'label_element' => 'h3',
+        'effect' => 'none',
+        'speed' => 'fast',
+        'classes' => '',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_design|node|produktvisning|form'] = $field_group;
+
+  $field_group = new stdClass;
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
   $field_group->identifier = 'group_details|commerce_product|publication|form';
   $field_group->group_name = 'group_details';
   $field_group->entity_type = 'commerce_product';
@@ -57,10 +89,10 @@ function commercify_product_book_field_group_info() {
     'children' => array(
       0 => 'field_product_description',
       1 => 'field_product_detail_publisher',
-      2 => 'field_product_detail_year',
-      3 => 'field_product_language',
-      4 => 'field_product_pages',
-      5 => 'field_product_series_num',
+      2 => 'field_product_language',
+      3 => 'field_product_series_num',
+      4 => 'field_product_detail_year',
+      5 => 'field_product_pages',
     ),
     'format_type' => 'tab',
     'format_settings' => array(
@@ -197,7 +229,7 @@ function commercify_product_book_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Produkt',
-    'weight' => '3',
+    'weight' => '2',
     'children' => array(
       0 => 'field_product_image',
       1 => 'field_product_description',
