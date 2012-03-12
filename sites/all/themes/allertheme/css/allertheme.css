@@ -598,7 +598,6 @@ body.ptf-gwf-bitter #nav-wrapper {
   font-size: 1.167em;
   background: #fff;
   background-clip: padding-box;
-  /* @include box-shadow(0 0 3px rgba(107,107,107,0.75)); */
   width: 228px;
   height: calc(6px, 14px)1em;
   margin-right: 7px;
@@ -613,6 +612,12 @@ body.ptf-gwf-bitter #nav-wrapper {
   -khtml-border-radius: 6px;
   border-radius: 6px;
   -webkit-appearance: textfield;
+}
+.region-header .block-search-api-page form .form-text:focus {
+  -moz-box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+  -webkit-box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+  -o-box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.4);
 }
 .region-header .block-search-api-page form .form-submit {
   font-size: 1.25em;

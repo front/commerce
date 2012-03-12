@@ -597,7 +597,6 @@ body.ptf-gwf-bitter {
         font-size: calc-em(14px, 12px);
         background: #fff;
         background-clip: padding-box;
-        /* @include box-shadow(0 0 3px rgba(107,107,107,0.75)); */
         width: 228px;
         height: calc(6px, 14px) + 1em;
         margin-right: 7px;
@@ -607,6 +606,10 @@ body.ptf-gwf-bitter {
         border-bottom-color: #747474;
         @include border-radius(6px);
         -webkit-appearance: textfield;
+
+        &:focus {
+          @include box-shadow(0 0 5px rgba(255,255,255,0.4));
+        }
       }
       .form-submit {
         font-size: calc-em(15px, 12px);
