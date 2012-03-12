@@ -97,4 +97,10 @@ function allertheme_form_alter(&$form, &$form_state, $form_id) {
       $form['keys_1']['#attributes']['#title'] = $form['keys_1']['#attributes']['placeholder'] = t('Search for book or author');
     }
   }
+  elseif ($form_id == 'search_api_page_search_form') {
+    if (isset($form['form']['keys_1'])) {
+      $form['form']['keys_1']['#attributes']['placeholder'] = $form['form']['keys_1']['#title'];
+      $form['form']['keys_1']['#title'] = '';
+    }
+  }
 }

@@ -770,6 +770,112 @@ input#edit-continue {
   }
 }
 
+/* Search */
+.page-sok {
+  .region-content {
+    h2 {
+      font-family: $font-family-headings;
+      font-size: calc-em(18px, 12px);
+      margin-left: 5px;
+      margin-bottom: 1em;
+    }
+    .search-performance {
+      color: #999;
+      font-size: calc-em(13px, 12px);
+      margin-left: 5px;
+      margin-bottom: 1em;
+    }
+  }
+  .search-results {
+    clear: both;
+    text-align: left;
+
+    .article {
+      @include grid(4);
+
+      $i: 5;
+      @while $i < 30 {
+        &.views-row-#{$i} {
+          clear: both;
+        }
+        $i: $i + 4;
+      }
+    }
+  }
+  .sidebar {
+    margin-top: calc-em(42px, 12px);
+
+    .block-facetapi {
+      background-color: #3d3d3d;
+      padding: 15px 5px;
+      margin-right: 10px;
+      @include border-radius(10px);
+
+      .block-title {
+        color: #fff;
+        font-size: calc-em(15px, 12px);
+        margin-bottom: calc-em(5px, 15px);
+      }
+      ul {
+        margin: 0;
+        list-style: none;
+
+        li {
+          color: #fff;
+          padding: 0;
+          list-style: none;
+          list-style-image: none;
+        }
+        a {
+          color: #fff;
+        }
+        input {
+          margin-left: 0;
+          &[checked=true] {
+            color: #fff;
+            font-weight: bold;
+          }
+        }
+      }
+    }
+  }
+}
+
+#search-api-page-search-form {
+  text-align: center;
+  background: #f4f4f4;
+  padding: 10px;
+  margin-right: 10px;
+  margin-bottom: 1em;
+
+  .form-item {
+    display: inline;
+    margin: 0;
+  }
+  input {
+    font-size: calc-em(13px, 12px);
+
+    &.form-text {
+      margin-right: 0.5em;
+      background-color: #fff;
+      @include border-radius(3px);
+
+      &:focus,
+      &:hover {
+        @include box-shadow(0 0 3px #fff);
+        border-color: #999;
+      }
+    }
+    
+    &.form-submit {
+      color: #fff;
+      text-transform: uppercase;
+      @include border-radius(1em);
+    }
+  }
+}
+
+
 /* Pager */
 
 .item-list .pager {
