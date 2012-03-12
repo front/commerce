@@ -882,6 +882,21 @@ form.commerce-add-to-cart input.form-submit:hover,
   text-align: right;
 }
 
+.page-cart table {
+  margin-top: 1em;
+}
+.page-cart table .views-field-edit-delete input {
+  color: #fff;
+  font-size: 0.917em;
+  padding: 1px 0.5em 2px;
+  -moz-border-radius: 1.05em;
+  -webkit-border-radius: 1.05em;
+  -o-border-radius: 1.05em;
+  -ms-border-radius: 1.05em;
+  -khtml-border-radius: 1.05em;
+  border-radius: 1.05em;
+}
+
 input#edit-checkout,
 input#edit-continue,
 input#edit-submit,
@@ -940,6 +955,12 @@ ol.inline.commerce-checkout-progress li {
   font-weight: normal;
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.15);
   background: #e1e1e1 url("../images/bg_arrow.png") no-repeat right center;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  -o-border-radius: 2px;
+  -ms-border-radius: 2px;
+  -khtml-border-radius: 2px;
+  border-radius: 2px;
 }
 ol.inline.commerce-checkout-progress li.active {
   background-color: #fdc064;

@@ -851,6 +851,17 @@ form.commerce-add-to-cart input.form-submit,
   text-align: right;
 }
 
+.page-cart table {
+  margin-top: 1em;
+
+  .views-field-edit-delete input {
+    color: #fff;
+    font-size: calc-em(11px, 12px);
+    padding: 1px 0.5em 2px;
+    @include border-radius(1.05em);
+  }
+}
+
 input#edit-checkout,
 input#edit-continue,
 input#edit-submit,
@@ -890,6 +901,7 @@ ol.inline.commerce-checkout-progress {
     font-weight: normal;
     text-shadow: 0 -1px 0 rgba(0,0,0,0.15);
     background: #E1E1E1 url('../images/bg_arrow.png') no-repeat right center;
+    @include border-radius(2px);
 
     &.active {
       background-color: #fdc064;
