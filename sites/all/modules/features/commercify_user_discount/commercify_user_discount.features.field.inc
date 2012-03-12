@@ -18,6 +18,9 @@ function commercify_user_discount_field_default_fields() {
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_user_discount',
+      'field_permissions' => array(
+        'type' => '2',
+      ),
       'foreign keys' => array(),
       'indexes' => array(
         'value' => array(
@@ -52,6 +55,7 @@ function commercify_user_discount_field_default_fields() {
           'weight' => 0,
         ),
       ),
+      'ds_extras_field_template' => '',
       'entity_type' => 'user',
       'field_name' => 'field_user_discount',
       'label' => 'Kunderabatt',
