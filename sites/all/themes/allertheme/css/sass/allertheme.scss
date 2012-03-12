@@ -1048,6 +1048,27 @@ div.checkout-completion-message {
   }
 }
 
+/* User */
+.page-user {
+  .panel-display {
+    margin-bottom: 2em;
+  }
+  .pane-commerce-user-orders {
+    margin: 1em 0;
+    .pane-title {
+      font-family: $font-family-headings;
+      font-weight: normal;
+      margin-bottom: 0.5em;
+    }
+    table {
+      border-top: 1px solid #e1e1e1;
+      .views-field-order-number {
+        text-align: center;
+        width: 12.5%;
+      }
+    }
+  }
+}
 
 /* Pager */
 

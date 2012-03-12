@@ -1118,6 +1118,26 @@ div.checkout-completion-message {
   border-radius: 1em;
 }
 
+/* User */
+.page-user .panel-display {
+  margin-bottom: 2em;
+}
+.page-user .pane-commerce-user-orders {
+  margin: 1em 0;
+}
+.page-user .pane-commerce-user-orders .pane-title {
+  font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
+  font-weight: normal;
+  margin-bottom: 0.5em;
+}
+.page-user .pane-commerce-user-orders table {
+  border-top: 1px solid #e1e1e1;
+}
+.page-user .pane-commerce-user-orders table .views-field-order-number {
+  text-align: center;
+  width: 12.5%;
+}
+
 /* Pager */
 .item-list .pager {
   margin-left: 0;
