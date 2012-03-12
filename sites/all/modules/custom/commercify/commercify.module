@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Commercify module.
@@ -129,8 +130,7 @@ function commercify_block_view($delta = '') {
   $block = array();
   switch ($delta) {
     case 'order-state-modify':
-      $order = menu_get_object('commerce_order', 3);
-      if (!empty($order)) {
+      if (arg(0) == 'admin' && $order = menu_get_object('commerce_order', 3)) {
         $block['subject'] = t('Modify order status');
         $block['content'] = drupal_render(drupal_get_form('commercify_moderate_form', $order));
       }
@@ -166,7 +166,7 @@ function commercify_moderate_form($form, &$form_state, $order) {
       '#default_value' => $order->status,
       '#description' => t('Set the status for this order.'),
   );
-  
+
   global $user;
   $default_msg = 'Oppdatert av ' . $user->name;
   $form['moderation']['log'] = array(
@@ -195,4 +195,4 @@ function commercify_moderate_form_submit($form, &$form_state) {
               '@before' => commerce_order_status_get_title($form_state['order']->status),
               '@now' => commerce_order_status_get_title($form_state['values']['moderate_status']))));
   commerce_order_status_update($form_state['order'], $form_state['values']['moderate_status']);
-}
+} 
