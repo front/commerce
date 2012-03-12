@@ -295,6 +295,14 @@ select {
   }
 }
 
+/* Commerce Shipping */
+#commerce-flat-rate-service-form {
+  .commerce-flat-rate-base-rate .form-item {
+    float: none;
+    margin-right: 0;
+  }
+}
+
 /* Node add/edit */
 .wysiwyg-toggle-wrapper a {
   font-size: calc-em(11px, 13px);
