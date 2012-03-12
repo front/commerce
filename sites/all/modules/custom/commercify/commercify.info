@@ -1,0 +1,4 @@
+name = Commercify code
+description = Functions for the commercify admin package. Adds menu shortcut points & other cool stuff.
+core = 7.x
+package = Commercify
