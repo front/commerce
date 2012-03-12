@@ -26,8 +26,8 @@ function commercify_product_book_ds_layout_settings_info() {
         1 => 'title',
         2 => 'dynamic_field_forfatter',
         3 => 'group_cart',
-        4 => 'group_details',
-        5 => 'product:commerce_price',
+        4 => 'product:commerce_price',
+        5 => 'group_details',
         6 => 'field_display_product',
         7 => 'product:field_product_language',
         8 => 'product:field_product_pages',
@@ -38,6 +38,7 @@ function commercify_product_book_ds_layout_settings_info() {
       ),
       'left' => array(
         0 => 'product:field_product_image',
+        1 => 'field_product_image',
       ),
     ),
     'fields' => array(
@@ -46,8 +47,8 @@ function commercify_product_book_ds_layout_settings_info() {
       'title' => 'right',
       'dynamic_field_forfatter' => 'right',
       'group_cart' => 'right',
-      'group_details' => 'right',
       'product:commerce_price' => 'right',
+      'group_details' => 'right',
       'field_display_product' => 'right',
       'product:field_product_language' => 'right',
       'product:field_product_pages' => 'right',
@@ -55,6 +56,7 @@ function commercify_product_book_ds_layout_settings_info() {
       'product:field_product_detail_year' => 'right',
       'field_product_description' => 'right',
       'field_product_author' => 'right',
+      'field_product_image' => 'left',
     ),
     'classes' => array(),
   );

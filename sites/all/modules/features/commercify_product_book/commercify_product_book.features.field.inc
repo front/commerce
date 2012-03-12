@@ -538,12 +538,16 @@ function commercify_product_book_field_default_fields() {
       'display' => array(
         'default' => array(
           'label' => 'hidden',
-          'module' => 'image',
+          'module' => 'galleryformatter',
           'settings' => array(
-            'image_link' => '',
-            'image_style' => 'product_display_large',
+            'link_to_full' => 1,
+            'link_to_full_style' => 'large',
+            'modal' => 'colorbox',
+            'slide_style' => 'product_display_large',
+            'style' => 'nostyle',
+            'thumb_style' => 'product_display_thumb',
           ),
-          'type' => 'image',
+          'type' => 'galleryformatter_default',
           'weight' => '9',
         ),
         'line_item' => array(
@@ -1529,92 +1533,6 @@ function commercify_product_book_field_default_fields() {
     ),
   );
 
-  // Exported field: 'node-produktvisning-field_product_image'
-  $fields['node-produktvisning-field_product_image'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '-1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_product_image',
-      'foreign keys' => array(
-        'fid' => array(
-          'columns' => array(
-            'fid' => 'fid',
-          ),
-          'table' => 'file_managed',
-        ),
-      ),
-      'indexes' => array(
-        'fid' => array(
-          0 => 'fid',
-        ),
-      ),
-      'module' => 'image',
-      'settings' => array(
-        'default_image' => 0,
-        'uri_scheme' => 'public',
-      ),
-      'translatable' => '0',
-      'type' => 'image',
-    ),
-    'field_instance' => array(
-      'bundle' => 'produktvisning',
-      'deleted' => '0',
-      'description' => 'Et bilde av produktet.',
-      'display' => array(
-        'default' => array(
-          'label' => 'hidden',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '30',
-        ),
-        'product_grid' => array(
-          'label' => 'hidden',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '17',
-        ),
-        'search_result' => array(
-          'label' => 'hidden',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '10',
-        ),
-        'teaser' => array(
-          'label' => 'hidden',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '24',
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_product_image',
-      'label' => 'Produktbilde',
-      'required' => 0,
-      'settings' => array(
-        'alt_field' => 0,
-        'file_directory' => 'product-images',
-        'file_extensions' => 'png gif jpg jpeg',
-        'max_filesize' => '',
-        'max_resolution' => '1200x1200',
-        'min_resolution' => '100x100',
-        'title_field' => 0,
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'image',
-        'settings' => array(
-          'preview_image_style' => 'thumbnail',
-          'progress_indicator' => 'throbber',
-        ),
-        'type' => 'image_image',
-        'weight' => '4',
-      ),
-    ),
-  );
-
   // Exported field: 'node-produktvisning-field_product_price_before'
   $fields['node-produktvisning-field_product_price_before'] = array(
     'field_config' => array(
@@ -1711,10 +1629,9 @@ function commercify_product_book_field_default_fields() {
       'display' => array(
         'default' => array(
           'label' => 'above',
-          'module' => 'list',
           'settings' => array(),
-          'type' => 'list_default',
-          'weight' => 32,
+          'type' => 'hidden',
+          'weight' => '32',
         ),
         'search_result' => array(
           'label' => 'above',
@@ -1758,7 +1675,6 @@ function commercify_product_book_field_default_fields() {
   t('Dimensjon');
   t('Dimensjonen på produktet.');
   t('En beskrivelse av produktet.');
-  t('Et bilde av produktet.');
   t('Et produukt som kan selges.');
   t('Forfatter');
   t('Forfattere av publikasjoner.');
