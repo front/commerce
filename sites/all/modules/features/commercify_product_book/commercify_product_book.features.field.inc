@@ -1679,6 +1679,74 @@ function commercify_product_book_field_default_fields() {
     ),
   );
 
+  // Exported field: 'node-produktvisning-field_product_special_css'
+  $fields['node-produktvisning-field_product_special_css'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_product_special_css',
+      'foreign keys' => array(),
+      'indexes' => array(
+        'value' => array(
+          0 => 'value',
+        ),
+      ),
+      'module' => 'list',
+      'settings' => array(
+        'allowed_values' => array(
+          'summer-sale' => 'Sommersalg',
+        ),
+        'allowed_values_function' => '',
+      ),
+      'translatable' => '0',
+      'type' => 'list_text',
+    ),
+    'field_instance' => array(
+      'bundle' => 'produktvisning',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Spesialdesign som kan legges på produktvisningen.',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'list',
+          'settings' => array(),
+          'type' => 'list_default',
+          'weight' => 32,
+        ),
+        'search_result' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'ds_extras_field_template' => '',
+      'entity_type' => 'node',
+      'field_name' => 'field_product_special_css',
+      'label' => 'Spesialdesign',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'options',
+        'settings' => array(),
+        'type' => 'options_select',
+        'weight' => '5',
+      ),
+    ),
+  );
+
   // Translatables
   // Included for use with string extractors like potx.
   t('Aktiverer lagervasrling. Settes automatisk om nivå faller for lavt.');
@@ -1708,6 +1776,8 @@ function commercify_product_book_field_default_fields() {
   t('Produktbilde for gjeldende produkt.');
   t('Produktets førpris. Brukes kun for å vise førpris for kunden, ikke i kalkuleringer.');
   t('Produktets hovedkategori.');
+  t('Spesialdesign');
+  t('Spesialdesign som kan legges på produktvisningen.');
   t('Språk');
   t('Stock');
   t('Utgivende forlag');
