@@ -844,9 +844,7 @@ body.ptf-gwf-bitter #nav-wrapper {
 }
 
 form.commerce-add-to-cart input.form-submit,
-.add-to-cart #edit-actions input.form-submit,
-input#edit-checkout,
-input#edit-continue {
+.add-to-cart #edit-actions input.form-submit {
   font-size: 1em;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
   background-clip: padding-box;
@@ -870,9 +868,55 @@ input#edit-continue {
   padding: 3px 5px 4px;
 }
 form.commerce-add-to-cart input.form-submit:hover,
-.add-to-cart #edit-actions input.form-submit:hover,
+.add-to-cart #edit-actions input.form-submit:hover {
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 1px 5px #8c2764;
+  -webkit-box-shadow: 0 1px 5px #8c2764;
+  -o-box-shadow: 0 1px 5px #8c2764;
+  box-shadow: 0 1px 5px #8c2764;
+}
+
+.commerce-line-item-actions,
+.checkout-buttons {
+  font-size: 1em;
+  text-align: right;
+}
+
+input#edit-checkout,
+input#edit-continue,
+input#edit-submit,
+input#edit-cancel,
+input#edit-back {
+  color: #fff;
+  font-size: 1em;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
+  background-clip: padding-box;
+  background: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2668a), color-stop(100%, #8c2764));
+  background: -webkit-linear-gradient(#a2668a, #8c2764);
+  background: -moz-linear-gradient(#a2668a, #8c2764);
+  background: -o-linear-gradient(#a2668a, #8c2764);
+  background: -ms-linear-gradient(#a2668a, #8c2764);
+  background: linear-gradient(#a2668a, #8c2764);
+  -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.5);
+  border: 2px solid #fff;
+  -moz-border-radius: 1em;
+  -webkit-border-radius: 1em;
+  -o-border-radius: 1em;
+  -ms-border-radius: 1em;
+  -khtml-border-radius: 1em;
+  border-radius: 1em;
+  float: none;
+  margin: 0 1em;
+  padding: 3px 1em 4px;
+}
 input#edit-checkout:hover,
-input#edit-continue:hover {
+input#edit-continue:hover,
+input#edit-submit:hover,
+input#edit-cancel:hover,
+input#edit-back:hover {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0 1px 5px #8c2764;
   -webkit-box-shadow: 0 1px 5px #8c2764;

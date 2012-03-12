@@ -829,9 +829,7 @@ body.ptf-gwf-bitter {
 }
 
 form.commerce-add-to-cart input.form-submit,
-.add-to-cart #edit-actions input.form-submit,
-input#edit-checkout,
-input#edit-continue {
+.add-to-cart #edit-actions input.form-submit {
   font-size: 1em;
   text-shadow: 0 1px 0 rgba(0,0,0,0.75);
   background-clip: padding-box;
@@ -846,6 +844,36 @@ input#edit-continue {
     @include box-shadow(0 1px 5px #8C2764);
   }
 }
+
+.commerce-line-item-actions,
+.checkout-buttons {
+  font-size: 1em;
+  text-align: right;
+}
+
+input#edit-checkout,
+input#edit-continue,
+input#edit-submit,
+input#edit-cancel,
+input#edit-back {
+  color: #fff;
+  font-size: 1em;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.75);
+  background-clip: padding-box;
+  @include background(linear-gradient(#A2668A, #8C2764));
+  @include box-shadow(0 1px 5px rgba(0,0,0,0.5));
+  border: 2px solid #fff;
+  @include border-radius(1em);
+  float: none;
+  margin: 0 1em;
+  padding: 3px 1em 4px;
+
+  &:hover {
+    text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+    @include box-shadow(0 1px 5px #8C2764);
+  }
+}
+
 
 /* Search */
 .page-sok {
