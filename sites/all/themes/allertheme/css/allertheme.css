@@ -413,6 +413,84 @@ body.ptf-gwf-bitter #nav-wrapper {
   display: block;
   padding: 10px;
 }
+.article-type-produktvisning.view-mode-full .field-field-product-image img {
+  background: #FFF;
+  -moz-box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
+  -webkit-box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
+  -o-box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
+  box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
+  display: block;
+  padding: 10px;
+}
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-slides {
+  padding: 20px 40px;
+  margin: -10px -30px;
+  overflow: hidden;
+}
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-slides .gallery-slide {
+  margin: -10px;
+}
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-slides .colorbox {
+  background: transparent url("../images/icon_product-gallery.png") no-repeat 0 0;
+  width: 44px;
+  height: 41px;
+  position: absolute;
+  top: 13px;
+  right: 10px;
+  overflow: hidden;
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=75);
+  opacity: 0.75;
+  display: block;
+  white-space: nowrap;
+  text-indent: 100%;
+  overflow: hidden;
+}
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-slides .colorbox:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=100);
+  opacity: 1;
+}
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-slides .colorbox:focus {
+  outline: none;
+}
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-slides .slide-button {
+  display: block;
+  white-space: nowrap;
+  text-indent: 100%;
+  overflow: hidden;
+  background: transparent url("../images/icon_product-gallery.png") no-repeat left bottom;
+  width: 22px;
+  height: 32px;
+  top: 47%;
+  position: absolute;
+}
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-slides .slide-button.next-slide {
+  background-position: right bottom;
+}
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-thumbs img {
+  margin: -4px;
+  padding: 4px;
+  -moz-box-shadow: 0 0 5px rgba(37, 37, 37, 0.4);
+  -webkit-box-shadow: 0 0 5px rgba(37, 37, 37, 0.4);
+  -o-box-shadow: 0 0 5px rgba(37, 37, 37, 0.4);
+  box-shadow: 0 0 5px rgba(37, 37, 37, 0.4);
+}
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-thumbs .active img,
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-thumbs a:hover img {
+  -moz-box-shadow: 0 0 10px rgba(141, 39, 101, 0.51);
+  -webkit-box-shadow: 0 0 10px rgba(141, 39, 101, 0.51);
+  -o-box-shadow: 0 0 10px rgba(141, 39, 101, 0.51);
+  box-shadow: 0 0 10px rgba(141, 39, 101, 0.51);
+}
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-thumbs ul {
+  width: 100%;
+  margin-top: 25px;
+  text-align: center;
+}
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-thumbs li {
+  float: none;
+  display: inline-block;
+  padding: 10px;
+}
 .article-type-produktvisning.view-mode-full .field-name-service-links-displays-group {
   text-align: right;
   height: 2.083em;

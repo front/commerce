@@ -37,6 +37,13 @@ $font-size: 12;
   clip: rect(1px, 1px, 1px, 1px);
 }
 
+@mixin image-replace {
+  display: block;
+  white-space: nowrap;
+  text-indent: 100%;
+  overflow: hidden;
+}
+
 /* AT theme overrides */
 body.ptf-gwf-bitter {
   #page-title,
@@ -432,6 +439,74 @@ body.ptf-gwf-bitter {
       @include box-shadow(0 0 10px rgba(37,37,37,0.51));
       display: block;
       padding: 10px;
+    }
+  }
+  .field-field-product-image {
+    img {
+      background: #FFF;
+      @include box-shadow(0 0 10px rgba(37,37,37,0.51));
+      display: block;
+      padding: 10px;
+    }
+    .gallery-slides {
+      padding: 20px 40px;
+      margin: -10px -30px;
+      overflow: hidden;
+
+      .gallery-slide {
+        margin: -10px;
+      }
+      .colorbox {
+        background: transparent url('../images/icon_product-gallery.png') no-repeat 0 0;
+        width: 44px;
+        height: 41px;
+        position: absolute;
+        top: 13px;
+        right: 10px;
+        overflow: hidden;
+        @include opacity(0.75);
+        @include image-replace;
+
+        &:hover {
+          @include opacity(1);
+        }
+        &:focus {
+          outline: none;
+        }
+      }
+      .slide-button {
+        @include image-replace;
+        background: transparent url('../images/icon_product-gallery.png') no-repeat left bottom;
+        width: 22px;
+        height: 32px;
+        top: 47%;
+        position: absolute;
+
+        &.next-slide {
+          background-position: right bottom;
+        }
+      }
+    }
+    .gallery-thumbs {
+      img {
+        margin: -4px;
+        padding: 4px;
+        @include box-shadow(0 0 5px rgba(37,37,37,0.40));
+      }
+      .active img,
+      a:hover img {
+        @include box-shadow(0 0 10px rgba(141,39,101,0.51));
+      }
+      ul {
+        width: 100%;
+        margin-top: 25px;
+        text-align: center;
+      }
+      li {
+        float: none;
+        display: inline-block;
+        padding: 10px;
+      }
     }
   }
   .field-name-service-links-displays-group {
