@@ -1,0 +1,153 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Google Website Optimizer module.
+ */
+
+/**
+ * Implementation of hook_schema().
+ */
+function google_website_optimizer_schema() {
+  $schema['google_website_optimizer'] = array(
+    'fields' => array(
+      'test_id' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'name' => array(
+        'type' => 'varchar',
+        'length' => 128,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+	  'test_status' => array(
+	    'type' => 'int',
+		'default' => 1,
+	  ),
+      'test_page_path' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+	  'test_page_language' => array(
+        'type' => 'varchar',
+        'length' => 5,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'variation_page_path' => array(
+        'type' => 'text',
+        'not null' => FALSE,
+      ),
+      'conversion_page_path' => array(
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'control_tracking_script' => array(
+        'type' => 'text',
+        'not null' => FALSE,
+      ),
+      'variation_tracking_script' => array(
+        'type' => 'text',
+        'not null' => FALSE,
+      ),
+      'conversion_script' => array(
+        'type' => 'text',
+        'not null' => FALSE,
+      ),
+      'excluded_ips' => array(
+        'type' => 'text',
+        'not null' => FALSE,
+      ),
+      'customvarslot' => array(
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => FALSE,
+        'default' => '0',
+      ),
+	  'test_page_title' => array(
+	    'type' => 'int',
+		'default' => 0,
+	  ),
+    ),
+    'primary key' => array('test_id'),
+  );
+
+  return $schema;
+}
+
+
+
+/**
+ * Implementation of hook_uninstall()
+ */
+function google_website_optimizer_uninstall() {
+  drupal_uninstall_schema('google_website_optimizer');
+}
+
+/**
+ * Combine the control and tracking script columns
+ *   1. Rename control_script to control_tracking_script
+ *   2. Add tracking scripts to the control_tracking_script column
+ *   3. Delete tracking_script column
+ */
+function google_website_optimizer_update_7101() {
+  db_change_field('google_website_optimizer', 'control_script', 'control_tracking_script', array(
+      'type' => 'text',
+      'not null' => FALSE,
+    )
+  );
+  $query = db_select('google_website_optimizer', 'gwo');
+  $query->fields('gwo', array('test_id', 'control_tracking_script', 'tracking_script'));
+  $result = $query->execute();
+  foreach ($result as $row) {
+    db_update('google_website_optimizer')
+      ->fields(array('control_tracking_script' => $row->control_tracking_script . "\n" . $row->tracking_script))
+      ->condition('test_id', $row->test_id)
+      ->execute();
+  }
+  db_drop_field('google_website_optimizer', 'tracking_script');
+}
+
+/**
+ * Add the customvarslot and excluded_ips fields to the google_website_optimizer table.
+ */
+
+function google_website_optimizer_update_7102() {
+  $ret = array();
+  db_add_field('google_website_optimizer', 'customvarslot', array('type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => '0'));
+  db_add_field('google_website_optimizer', 'excluded_ips', array('type' => 'text', 'not null' => FALSE));  
+  return $ret;
+}
+
+/**
+ * Add test_page_title field to the google_website_optimizer_ table.
+ */
+function google_website_optimizer_update_7103() {
+  $ret = array();
+  db_add_field('google_website_optimizer', 'test_page_title', array('type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 0));
+  return $ret;
+}
+
+/**
+ * Add test_status field to the google_website_optimizer table.
+ */
+function google_website_optimizer_update_7104() {
+  $ret = array();
+  db_add_field('google_website_optimizer', 'test_status', array('type' => 'int', 'unsigned' => TRUE, 'not null' => FALSE, 'default' => 1));
+  return $ret;
+}
+
+/**
+ * Add test_page_language field to the google_website_optimizer table.
+ */
+function google_website_optimizer_update_7105() {
+  $ret = array();
+  db_add_field('google_website_optimizer', 'test_page_language', array('type' => 'varchar', 'length' => 5, 'not null' => FALSE, 'default' => ''));
+  return $ret;
+}

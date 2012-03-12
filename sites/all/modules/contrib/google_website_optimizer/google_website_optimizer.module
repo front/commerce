@@ -1,0 +1,202 @@
+<?php
+
+/**
+ * @file
+ * Easily insert the nessesary javascript code for your Google Website Optimizer tests.
+ */
+
+/**
+ * Implementation of hook_menu().
+ */
+function google_website_optimizer_menu() {
+  $items['admin/config/content/google_website_optimizer'] = array(
+    'title' => 'Google Website Optimizer',
+    'description' => 'Create and manage your Google Website Optimizer tests.',
+    'page callback' => 'google_website_optimizer_admin_overview',
+    'access arguments' => array('administer google_website_optimizer'),
+    'file' => 'google_website_optimizer.admin.inc',
+  );
+  $items['admin/config/content/google_website_optimizer/list'] = array(
+    'title' => 'List',
+    'type' => MENU_DEFAULT_LOCAL_TASK,
+    'weight' => -1,
+  );
+  $items['admin/config/content/google_website_optimizer/add'] = array(
+    'title' => 'Add Test',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('google_website_optimizer_admin_form'),
+    'access arguments' => array('administer google_website_optimizer'),
+    'file' => 'google_website_optimizer.admin.inc',
+    'type' => MENU_LOCAL_TASK,
+  );
+  $items['admin/config/content/google_website_optimizer/edit/%'] = array(
+    'title' => 'Edit test',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('google_website_optimizer_admin_form', 5),
+    'access arguments' => array('administer google_website_optimizer'),
+    'file' => 'google_website_optimizer.admin.inc',
+  );
+  $items['admin/config/content/google_website_optimizer/delete/%'] = array(
+    'title' => 'Delete test',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('google_website_optimizer_delete_confirm', 5),
+    'access arguments' => array('administer google_website_optimizer'),
+    'file' => 'google_website_optimizer.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implementation of hook_help().
+ */
+function google_website_optimizer_help($path, $arg) {
+  switch ($path) {
+    case 'admin/config/content/google_website_optimizer#pages':
+      return "node/*\nuser/*\ncomment/*";
+    case 'admin/config/content/google_website_optimizer':
+    case 'admin/help#google_website_optimizer' :
+      return '<p>'. t('Google Website Optimizer allows you to test different content and layout on your pages to increase your conversion rate. Learn more about <a href="http://www.google.com/websiteoptimizer">Google Website Optimizer</a>.') .'</p>'.
+               '<p>'. t('This module provides an easy way to output the javascript code on the appropriate pages.') .'</p>'.
+               '<p>'. t('When you create a test in Google Website Optimizer, create a new test here and input the code provided into the appropriate places. The module will do the rest.') .'</p>';
+  }
+}
+
+/**
+ * Implementation of hook_permission().
+ */
+function google_website_optimizer_permission() {
+  return array(
+    'administer google_website_optimizer' => array(
+      'title' => t('Administer Google Website Optimizer'),
+      'description' => t('Perform A/B split and multivariate testing using the Google Website Optimizer service.'),
+    )
+  );
+}
+
+/**
+ * Implementation of hook_boot() to insert Javascript on the page
+ * I don't know if this is the hook to use
+ */
+function google_website_optimizer_init() {
+  global $user, $language;
+  $tests = google_website_optimizer_test_load();
+  foreach ($tests as $test) {
+	if ($test->test_status == 1) {
+      $testing_page = _google_website_optimizer_page_match($test->test_page_path);
+	  $testing_page = $testing_page && ($language->language == $test->test_page_language || $test->test_page_language == LANGUAGE_NONE);
+
+      $conversion_page = _google_website_optimizer_page_match($test->conversion_page_path);
+      $variation_page = _google_website_optimizer_page_match($test->variation_page_path);
+
+      // implement IP filter. - Added by Yannis Karampelas (yannisc - http://www.netstudio.gr) - 29/6/2011.
+      $ipfilteredvisitor = _google_website_optimizer_filtered_ip_match($test->excluded_ips); // returns true or false
+      if ($conversion_page && !$ipfilteredvisitor && !$user->uid) {
+        $element = array(
+          '#type' => 'markup',
+          '#markup' => $test->conversion_script,
+        );
+        drupal_add_html_head($element, 'google_website_optimizer_conversion');
+      }
+      else if ($testing_page) { //we want the control script to remain even for filtered IP's, so we have to remove the tracking script for filtered IP's
+        $script = $test->control_tracking_script; 
+	  if ($ipfilteredvisitor && $user->uid) { // if filtered IP, show only control script
+	    $script = preg_match('/(?s)<!-- Google Website Optimizer Control Script -->.*<!-- End of Google Website Optimizer Control Script -->/im', $script, $controlscript);	
+        $script = $controlscript[0];
+	  }
+
+	  // add Google Analytics integration by setting a custom, session level variable.
+	  // added by Yannis Karampelas (yannisc - http://www.netstudio.gr) - 30/6/2011.
+      if ($test->customvarslot > 0 && $test->customvarslot < 6) {
+        $script .= "\r\n<script>if(utmx('combination_string') != undefined) {try {_gaq.push(['_setCustomVar', " . $test->customvarslot . ", '" . $test->name . "', utmx('combination_string'), 2]);}catch(err){}}</script>\r\n";
+	  }
+
+      $element = array(
+        '#type' => 'markup',
+        '#markup' => $script,
+      );
+      drupal_add_html_head($element, 'google_website_optimizer_variation_tracking');
+	  
+      } elseif ($variation_page && !$ipfilteredvisitor && !$user->uid) {
+        $element = array(
+          '#type' => 'markup',
+          '#markup' => $test->variation_tracking_script,
+      );
+      drupal_add_html_head($element, 'google_website_optimizer_control_tracking');
+      }
+    }
+  }
+}
+
+/**
+ * Module Functions :: Private
+ */
+
+/**
+ * Load all tests. Just load one test if $test_id is passed in.
+ */
+function google_website_optimizer_test_load($test_id = 0) {
+  static $tests = array();
+  if (!$tests) {
+    $result = db_query('SELECT * FROM {google_website_optimizer}');
+    foreach($result as $record) {
+      $tests[$record->test_id] = $record;
+    }
+  }
+  return $test_id ? $tests[$test_id] : $tests;
+}
+
+/**
+ * Determine if the current page matches the testing or conversion page path.
+ *
+ * @return
+ *   TRUE if yes, FALSE if no.
+ */
+function _google_website_optimizer_page_match($paths) {
+  $page_match = FALSE;
+
+  $path = drupal_get_path_alias($_GET['q']);
+  $regexp = '/^('. preg_replace(array('/(\r\n?|\n)/', '/\\\\\*/', '/(^|\|)\\\\<front\\\\>($|\|)/'), array('|', '.*', '\1'. preg_quote(variable_get('site_frontpage', 'node'), '/') .'\2'), preg_quote($paths, '/')) .')$/';
+  // Compare with the internal and path alias (if any).
+  $page_match = preg_match($regexp, $path);
+
+  if ($path != $_GET['q']) {
+    $page_match = $page_match || preg_match($regexp, $_GET['q']);
+  }
+
+  return $page_match;
+}
+
+/**
+ * Determine if the current user's IP matches the experiment's excluded IP's.
+ *
+ * @return
+ *   TRUE if yes, FALSE if no.
+ */
+function _google_website_optimizer_filtered_ip_match($ips) {
+  $filtered_ip_match = FALSE;
+  $visitor_ip = ip_address();
+  if (preg_match('/' . $visitor_ip . '/im', $ips) > 0) {
+	  $filtered_ip_match = TRUE;
+  }
+  return $filtered_ip_match;
+}
+
+
+/**
+ * Implements hook_preprocess_page().
+ * Adds the utmx_section tags around the page title.
+ */
+function google_website_optimizer_preprocess_page(&$vars) {
+  global $language;
+  $tests = google_website_optimizer_test_load();
+  foreach ($tests as $test) {
+    if ($test->test_page_title == 1 && $test->test_status == 1) {
+      $testing_page = _google_website_optimizer_page_match($test->test_page_path);
+	  $testing_page = $testing_page && ($language->language == $test->test_page_language || $test->test_page_language == LANGUAGE_NONE);
+      if (array_key_exists('node', $vars) && $testing_page) {	
+        $title = $vars['node']->title;
+        $vars['title'] = '<script>utmx_section("Page Title")</script>' . $title . '</noscript>';
+      }
+	}
+  }
+}
