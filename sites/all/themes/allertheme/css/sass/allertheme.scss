@@ -625,11 +625,13 @@ body.ptf-gwf-bitter {
   .field-name-field-product-image {
     vertical-align: top;
     figure {
-      margin-bottom: 1em;
       padding: 0;
     }
     img {
+      background: #fff;
       display: block;
+      padding: 4px;
+      margin-bottom: 1em;
       @include box-shadow(0 0 10px rgba(37,37,37,0.51));
       @include transition(box-shadow 0.25s ease-in-out);
     }

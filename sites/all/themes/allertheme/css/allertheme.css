@@ -614,11 +614,13 @@ body.ptf-gwf-bitter #nav-wrapper {
   vertical-align: top;
 }
 .article-type-produktvisning.view-mode-teaser .field-name-field-product-image figure {
-  margin-bottom: 1em;
   padding: 0;
 }
 .article-type-produktvisning.view-mode-teaser .field-name-field-product-image img {
+  background: #fff;
   display: block;
+  padding: 4px;
+  margin-bottom: 1em;
   -moz-box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
   -webkit-box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);
   -o-box-shadow: 0 0 10px rgba(37, 37, 37, 0.51);

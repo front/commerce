@@ -88,3 +88,16 @@ function aller_store_commerce_currency_info_alter(&$currencies, $langcode) {
   $currencies['NOK']['code_placement'] = '';
 }
 
+/**
+ * Implements hook_preprocess_node().
+ *
+ * Show only 1 image on products teasers
+ */
+function aller_store_preprocess_node(&$vars) {
+  if ($vars['view_mode'] == 'teaser') {
+    if (isset($vars['content']['product:field_product_image'])) {
+      $product_image = array($vars['content']['product:field_product_image']['#items'][0]);
+      $vars['content']['product:field_product_image']['#items'] = $product_image;
+    }
+  }
+}
