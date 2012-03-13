@@ -28,9 +28,9 @@ function commercify_admin_overview_default_page_manager_pages() {
     'name' => 'user-menu',
     'weight' => '-50',
     'parent' => array(
-      'type' => 'normal',
+      'type' => 'none',
       'title' => '',
-      'name' => 'user-menu',
+      'name' => 'menu-admin-links',
       'weight' => '0',
     ),
   );
