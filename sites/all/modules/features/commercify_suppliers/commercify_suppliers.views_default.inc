@@ -275,8 +275,8 @@ function commercify_suppliers_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'admin/commerce/overview/suppliers/list';
-  $handler->display->display_options['menu']['type'] = 'default tab';
+  $handler->display->display_options['path'] = 'admin/commerce/overview/suppliers';
+  $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Leverandører';
   $handler->display->display_options['menu']['description'] = 'Liste over leverandører';
   $handler->display->display_options['menu']['weight'] = '0';
