@@ -864,9 +864,9 @@ form.commerce-add-to-cart input.form-submit,
 
 input#edit-checkout,
 input#edit-continue,
-input#edit-submit,
 input#edit-cancel,
-input#edit-back {
+input#edit-back,
+.view-commerce-cart-form input#edit-submit {
   color: #fff;
   font-size: 1em;
   text-shadow: 0 1px 0 rgba(0,0,0,0.75);

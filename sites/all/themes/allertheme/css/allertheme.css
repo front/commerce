@@ -899,9 +899,9 @@ form.commerce-add-to-cart input.form-submit:hover,
 
 input#edit-checkout,
 input#edit-continue,
-input#edit-submit,
 input#edit-cancel,
-input#edit-back {
+input#edit-back,
+.view-commerce-cart-form input#edit-submit {
   color: #fff;
   font-size: 1em;
   text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
@@ -929,9 +929,9 @@ input#edit-back {
 }
 input#edit-checkout:hover,
 input#edit-continue:hover,
-input#edit-submit:hover,
 input#edit-cancel:hover,
-input#edit-back:hover {
+input#edit-back:hover,
+.view-commerce-cart-form input#edit-submit:hover {
   text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
   -moz-box-shadow: 0 1px 5px #8c2764;
   -webkit-box-shadow: 0 1px 5px #8c2764;
