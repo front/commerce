@@ -358,12 +358,12 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['path'] = 'admin/commerce/overview/coupons';
   $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Kuponger';
+  $handler->display->display_options['menu']['description'] = 'Liste over kuponger';
   $handler->display->display_options['menu']['weight'] = '-14';
   $handler->display->display_options['menu']['context'] = 0;
-  $handler->display->display_options['tab_options']['type'] = 'normal';
-  $handler->display->display_options['tab_options']['title'] = 'Coupons';
-  $handler->display->display_options['tab_options']['description'] = 'Manage coupons in the store.';
-  $handler->display->display_options['tab_options']['weight'] = '';
+  $handler->display->display_options['tab_options']['title'] = 'Kuponger';
+  $handler->display->display_options['tab_options']['description'] = 'Liste over kuponger';
+  $handler->display->display_options['tab_options']['weight'] = '-1';
   $handler->display->display_options['tab_options']['name'] = 'management';
 
   /* Display: Block */
@@ -3676,8 +3676,6 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['created_1']['field'] = 'created';
   $handler->display->display_options['filters']['created_1']['relationship'] = 'order_id';
   $handler->display->display_options['filters']['created_1']['operator'] = '<';
-  $handler->display->display_options['filters']['created_1']['value']['value'] = 'last day of this month';
-  $handler->display->display_options['filters']['created_1']['value']['type'] = 'offset';
   $handler->display->display_options['filters']['created_1']['exposed'] = TRUE;
   $handler->display->display_options['filters']['created_1']['expose']['operator_id'] = 'created_1_op';
   $handler->display->display_options['filters']['created_1']['expose']['label'] = 'Til (Dato)';
@@ -4132,7 +4130,6 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['created']['expose']['label'] = 'Fra (Dato)';
   $handler->display->display_options['filters']['created']['expose']['operator'] = 'created_op';
   $handler->display->display_options['filters']['created']['expose']['identifier'] = 'created';
-  $handler->display->display_options['filters']['created']['expose']['remember'] = 1;
   $handler->display->display_options['filters']['created']['expose']['multiple'] = FALSE;
   /* Filter criterion: Commerce Order: Created date */
   $handler->display->display_options['filters']['created_1']['id'] = 'created_1';
@@ -4145,7 +4142,6 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['created_1']['expose']['label'] = 'Til (Dato)';
   $handler->display->display_options['filters']['created_1']['expose']['operator'] = 'created_1_op';
   $handler->display->display_options['filters']['created_1']['expose']['identifier'] = 'created_1';
-  $handler->display->display_options['filters']['created_1']['expose']['remember'] = 1;
   $handler->display->display_options['filters']['created_1']['expose']['multiple'] = FALSE;
   /* Filter criterion: IP geolocations: Latitude */
   $handler->display->display_options['filters']['latitude']['id'] = 'latitude';
@@ -6344,7 +6340,6 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['menu']['description'] = 'Viser alle brukere i systemet, inkludert admins og selgere.';
   $handler->display->display_options['menu']['weight'] = '39';
   $handler->display->display_options['menu']['context'] = 0;
-  $handler->display->display_options['tab_options']['type'] = 'tab';
   $handler->display->display_options['tab_options']['title'] = 'All';
   $handler->display->display_options['tab_options']['weight'] = '0';
 
@@ -6717,7 +6712,7 @@ function commercify_admin_overview_views_default_views() {
 
   /* Display: Page */
   $handler = $view->new_display('page', 'Page', 'page');
-  $handler->display->display_options['path'] = 'admin/commerce/overview/users/customers';
+  $handler->display->display_options['path'] = 'admin/commerce/overview/users/list';
   $handler->display->display_options['menu']['type'] = 'default tab';
   $handler->display->display_options['menu']['title'] = 'Kunder';
   $handler->display->display_options['menu']['description'] = 'Viser en liste over kunder med ordre';

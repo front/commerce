@@ -94,7 +94,6 @@ function commercify_menu() {
     );
   }
   return $items;
-  
 }
 
 /**
@@ -109,9 +108,7 @@ function commercify_link_dest($url) {
           'destination' => $url
       )
   );
- }
-
-
+}
 
 /**
  * Implements hook_block_info();
@@ -195,4 +192,73 @@ function commercify_moderate_form_submit($form, &$form_state) {
               '@before' => commerce_order_status_get_title($form_state['order']->status),
               '@now' => commerce_order_status_get_title($form_state['values']['moderate_status']))));
   commerce_order_status_update($form_state['order'], $form_state['values']['moderate_status']);
-} 
+}
+
+/**
+ * Implements hook_menu_breadcrumb_alter().
+ * 
+ * Fixes the menu trail for commerce overviwew.
+ * Adds the admin/commerce/overview as base point for all admin trails.
+ */
+function commercify_menu_breadcrumb_alter(&$active_trail, $item) {
+  $active_trail[0]['title'] = t('Administrer butikk');
+  $active_trail[0]['href'] = 'admin/commerce/overview';
+
+  // Clean up menu trails
+  if (arg(0) == 'admin' && arg(1) == 'commerce' && arg(2) == 'overview') {
+    unset($active_trail[1]);
+    unset($active_trail[2]);
+  }
+  elseif (arg(0) == 'admin' && arg(1) == 'commerce') {
+    unset($active_trail[1]);
+    unset($active_trail[2]);
+  }
+}
+
+/**
+ * Implements hook_menu_alter().
+ * 
+ * Required for overriding breadcrumb for orders
+ * @param type $items 
+ */
+function commercify_menu_alter(&$items) {
+  $items['admin/commerce/orders/%commerce_order']['page arguments'] = array(3, 'administrator', FALSE);
+}
+
+/**
+ * Implements hook_page_alter().
+ * 
+ * Do a override on the products breadcrumb.
+ */
+function commercify_page_alter(&$page) {
+  $breadcrumb = array();
+  if (arg(1) == 'commerce' && arg(2) == 'products') {
+    // Create the breadcrumb array based on the view mode.
+    $breadcrumb = array(
+        l(t('Admnistrer butikk'), 'admin/commerce/overview'),
+        l(t('Produkter'), 'admin/commerce/overview/products'),
+    );
+  }
+  if (arg(0) == 'node' && arg(1) == 'add' && arg(2) == 'supplier') {
+        $breadcrumb = array(
+        l(t('Administrer butikk'), 'admin/commerce/overview'),
+        l(t('Leverandør'), 'admin/commerce/overview/suppliers'),
+    );
+  }
+  if (!empty($breadcrumb)) {
+    drupal_set_breadcrumb($breadcrumb);
+  }
+}
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ * 
+ */
+function commercify_form_alter(&$form, $form_state, $form_id) {
+  if ($form['#id'] == 'views-exposed-form-c-dashboard-product-charts-panel-pane-1') {
+    if (empty($form['created']['#value']) && empty($form['created_1']['#value'])) {
+      $form['created']['#default_value'] = date('Y-m-01');
+      $form['created_1']['#default_value'] = date('Y-m-t');
+    }
+  }
+}
