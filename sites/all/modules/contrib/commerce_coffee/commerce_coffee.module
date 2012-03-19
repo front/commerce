@@ -11,9 +11,9 @@
  */
 function commerce_coffee_permission() {
   $permissions = array(
-    'use commercify coffee' => array(
-      'title' => t('Use commercify\'s coffee commands'),
-      'description' => t('Allow users to use commercify commands under Alt-d.'),
+    'use commerce coffee' => array(
+      'title' => t('Use commerce coffee commands'),
+      'description' => t('Allow users to use commerce commands under Alt-d.'),
     ),
   );
 
@@ -27,7 +27,7 @@ function commerce_coffee_permission() {
  * Jumps into an include file if proper perms are set, since its admin only.
  */
 function commerce_coffee_coffee_command($op) {
-  if (user_access('use commercify coffee')) {
+  if (user_access('use commerce coffee')) {
     module_load_include('inc', 'commerce_coffee', 'commerce_coffee.includes');
     return commerce_coffee_get_commands(check_plain($op));
   }
