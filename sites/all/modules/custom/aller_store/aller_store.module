@@ -9,11 +9,11 @@
  * Implements hook_menu().
  */
 function aller_store_menu() {
-  $items['admin/commerce/overview/add/article'] = array(
-    'title' => 'Add article',
+  $items['admin/commerce/overview/add/page'] = array(
+    'title' => 'Add page',
     'page callback' => 'drupal_goto',
-    'page arguments' => array('node/add/article'),
-    'access arguments' => array('create article content'),
+    'page arguments' => array('node/add/page'),
+    'access arguments' => array('create page content'),
     'type' => MENU_LOCAL_ACTION,
     'weight' => 0,
   );
