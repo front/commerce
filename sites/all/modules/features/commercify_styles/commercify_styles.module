@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Commercify Styles feature.
+ */
+
+include_once('commercify_styles.features.inc');

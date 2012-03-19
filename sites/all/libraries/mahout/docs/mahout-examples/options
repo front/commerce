@@ -1,0 +1,30 @@
+-classpath
+'/private/var/tmp/mahout-release/target/checkout/examples/target/classes:/Users/srowen/.m2/repository/org/uncommons/watchmaker/watchmaker-swing/0.6.2/watchmaker-swing-0.6.2.jar:/Users/srowen/.m2/repository/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar:/Users/srowen/.m2/repository/commons-lang/commons-lang/2.4/commons-lang-2.4.jar:/private/var/tmp/mahout-release/target/checkout/core/target/mahout-core-0.5.jar:/Users/srowen/.m2/repository/org/apache/lucene/lucene-analyzers/3.1.0/lucene-analyzers-3.1.0.jar:/Users/srowen/.m2/repository/com/google/collections/google-collections/1.0-rc2/google-collections-1.0-rc2.jar:/Users/srowen/.m2/repository/org/apache/commons/commons-math/2.1/commons-math-2.1.jar:/Users/srowen/.m2/repository/commons-collections/commons-collections/3.2.1/commons-collections-3.2.1.jar:/Users/srowen/.m2/repository/org/apache/mahout/commons/commons-cli/2.0-mahout/commons-cli-2.0-mahout.jar:/Users/srowen/.m2/repository/commons-beanutils/commons-beanutils/1.7.0/commons-beanutils-1.7.0.jar:/Users/srowen/.m2/repository/commons-httpclient/commons-httpclient/3.1/commons-httpclient-3.1.jar:/Users/srowen/.m2/repository/org/apache/lucene/lucene-memory/3.1.0/lucene-memory-3.1.0.jar:/Users/srowen/.m2/repository/net/java/dev/jets3t/jets3t/0.7.1/jets3t-0.7.1.jar:/Users/srowen/.m2/repository/com/google/guava/guava/r03/guava-r03.jar:/Users/srowen/.m2/repository/org/apache/hadoop/hadoop-core/0.20.2/hadoop-core-0.20.2.jar:/Users/srowen/.m2/repository/commons-logging/commons-logging/1.1.1/commons-logging-1.1.1.jar:/Users/srowen/.m2/repository/commons-digester/commons-digester/1.7/commons-digester-1.7.jar:/Users/srowen/.m2/repository/commons-pool/commons-pool/1.4/commons-pool-1.4.jar:/private/var/tmp/mahout-release/target/checkout/math/target/mahout-math-0.5.jar:/Users/srowen/.m2/repository/xpp3/xpp3_min/1.1.4c/xpp3_min-1.1.4c.jar:/Users/srowen/.m2/repository/org/apache/lucene/lucene-queries/3.1.0/lucene-queries-3.1.0.jar:/Users/srowen/.m2/repository/org/apache/mahout/mahout-collections/1.0/mahout-collections-1.0.jar:/Users/srowen/.m2/repository/com/thoughtworks/xstream/xstream/1.3.1/xstream-1.3.1.jar:/Users/srowen/.m2/repository/commons-cli/commons-cli/1.2/commons-cli-1.2.jar:/Users/srowen/.m2/repository/org/apache/lucene/lucene-core/3.1.0/lucene-core-3.1.0.jar:/private/var/tmp/mahout-release/target/checkout/utils/target/mahout-utils-0.5.jar:/Users/srowen/.m2/repository/org/apache/lucene/lucene-highlighter/3.1.0/lucene-highlighter-3.1.0.jar:/Users/srowen/.m2/repository/org/uncommons/watchmaker/watchmaker-framework/0.6.2/watchmaker-framework-0.6.2.jar:/Users/srowen/.m2/repository/org/apache/commons/commons-compress/1.1/commons-compress-1.1.jar:/Users/srowen/.m2/repository/org/slf4j/slf4j-jcl/1.6.0/slf4j-jcl-1.6.0.jar:/Users/srowen/.m2/repository/jakarta-regexp/jakarta-regexp/1.4/jakarta-regexp-1.4.jar:/Users/srowen/.m2/repository/org/slf4j/slf4j-api/1.6.0/slf4j-api-1.6.0.jar:/Users/srowen/.m2/repository/org/apache/lucene/lucene-benchmark/3.1.0/lucene-benchmark-3.1.0.jar:/Users/srowen/.m2/repository/org/uncommons/maths/uncommons-maths/1.2/uncommons-maths-1.2.jar:/Users/srowen/.m2/repository/org/apache/lucene/lucene-xercesImpl/3.1.0/lucene-xercesImpl-3.1.0.jar:/Users/srowen/.m2/repository/commons-dbcp/commons-dbcp/1.2.2/commons-dbcp-1.2.2.jar:/Users/srowen/.m2/repository/commons-codec/commons-codec/1.3/commons-codec-1.3.jar:/Users/srowen/.m2/repository/org/apache/solr/solr-commons-csv/3.1.0/solr-commons-csv-3.1.0.jar'
+-encoding
+'UTF-8'
+-protected
+-sourcepath
+'/private/var/tmp/mahout-release/target/checkout/examples/src/main/java'
+-author
+-bottom
+'Copyright &#169; 2008-2011 <a href="http://www.apache.org/">The Apache Software Foundation</a>. All Rights Reserved.'
+-charset
+'UTF-8'
+-d
+'/private/var/tmp/mahout-release/target/checkout/examples/target/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Mahout Examples 0.5 API'
+-linkoffline
+'http://download.oracle.com/javase/6/docs/api' '/private/var/tmp/mahout-release/target/checkout/examples/target/javadoc-bundle-options'
+-linkoffline
+'http://mahout.apache.org/mahout-math/apidocs' '/private/var/tmp/mahout-release/target/checkout/math/target/apidocs'
+-linkoffline
+'http://mahout.apache.org/mahout-core/apidocs' '/private/var/tmp/mahout-release/target/checkout/core/target/apidocs'
+-linkoffline
+'http://mahout.apache.org/mahout-utils/apidocs' '/private/var/tmp/mahout-release/target/checkout/utils/target/apidocs'
+-use
+-version
+-windowtitle
+'Mahout Examples 0.5 API'

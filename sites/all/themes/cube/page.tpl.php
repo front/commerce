@@ -5,7 +5,7 @@
     <div id='console' class='clear-block'><?php print $messages; ?></div>
   <?php endif; ?>
 
-  <div id='content'>
+  <div id='content' class="block-region">
     <?php if (!empty($page['content'])): ?>
       <div class='content-wrapper clear-block'><?php print render($page['content']); ?></div>
     <?php endif; ?>

@@ -97,7 +97,7 @@ th {
   border-bottom: 0 none;
 }
 tr.even, tr.odd {
-  background-color: rgba(0,0,0,0.03);
+  background-color: rgba(0,0,0,0.01);
   padding: 0;
 }
 
@@ -222,9 +222,15 @@ fieldset.filter-wrapper {
 }
 .form-submit:focus,
 .form-submit:hover {
-  -moz-box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.7);
-  -webkit-box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.7);
-  box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.7);
+  -moz-box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 3px 3px rgba(0, 0, 0, 0.1);
+}
+#block-user-login .form-submit:focus,
+#block-user-login .form-submit:hover {
+  -moz-box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
+  -webkit-box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 0 2px 2px rgba(0, 0, 0, 0.1);
 }
 input.form-text,
 textarea,
@@ -279,6 +285,20 @@ input#edit-cancel {
   min-width: 25%;
   max-width: 50%;
 }
+#draw {
+  display: block;
+  width: 100%;
+}
+html.js #draw,
+#toggle-wrapper {
+  display: none;
+}
+html.js #toggle-wrapper {
+  display: block;
+}
+#draw-wrapper a {
+  text-decoration: underline;
+}
 #toggle-wrapper a {
   display: block;
   padding: 0 10px 2px;
@@ -327,7 +347,9 @@ input#edit-cancel {
 }
 
 /* Menu bar */
-#menu-bar {
+#nav-wrapper {
+  margin: 0;
+  padding: 0;
   position: relative;
   top: 1.5em;
   min-height: 3em;
@@ -336,6 +358,7 @@ input#edit-cancel {
   -webkit-box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
   box-shadow: 0 5px 5px rgba(0, 0, 0, 0.4);
 }
+#menu-bar {}
 .nav ul,
 .nav ul li {
   margin: 0;

@@ -2,10 +2,10 @@
 # Otherwise, please see README and make necessary configuration to make this script running correctly.
 
 # config parameters
-export DRUPAL_HOME=../../../..
+export DRUPAL_HOME=../../../../..
 
-ASYNC_COMMAND_HOME=$DRUPAL_HOME/sites/all/modules/async_command
-RECOMMENDER_HOME=$DRUPAL_HOME/sites/all/modules/recommender
+ASYNC_COMMAND_HOME=$DRUPAL_HOME/sites/all/modules/contrib/async_command
+RECOMMENDER_HOME=$DRUPAL_HOME/sites/all/modules/contrib/recommender
 MAHOUT_HOME=$DRUPAL_HOME/sites/all/libraries/mahout
 
 # please make sure you have java and php installed.

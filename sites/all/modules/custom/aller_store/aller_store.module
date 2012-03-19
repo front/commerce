@@ -6,6 +6,38 @@
  */
 
 /**
+ * Implements hook_menu().
+ */
+function aller_store_menu() {
+  $items['admin/commerce/overview/add/article'] = array(
+    'title' => 'Add article',
+    'page callback' => 'drupal_goto',
+    'page arguments' => array('node/add/article'),
+    'access arguments' => array('create article content'),
+    'type' => MENU_LOCAL_ACTION,
+    'weight' => 0,
+  );
+  $items['admin/commerce/overview/add/produktvisning'] = array(
+    'title' => 'Add new product',
+    'page callback' => 'drupal_goto',
+    'page arguments' => array('node/add/produktvisning'),
+    'access arguments' => array('create produktvisning content'),
+    'type' => MENU_LOCAL_ACTION,
+    'weight' => 1,
+  );
+  $items['admin/commerce/overview/add/taxonomy/produkter'] = array(
+    'title' => 'Add category',
+    'page callback' => 'drupal_goto',
+    'page arguments' => array('admin/structure/taxonomy/produkter'),
+    'access arguments' => array('administer taxonomy'),
+    'type' => MENU_LOCAL_ACTION,
+    'weight' => 2,
+  );
+
+  return $items;
+}
+
+/**
  * Implements hook_views_rss_date_sources().
  * 
  * Implements correct dates in views_rss when using commerce products
@@ -41,6 +73,31 @@ function aller_store_form_alter(&$form, &$form_state, $form_id) {
       $form['created_1']['#type'] = 'date_popup';
       $form['created_1']['#date_format'] = 'Y-m-d';
 
+    }
+  }
+}
+
+/**
+* Implements hook_commerce_currency_info_alter().
+*
+* Because the default display of AUD is awful
+*/
+function aller_store_commerce_currency_info_alter(&$currencies, $langcode) {
+  $currencies['NOK']['symbol'] = 'kr';
+  $currencies['NOK']['symbol_placement'] = 'after';
+  $currencies['NOK']['code_placement'] = '';
+}
+
+/**
+ * Implements hook_preprocess_node().
+ *
+ * Show only 1 image on products teasers
+ */
+function aller_store_preprocess_node(&$vars) {
+  if ($vars['view_mode'] == 'teaser') {
+    if (isset($vars['content']['product:field_product_image'])) {
+      $product_image = array($vars['content']['product:field_product_image']['#items'][0]);
+      $vars['content']['product:field_product_image']['#items'] = $product_image;
     }
   }
 }

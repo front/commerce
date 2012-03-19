@@ -5,16 +5,6 @@
  * Replace 'allertheme' with your themes name, i.e. mytheme_preprocess_html()
  */
 function allertheme_preprocess_html(&$vars) {
-
-  // Load the media queries styles
-  // If you change the names of these files they must match here - these files are
-  // in the /css/ directory of your subtheme - the names must be identical!
-  $media_queries_css = array(
-    'allertheme.responsive.style.css',
-    'allertheme.responsive.gpanels.css'
-  );
-  load_subtheme_media_queries($media_queries_css, 'allertheme');
-
  /**
   * Load IE specific stylesheets
   * AT automates adding IE stylesheets, simply add to the array using
@@ -101,11 +91,16 @@ function allertheme_commerce_price_savings_formatter_formatter($vars) {
  * Implements hook_form_alter().
  */
 function allertheme_form_alter(&$form, &$form_state, $form_id) {
-  if ($form_id == 'search_block_form') {
-    if (isset($form['search_block_form'])) {
-      $title = $form['search_block_form']['#attributes']['title'];
-      $title = str_replace('.', '', $title);
-      $form['search_block_form']['#attributes']['placeholder'] = $title;
+  // TODO: move this to a custom module and make title context aware
+  if ($form_id == 'search_api_page_search_form_search_page') {
+    if (isset($form['keys_1'])) {
+      $form['keys_1']['#attributes']['#title'] = $form['keys_1']['#attributes']['placeholder'] = t('Search for book or author');
+    }
+  }
+  elseif ($form_id == 'search_api_page_search_form') {
+    if (isset($form['form']['keys_1'])) {
+      $form['form']['keys_1']['#attributes']['placeholder'] = $form['form']['keys_1']['#title'];
+      $form['form']['keys_1']['#title'] = '';
     }
   }
 }
