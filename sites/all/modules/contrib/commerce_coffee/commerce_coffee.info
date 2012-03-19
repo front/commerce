@@ -2,7 +2,7 @@ name = Commerce coffee integrations
 description = Provides rapid admin interface for commerce using coffee
 core = 7.x
 package = Commerce
-dependencies[] = coffee (7.x-1.x)
+dependencies[] = coffee
 dependencies[] = commerce
 
 ; Information added by drupal.org packaging script on 2012-03-18
