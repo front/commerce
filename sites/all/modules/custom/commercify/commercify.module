@@ -56,7 +56,7 @@ function commercify_menu() {
       'title' => 'Create an order',
       'description' => 'Create a new order.',
       'page callback' => 'drupal_goto',
-      'page arguments' => array('admin/people/create', commercify_link_dest('admin/commerce/overview/users')),
+      'page arguments' => array('admin/commerce/orders/add', commercify_link_dest('admin/commerce/overview/orders')),
       'access callback' => 'commerce_order_access',
       'access arguments' => array('create'),
       'weight' => 10,
