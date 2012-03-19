@@ -3,16 +3,6 @@
 /**
  * @file
  * Enables users to pay using Nets Service
- *
- * Card number for testing:
- * - VISA 4925000000000004 - 11 - 11 - 123
- * - MC   5413000000000000 - 11 - 11 - 123
- *
- * ID for testing:
- * - 11000324
- *
- * Token for testing:
- * - pH=6?8Kj
  */
 
 /**
@@ -175,15 +165,13 @@ function commerce_nets_redirect_form_validate($order, $payment_method) {
     $webshopParameter = $_GET['webshopParameter'];
   }
 
-  // If the user does end up returning at the success URL with a failed payment, go back.
-  if ($responseCode != 'OK') {
-    // Logging the error
-    watchdog('commerce_nets', 'Customer returned from Nets with the following POST:<pre>' . check_plain(print_r($responseCode, TRUE)) . '</pre>', array(), WATCHDOG_ERROR);
-    return FALSE;
-  }
-  elseif ($responseCode == 'OK') {
+  if ($responseCode == 'OK' ) {
     return commerce_nets_sale_form($order, $transactionId, $payment_method);
   }
+
+  // at this point, payment was not accepted
+  watchdog('commerce_nets', 'Payment was not accepted for customer at Nets with the following GET:<pre>' . check_plain(print_r($_GET, TRUE)) . '</pre>', array(), WATCHDOG_ERROR);
+  return FALSE;
 }
 
 /**
@@ -422,6 +410,8 @@ function commerce_nets_sale_form($order, $transactionId, $payment_method) {
 
     if ($ProcessResult->ResponseCode == "OK") {
       commerce_nets_transaction($payment_method, $order, $ProcessResult->TransactionId);
+      // explicitly advance in payment process
+      return TRUE;
     }
   } catch (SoapFault $fault) {
     // Printing errors from the communication. This can be modified to make a nice error screen for the users.
@@ -433,10 +423,10 @@ function commerce_nets_sale_form($order, $transactionId, $payment_method) {
 
     // Logging the error
     watchdog('commerce_nets', 'Webservice Nets returned not OK from sale/authorizationrequest. Data:<pre>' . check_plain(print_r($fault, TRUE)) . '</pre>', array(), WATCHDOG_ERROR);
-
-    // Go back!
-    return FALSE;
   }
+
+  // step back in checkout process
+  return FALSE;
 }
 
 /**
