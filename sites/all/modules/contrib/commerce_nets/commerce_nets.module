@@ -2,16 +2,9 @@
 
 /**
  * @file
- * Enables users to pay using Nets Netterminal
+ * Enables users to pay using Nets Service
  *
- * Made for use with 'Drupal Commerce' ( http://www.drupalcommerce.org/ )
- *
- * Creator: Rino André Johnsen AKA 'The Half-Code Prince'
- *   - Mail: rino@nymedia.no
- *
- * Code style: Drupal standard
- *
- * Kortnummer for testing:
+ * Card number for testing:
  * - VISA 4925000000000004 - 11 - 11 - 123
  * - MC   5413000000000000 - 11 - 11 - 123
  *
@@ -21,10 +14,6 @@
  * Token for testing:
  * - pH=6?8Kj
  */
-
-/*******************************************************************************
- * Hook Functions                                                              *
- *******************************************************************************/
 
 /**
  * Implements hook_commerce_payment_method_info().
@@ -43,10 +32,6 @@ function commerce_nets_commerce_payment_method_info() {
 
   return $payment_methods;
 }
-
-/*******************************************************************************
- * Callback Functions                                                          *
- *******************************************************************************/
 
 /**
  * Payment method callback: settings form.
@@ -146,10 +131,8 @@ function commerce_nets_redirect_form($form, &$form_state, $order, $payment_metho
   $settings = array(
     // Return to the previous page when payment is canceled
     'cancel_return' => url('checkout/' . $order->order_id . '/payment/back/' . $order->data['payment_redirect_key'], array('absolute' => TRUE)),
-
     // Return to the payment redirect page for processing successful payments
     'return' => url('checkout/' . $order->order_id . '/payment/return/' . $order->data['payment_redirect_key'], array('absolute' => TRUE)),
-
     // Specify the current payment method instance ID in the notify_url
     'payment_method' => $payment_method['instance_id'],
   );
@@ -177,43 +160,34 @@ function commerce_nets_redirect_form($form, &$form_state, $order, $payment_metho
  */
 function commerce_nets_redirect_form_validate($order, $payment_method) {
   $transactionId = '';
-	if (isset($_GET['transactionId'])) {
-  	$transactionId = $_GET['transactionId'];
-	}
+  if (isset($_GET['transactionId'])) {
+    $transactionId = $_GET['transactionId'];
+  }
 
-	$responseCode = '';
-	if (isset($_GET['responseCode'])) {
-  	$responseCode = $_GET['responseCode'];
-	}
+  $responseCode = '';
+  if (isset($_GET['responseCode'])) {
+    $responseCode = $_GET['responseCode'];
+  }
 
-	// Not using this atm, but is catching it - we may need it later.
-	$webshopParameter = '';
-	if (isset($_GET['webshopParameter'])) {
-  	$webshopParameter = $_GET['webshopParameter'];
-	}
+  // Not using this atm, but is catching it - we may need it later.
+  $webshopParameter = '';
+  if (isset($_GET['webshopParameter'])) {
+    $webshopParameter = $_GET['webshopParameter'];
+  }
 
   // If the user does end up returning at the success URL with a failed payment, go back.
   if ($responseCode != 'OK') {
-  	// Logging the error
-	  watchdog('commerce_nets', 'Customer returned from Nets with the following POST:<pre>' . check_plain(print_r($responseCode, TRUE)) . '</pre>', array(), WATCHDOG_ERROR);
-		return FALSE;
-	}
-	elseif($responseCode == 'OK') {
-		return commerce_nets_sale_form($order, $transactionId, $payment_method);
-	}
+    // Logging the error
+    watchdog('commerce_nets', 'Customer returned from Nets with the following POST:<pre>' . check_plain(print_r($responseCode, TRUE)) . '</pre>', array(), WATCHDOG_ERROR);
+    return FALSE;
+  }
+  elseif ($responseCode == 'OK') {
+    return commerce_nets_sale_form($order, $transactionId, $payment_method);
+  }
 }
-
-/*******************************************************************************
- * Module Functions                                                            *
- *******************************************************************************/
 
 /**
  * Builds a Website Payments Standard form from an order object.
- *
- * @func
- *   Keeping this nice and clean. Normally I would wrap this up in a class,
- *   but since more people than me (the author) that will use this code, I set
- *   parameters here so they are easily editable for others.
  *
  * @param $order
  *   The fully loaded order being registered at Nets.
@@ -222,13 +196,7 @@ function commerce_nets_redirect_form_validate($order, $payment_method) {
  *   A renderable form array.
  */
 function commerce_nets_order_form($form, &$form_state, $order, $settings) {
-	include_once(drupal_get_path('module', 'commerce_nets') .'/class/ClassOrder.php');
-	include_once(drupal_get_path('module', 'commerce_nets') .'/class/ClassTerminal.php');
-	include_once(drupal_get_path('module', 'commerce_nets') .'/class/ClassRegisterRequest.php');
-	include_once(drupal_get_path('module', 'commerce_nets') .'/class/ClassEnvironment.php');
-	include_once(drupal_get_path('module', 'commerce_nets') .'/class/ClassCustomer.php');
-	include_once(drupal_get_path('module', 'commerce_nets') .'/class/ClassItem.php');
-  include_once(drupal_get_path('module', 'commerce_nets') .'/class/ClassArrayOfItem.php');
+  module_load_include('inc', 'commerce_nets', 'commerce_nets.classes');
 
   // Gather info that was entered in 'Billing Information'
   $wrapper = entity_metadata_wrapper('commerce_order', $order);
@@ -239,199 +207,163 @@ function commerce_nets_order_form($form, &$form_state, $order, $settings) {
   // Ensure a default value for the payment_method setting.
   $settings += array('payment_method' => '');
 
-	####  SETUP  ####
-	$merchantId = $settings['merchantid'];
-	$token = $settings['netstoken'];
-	$wsdl = commerce_nets_wsdl_url($settings['server']);
-	$terminal = commerce_nets_server_url($settings['server']);
+  ####  SETUP  ####
+  $merchantId = $settings['merchantid'];
+  $token = $settings['netstoken'];
+  $wsdl = commerce_nets_wsdl_url($settings['server']);
+  $terminal = commerce_nets_server_url($settings['server']);
 
   ####  PARAMETERS IN ORDER  ####
-	$amount = $wrapper->commerce_order_total->amount->value(); // Required parameter
-	$currencyCode = $settings['currency_code']; // Required parameter
-	$force3DSecure = null; // Optional parameter
-	$orderNumber = $order->order_id; // Required parameter
-	$UpdateStoredPaymentInfo = null; // Optional parameter
-
-	####  PARAMETERS IN Environment  ####
-	$Language = null; // Optional parameter
-	$OS = null; // Optional parameter
-	$WebServicePlatform = 'PHP5'; // Required parameter
-
-	####  PARAMETERS IN TERMINAL  ####
-	$autoAuth = null; // Optional parameter
-	$paymentMethodList = null; // Optional parameter
-	$language = $settings['language']; // Optional parameter
-	$orderDescription = null; // Optional parameter
-	$redirect_url = $settings['return']; // Required parameter
-	$redirectOnError = $settings['cancel_return']; // Optional parameter
-
-	####  PARAMETERS IN REGISTER REQUEST  ####
-	$AvtaleGiro = null; // Optional parameter
-	$CardInfo = null; // Optional parameter
-	$description = null; // Optional parameter
-	$DnBNorDirectPayment = null; // Optional parameter
-	$Environment = null; // Optional parameter
-	$MicroPayment = null; // Optional parameter
-	$serviceType = null; // Optional parameter: null ==> default = "B" <=> BBS HOSTED
-	$Recurring = null; // Optional parameter
-	//$transactionId = null; // Optional parameter
+  $amount = $wrapper->commerce_order_total->amount->value(); // Required parameter
+  $currencyCode = $settings['currency_code']; // Required parameter
+  $force3DSecure = NULL; // Optional parameter
+  $orderNumber = $order->order_id; // Required parameter
+  $UpdateStoredPaymentInfo = NULL; // Optional parameter
+  ####  PARAMETERS IN Environment  ####
+  $Language = NULL; // Optional parameter
+  $OS = NULL; // Optional parameter
+  $WebServicePlatform = 'PHP5'; // Required parameter
+  ####  PARAMETERS IN TERMINAL  ####
+  $autoAuth = NULL; // Optional parameter
+  $paymentMethodList = NULL; // Optional parameter
+  $language = $settings['language']; // Optional parameter
+  $orderDescription = NULL; // Optional parameter
+  $redirect_url = $settings['return']; // Required parameter
+  $redirectOnError = $settings['cancel_return']; // Optional parameter
+  ####  PARAMETERS IN REGISTER REQUEST  ####
+  $AvtaleGiro = NULL; // Optional parameter
+  $CardInfo = NULL; // Optional parameter
+  $description = NULL; // Optional parameter
+  $DnBNorDirectPayment = NULL; // Optional parameter
+  $Environment = NULL; // Optional parameter
+  $MicroPayment = NULL; // Optional parameter
+  $serviceType = NULL; // Optional parameter: NULL ==> default = "B" <=> BBS HOSTED
+  $Recurring = NULL; // Optional parameter
+  //$transactionId = NULL; // Optional parameter
   // Format the transactionId as DDMMYYYY0000001
   $transactionId = date('dmHi') . substr(date('s'), 0, 1) . str_pad($wrapper->order_number->value(), 15 - 9, '0', STR_PAD_LEFT);
-	$transactionReconRef = null; // Optional parameter
+  $transactionReconRef = NULL; // Optional parameter
+  ####  PARAMETERS IN CUSTOMER  ####
+  $customerAddress1 = $customerWrapper['thoroughfare']; // Optional parameter (required if DnBNorDirectPayment)
+  $customerAddress2 = ""; // Optional parameter
+  $customerCompanyName = $customerWrapper['country']; // Optional parameter
+  $customerCompanyRegistrationNumber = NULL; // Optional parameter
+  $customerCountry = $customerWrapper['country']; // Optional parameter
+  $customerFirstName = $customerWrapper['first_name']; // Optional parameter (required if DnBNorDirectPayment)
+  $customerLastName = $customerWrapper['last_name']; // Optional parameter (required if DnBNorDirectPayment)
+  $customerNumber = $order->uid; // Optional parameter
+  $customerEmail = $order->mail; // Optional parameter
+  $customerPhoneNumber = NULL; // Optional parameter
+  $customerPostcode = $customerWrapper['postal_code']; // Optional parameter (required if DnBNorDirectPayment)
+  $customerSocialSecurityNumber = NULL; // Optional parameter
+  $customerTown = $customerWrapper['locality']; // Optional parameter (required if DnBNorDirectPayment)
+  ####  ENVIRONMENT OBJECT  ####
+  $Environment = new Environment(
+          $Language,
+          $OS,
+          $WebServicePlatform
+  );
 
-	####  PARAMETERS IN CUSTOMER  ####
-	$customerAddress1 = $customerWrapper['thoroughfare']; // Optional parameter (required if DnBNorDirectPayment)
-	$customerAddress2 = ""; // Optional parameter
-	$customerCompanyName = $customerWrapper['country']; // Optional parameter
-	$customerCompanyRegistrationNumber = null; // Optional parameter
-	$customerCountry = $customerWrapper['country']; // Optional parameter
-	$customerFirstName = $customerWrapper['first_name']; // Optional parameter (required if DnBNorDirectPayment)
-	$customerLastName = $customerWrapper['last_name']; // Optional parameter (required if DnBNorDirectPayment)
-	$customerNumber = $order->uid; // Optional parameter
-	$customerEmail = $order->mail; // Optional parameter
-	$customerPhoneNumber = null; // Optional parameter
-	$customerPostcode = $customerWrapper['postal_code']; // Optional parameter (required if DnBNorDirectPayment)
-	$customerSocialSecurityNumber = null; // Optional parameter
-	$customerTown = $customerWrapper['locality']; // Optional parameter (required if DnBNorDirectPayment)
+  ####  TERMINAL OBJECT  ####
+  $Terminal = new Terminal(
+          $autoAuth,
+          $paymentMethodList,
+          $language,
+          $orderDescription,
+          $redirectOnError,
+          $redirect_url
+  );
 
-	####  ENVIRONMENT OBJECT  ####
-	$Environment = new Environment(
-	  $Language,
-	  $OS,
-	  $WebServicePlatform
-	);
+  $ArrayOfItem = NULL; // no goods for Klana ==> normal transaction
+  ####  CUSTOMER OBJECT  ####
+  $Customer = new Customer(
+          $customerAddress1,
+          $customerAddress2,
+          $customerCompanyName,
+          $customerCompanyRegistrationNumber,
+          $customerCountry,
+          $customerNumber,
+          $customerEmail,
+          $customerFirstName,
+          $customerLastName,
+          $customerPhoneNumber,
+          $customerPostcode,
+          $customerSocialSecurityNumber,
+          $customerTown
+  );
 
-	####  TERMINAL OBJECT  ####
-	$Terminal = new Terminal(
-	  $autoAuth,
-	  $paymentMethodList,
-	  $language,
-	  $orderDescription,
-	  $redirectOnError,
-	  $redirect_url
-	);
-
-	$ArrayOfItem = null; // no goods for Klana ==> normal transaction
-
-	####  CUSTOMER OBJECT  ####
-	$Customer = new Customer(
-	  $customerAddress1,
-	  $customerAddress2,
-	  $customerCompanyName,
-	  $customerCompanyRegistrationNumber,
-	  $customerCountry,
-	  $customerNumber,
-	  $customerEmail,
-	  $customerFirstName,
-	  $customerLastName,
-	  $customerPhoneNumber,
-	  $customerPostcode,
-	  $customerSocialSecurityNumber,
-	  $customerTown
-	);
-
-	####  ORDER OBJECT  ####
-	$Order = new Order(
-	  $amount,
-	  $currencyCode,
-	  $force3DSecure,
-	  $ArrayOfItem,
-	  $orderNumber,
-	  $UpdateStoredPaymentInfo
-	);
+  ####  ORDER OBJECT  ####
+  $Order = new Order(
+          $amount,
+          $currencyCode,
+          $force3DSecure,
+          $ArrayOfItem,
+          $orderNumber,
+          $UpdateStoredPaymentInfo
+  );
 
 
-	####  START REGISTER REQUEST  ####
-	$RegisterRequest = new RegisterRequest(
-	  $AvtaleGiro,
-	  $CardInfo,
-	  $Customer,
-	  $description,
-	  $DnBNorDirectPayment,
-	  $Environment,
-	  $MicroPayment,
-	  $Order,
-	  $Recurring,
-	  $serviceType,
-	  $Terminal,
-	  $transactionId,
-	  $transactionReconRef
-	);
+  ####  START REGISTER REQUEST  ####
+  $RegisterRequest = new RegisterRequest(
+          $AvtaleGiro,
+          $CardInfo,
+          $Customer,
+          $description,
+          $DnBNorDirectPayment,
+          $Environment,
+          $MicroPayment,
+          $Order,
+          $Recurring,
+          $serviceType,
+          $Terminal,
+          $transactionId,
+          $transactionReconRef
+  );
 
 
-	####  ARRAY WITH REGISTER PARAMETERS  ####
-	$InputParametersOfRegister = array (
+  ####  ARRAY WITH REGISTER PARAMETERS  ####
+  $InputParametersOfRegister = array(
     "token" => $token,
     "merchantId" => $merchantId,
     "request" => $RegisterRequest
-	);
+  );
 
-	/**
-	 *  Ready to deploy register request to Nets server.
-	 *
-	 *	                           /\
-   *                            /  \
-   *                       ||  /    \
-   *                       || /______\
-   *                       |||        |
-   *                      |  |  NETS  |
-   *                      |  |        |
-   *                      |__|________|
-   *                      |___________|
-   *                      |  |        |
-   *                      |__|   ||   |\
-   *                       |||   ||   | \
-   *                      /|||   ||   |  \
-   *                     /_|||...||...|___\
-   *                       |||::::::::|
-   *                       || \::::::/     $InputParametersOfRegister
-   *                       ||  ||__||      ________    ______________
-   *                       ||    ||                \  /
-   *                       ||     \\_______________/ /
-   *        _______________||______`----------------'
-	 *
-	 */
-	try
-	{
-	  if (strpos($_SERVER["HTTP_HOST"], 'uapp') > 0) {
-		  // Creating new client having proxy
-		  $client = new SoapClient($wsdl, array('proxy_host' => "isa4", 'proxy_port' => 8080, 'trace' => true,'exceptions' => true));
-	  }
-	  else {
-		  // Creating new client without proxy
-		  $client = new SoapClient($wsdl, array('trace' => true,'exceptions' => true ));
-	  }
+  try {
+    if (strpos($_SERVER["HTTP_HOST"], 'uapp') > 0) {
+      // Creating new client having proxy
+      $client = new SoapClient($wsdl, array('proxy_host' => "isa4", 'proxy_port' => 8080, 'trace' => TRUE, 'exceptions' => TRUE));
+    }
+    else {
+      // Creating new client without proxy
+      $client = new SoapClient($wsdl, array('trace' => TRUE, 'exceptions' => TRUE));
+    }
 
-	  $OutputParametersOfRegister = $client->__call('Register' , array("parameters"=>$InputParametersOfRegister));
+    $OutputParametersOfRegister = $client->__call('Register', array("parameters" => $InputParametersOfRegister));
 
-	  // RegisterResult
-	  $RegisterResult = $OutputParametersOfRegister->RegisterResult;
+    // RegisterResult
+    $RegisterResult = $OutputParametersOfRegister->RegisterResult;
 
-	  $terminal_parameters = "?merchantId=". $merchantId . "&transactionId=" .  $RegisterResult->TransactionId;
-	  $process_parameters = "?transactionId=" .  $RegisterResult->TransactionId;
+    $terminal_parameters = "?merchantId=" . $merchantId . "&transactionId=" . $RegisterResult->TransactionId;
+    $process_parameters = "?transactionId=" . $RegisterResult->TransactionId;
 
-	  // Send costumer to Nets terminal
-	  $form['#action'] = $terminal.$terminal_parameters;
-  	$form['submit'] = array(
-	    '#type' => 'submit',
-	    '#value' => t('Proceed to Nets'),
-  	);
+    // Send customer to Nets terminal
+    $form['#action'] = $terminal . $terminal_parameters;
+    $form['submit'] = array(
+      '#type' => 'submit',
+      '#value' => t('Proceed to Nets'),
+    );
 
-  return $form;
+    return $form;
+  } catch (SoapFault $fault) {
+    // Printing errors from the communication. This can be modified to make a nice error screen for the users.
+    echo "<h3><font color='red'>EXCEPTION IN REGISTER CALL:</font></h3>";
+    echo "<pre>";
+    print_r($fault);
+    echo "</pre>";
 
-	}
-	catch (SoapFault $fault)
-	{
-	  // Printing errors from the communication. This can be modified to make a nice error screen for the users.
-	  // I (the author) is not a user atm, so I need the cryptic stuff :)
-	  echo "<h3><font color='red'>EXCEPTION IN REGISTER CALL:</font></h3>";
-	  echo "<pre>";
-	  print_r($fault);
-	  echo "</pre>";
-
-	  // Logging the error
-	  watchdog('commerce_nets', 'Webservice Nets returned not OK from register request. Data:<pre>' . check_plain(print_r($fault, TRUE)) . '</pre>', array(), WATCHDOG_ERROR);
-	}
+    // Logging the error
+    watchdog('commerce_nets', 'Webservice Nets returned not OK from register request. Data:<pre>' . check_plain(print_r($fault, TRUE)) . '</pre>', array(), WATCHDOG_ERROR);
+  }
 }
 
 /**
@@ -444,99 +376,71 @@ function commerce_nets_order_form($form, &$form_state, $order, $settings) {
  *   TRUE/FALSE - TRUE results in a completed payment. FALSE results in moving a page back to "review order" with an error message.
  */
 function commerce_nets_sale_form($order, $transactionId, $payment_method) {
-	include_once(drupal_get_path('module', 'commerce_nets') .'/class/ClassProcessRequest.php');
+  module_load_include('inc', 'commerce_nets', 'commerce_nets.classes');
 
-	$wrapper = entity_metadata_wrapper('commerce_order', $order);
+  $wrapper = entity_metadata_wrapper('commerce_order', $order);
 
-	####  SETUP  ####
-	$merchantId = $payment_method['settings']['merchantid'];
+  ####  SETUP  ####
+  $merchantId = $payment_method['settings']['merchantid'];
   $token = $payment_method['settings']['netstoken'];
   $transactionAmount = "";
-	$transactionReconRef = "";
-	$description = "";
-	$wsdl = commerce_nets_wsdl_url($payment_method['settings']['server']);
-	$operation = commerce_nets_payment_action();
+  $transactionReconRef = "";
+  $description = "";
+  $wsdl = commerce_nets_wsdl_url($payment_method['settings']['server']);
+  $operation = commerce_nets_payment_action();
 
-	####  PROCESS OBJECT  ####
-	$ProcessRequest = new ProcessRequest(
-	  $description,
-	  $operation,
-	  $transactionAmount,
-	  $transactionId,
-	  $transactionReconRef
-	);
+  ####  PROCESS OBJECT  ####
+  $ProcessRequest = new ProcessRequest(
+          $description,
+          $operation,
+          $transactionAmount,
+          $transactionId,
+          $transactionReconRef
+  );
 
-	$InputParametersOfProcess = array(
-	  "token" => $token,
-	  "merchantId" => $merchantId,
-	  "request" => $ProcessRequest
-	);
+  $InputParametersOfProcess = array(
+    "token" => $token,
+    "merchantId" => $merchantId,
+    "request" => $ProcessRequest
+  );
 
-	/**
-	 *  Ready to deploy sale/authorization request to Nets server.
-	 *
-	 *	                           /\
-   *                            /  \
-   *                       ||  /    \
-   *                       || /______\
-   *                       |||        |
-   *                      |  |  NETS  |
-   *                      |  |        |
-   *                      |__|________|
-   *                      |___________|
-   *                      |  |        |
-   *                      |__|   ||   |\
-   *                       |||   ||   | \
-   *                      /|||   ||   |  \
-   *                     /_|||...||...|___\
-   *                       |||::::::::|
-   *                       || \::::::/     $InputParametersOfProcess
-   *                       ||  ||__||      ________    ______________
-   *                       ||    ||                \  /
-   *                       ||     \\_______________/ /
-   *        _______________||______`----------------'
-	 *
-	 */
+  try {
+    if (strpos($_SERVER["HTTP_HOST"], 'uapp') > 0) {
+      // Creating new client having proxy
+      $client = new SoapClient($wsdl, array('proxy_host' => "isa4", 'proxy_port' => 8080, 'trace' => TRUE, 'exceptions' => TRUE));
+    }
+    else {
+      // Creating new client without proxy
+      $client = new SoapClient($wsdl, array('trace' => TRUE, 'exceptions' => TRUE));
+    }
 
-	try
-	{
-	  if (strpos($_SERVER["HTTP_HOST"], 'uapp') > 0) {
-		  // Creating new client having proxy
-		  $client = new SoapClient($wsdl, array('proxy_host' => "isa4", 'proxy_port' => 8080, 'trace' => true,'exceptions' => true));
-	  }
-	  else {
-		  // Creating new client without proxy
-		  $client = new SoapClient($wsdl, array('trace' => true,'exceptions' => true ));
-	  }
+    $OutputParametersOfProcess = $client->__call('Process', array("parameters" => $InputParametersOfProcess));
 
-	  $OutputParametersOfProcess = $client->__call('Process' , array("parameters"=>$InputParametersOfProcess));
+    $ProcessResult = $OutputParametersOfProcess->ProcessResult;
 
-	  $ProcessResult = $OutputParametersOfProcess->ProcessResult;
+    $process_parameters = "?transactionId=" . $ProcessResult->TransactionId;
 
-	  $process_parameters = "?transactionId=" .  $ProcessResult->TransactionId;
+    if ($ProcessResult->ResponseCode == "OK") {
+      commerce_nets_transaction($payment_method, $order, $ProcessResult->TransactionId);
+    }
+  } catch (SoapFault $fault) {
+    // Printing errors from the communication. This can be modified to make a nice error screen for the users.
+    // I (the author) is not a user atm, so I need the cryptic stuff :)
+    echo "<h3><font color='red'>EXCEPTION IN SALE/AUTHORIZATION CALL:</font></h3>";
+    echo "<pre>";
+    print_r($fault);
+    echo "</pre>";
 
-	  if ($ProcessResult->ResponseCode == "OK"){
-	  	commerce_nets_transaction($payment_method, $order, $ProcessResult->TransactionId);
-	  }
-	}
-	catch (SoapFault $fault) {
-	  // Printing errors from the communication. This can be modified to make a nice error screen for the users.
-	  // I (the author) is not a user atm, so I need the cryptic stuff :)
-	  echo "<h3><font color='red'>EXCEPTION IN SALE/AUTHORIZATION CALL:</font></h3>";
-	  echo "<pre>";
-	  print_r($fault);
-	  echo "</pre>";
+    // Logging the error
+    watchdog('commerce_nets', 'Webservice Nets returned not OK from sale/authorizationrequest. Data:<pre>' . check_plain(print_r($fault, TRUE)) . '</pre>', array(), WATCHDOG_ERROR);
 
-	  // Logging the error
-	  watchdog('commerce_nets', 'Webservice Nets returned not OK from sale/authorizationrequest. Data:<pre>' . check_plain(print_r($fault, TRUE)) . '</pre>', array(), WATCHDOG_ERROR);
-
-	  // Go back!
-	  return FALSE;
-	}
+    // Go back!
+    return FALSE;
+  }
 }
 
 /**
- * Creates an payment transaction.
+ * Creates a payment transaction.
  *
  * @param $payment_method
  *   The payment method instance object used to charge this payment.
@@ -556,12 +460,12 @@ function commerce_nets_transaction($payment_method, $order, $remoteTransactionId
   $transaction->remote_id = $remoteTransactionId;
 
   if (commerce_nets_payment_action() == 'SALE') {
-  	$order->status = 'completed';
-  	$transaction->status = COMMERCE_PAYMENT_STATUS_SUCCESS;
+    $order->status = 'completed';
+    $transaction->status = COMMERCE_PAYMENT_STATUS_SUCCESS;
   }
   elseif (commerce_nets_payment_action() == 'AUTH') {
-  	$order->status = 'pending';
-  	$transaction->status = COMMERCE_PAYMENT_STATUS_PENDING;
+    $order->status = 'pending';
+    $transaction->status = COMMERCE_PAYMENT_STATUS_PENDING;
   }
 
   commerce_payment_transaction_save($transaction);
