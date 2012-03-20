@@ -20,7 +20,7 @@
         
         var chart = new google.visualization.ColumnChart(document.getElementById('salesmonthlychart_div'));
         var options = {
-              'title':'Product Sales',
+              'title':Drupal.t('Product Sales'),
               'width':880,
               'height':300,
               'chartArea':{left:100,top:10,width:600},
@@ -31,7 +31,7 @@
 </script>
 <section class="commerce-reports-accordion">
     <header>
-        <h2>Product Sales<a>+</a></h2>
+        <h2><?php print t('Product Sales');?><a>+</a></h2>
     </header>
     <div id="salesmonthlychart_div"></div>
 </section>

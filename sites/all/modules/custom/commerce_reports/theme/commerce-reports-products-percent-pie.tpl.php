@@ -20,7 +20,7 @@
         
         var chart = new google.visualization.PieChart(document.getElementById('productspercentchart_div'));
         var options = {
-              'title':'Product Percentages',
+              'title':Drupal.t('Product Percentages'),
               'width':880,
               'height':300,
               'chartArea':{left:100,top:10,width:600},
@@ -31,7 +31,7 @@
 </script>
 <section class="commerce-reports-accordion">
     <header>
-        <h2>Product Sales Percentages<a>+</a></h2>
+        <h2><?php print t('Product Sales Percentages');?><a>+</a></h2>
     </header>
     <div id="productspercentchart_div"></div>
 </section>
