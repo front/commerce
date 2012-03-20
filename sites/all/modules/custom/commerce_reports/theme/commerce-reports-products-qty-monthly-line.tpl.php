@@ -34,7 +34,7 @@
         
         var chart = new google.visualization.LineChart(document.getElementById('productsqtychart_div'));
         var options = {
-              'title':'Product Qtys',
+              'title':Drupal.t('Product Qtys'),
               'width':880,
               'height':300,
               'chartArea':{left:100,top:10,width:600},
@@ -45,7 +45,7 @@
 </script>
 <section class="commerce-reports-accordion">
     <header>
-        <h2>Product Qtys<a>+</a></h2>
+        <h2><?php print t('Product Qtys');?><a>+</a></h2>
     </header>
     <div id="productsqtychart_div"></div>
 </section>
