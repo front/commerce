@@ -1026,6 +1026,20 @@ div.checkout-completion-message {
   padding-top: 0;
   padding-bottom: 0;
 }
+#commerce-checkout-form-checkout .form-type-radio input,
+#commerce-checkout-form-checkout .form-type-checkbox input {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+#commerce-checkout-form-checkout .form-type-radio input.form-radio,
+#commerce-checkout-form-checkout .form-type-checkbox input.form-radio {
+  margin-top: 0.25em;
+}
+#commerce-checkout-form-checkout .form-type-radio label,
+#commerce-checkout-form-checkout .form-type-checkbox label {
+  vertical-align: middle;
+  padding-top: 0.2em;
+}
 #commerce-checkout-form-checkout .redirect-list {
   display: none;
 }

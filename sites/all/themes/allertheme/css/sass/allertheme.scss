@@ -967,6 +967,21 @@ div.checkout-completion-message {
       padding-bottom: 0;
     }
   }
+  .form-type-radio,
+  .form-type-checkbox {
+    input {
+      margin-top: 0;
+      margin-bottom: 0;
+
+      &.form-radio {
+        margin-top: 0.25em;
+      }
+    }
+    label {
+      vertical-align: middle;
+      padding-top: 0.2em;
+    }
+  }
   .redirect-list {
     display: none;
   }
