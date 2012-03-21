@@ -1,4 +1,0 @@
-name = ISBN
-description = Keeps track of ISBNs
-version = VERSION
-core = 7.x
