@@ -450,11 +450,9 @@ function commerce_nets_transaction($payment_method, $order, $remoteTransactionId
   $transaction->remote_id = $remoteTransactionId;
 
   if (commerce_nets_payment_action() == 'SALE') {
-    $order->status = 'completed';
     $transaction->status = COMMERCE_PAYMENT_STATUS_SUCCESS;
   }
   elseif (commerce_nets_payment_action() == 'AUTH') {
-    $order->status = 'pending';
     $transaction->status = COMMERCE_PAYMENT_STATUS_PENDING;
   }
 
