@@ -18,6 +18,9 @@ function commercify_banners_field_default_fields() {
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_banner_link',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
       'foreign keys' => array(),
       'indexes' => array(),
       'module' => 'link',
@@ -43,14 +46,14 @@ function commercify_banners_field_default_fields() {
       'bundle' => 'banners',
       'default_value' => NULL,
       'deleted' => '0',
-      'description' => 'Url that this banner should redirect to',
+      'description' => 'Url that this banner should redirect to.',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'link',
           'settings' => array(),
           'type' => 'link_default',
-          'weight' => 1,
+          'weight' => '1',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -59,9 +62,10 @@ function commercify_banners_field_default_fields() {
           'weight' => 0,
         ),
       ),
+      'ds_extras_field_template' => '',
       'entity_type' => 'node',
       'field_name' => 'field_banner_link',
-      'label' => 'Banner link',
+      'label' => 'Link',
       'required' => 0,
       'settings' => array(
         'attributes' => array(
@@ -87,7 +91,7 @@ function commercify_banners_field_default_fields() {
         'module' => 'link',
         'settings' => array(),
         'type' => 'link_field',
-        'weight' => '32',
+        'weight' => '2',
       ),
     ),
   );
@@ -100,6 +104,9 @@ function commercify_banners_field_default_fields() {
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_slide',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
       'foreign keys' => array(
         'fid' => array(
           'columns' => array(
@@ -127,14 +134,14 @@ function commercify_banners_field_default_fields() {
       'description' => '',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'image',
           'settings' => array(
             'image_link' => '',
             'image_style' => '',
           ),
           'type' => 'image',
-          'weight' => 3,
+          'weight' => '3',
         ),
         'teaser' => array(
           'label' => 'above',
@@ -143,18 +150,19 @@ function commercify_banners_field_default_fields() {
           'weight' => 0,
         ),
       ),
+      'ds_extras_field_template' => '',
       'entity_type' => 'node',
       'field_name' => 'field_slide',
-      'label' => 'Slideshow images',
-      'required' => 0,
+      'label' => 'Banner',
+      'required' => 1,
       'settings' => array(
-        'alt_field' => 1,
-        'file_directory' => '',
+        'alt_field' => 0,
+        'file_directory' => 'banners',
         'file_extensions' => 'png gif jpg jpeg',
         'max_filesize' => '',
-        'max_resolution' => '',
+        'max_resolution' => '1000x1000',
         'min_resolution' => '',
-        'title_field' => 1,
+        'title_field' => 0,
         'user_register_form' => FALSE,
       ),
       'widget' => array(
@@ -165,16 +173,16 @@ function commercify_banners_field_default_fields() {
           'progress_indicator' => 'throbber',
         ),
         'type' => 'image_image',
-        'weight' => '34',
+        'weight' => '1',
       ),
     ),
   );
 
   // Translatables
   // Included for use with string extractors like potx.
-  t('Banner link');
-  t('Slideshow images');
-  t('Url that this banner should redirect to');
+  t('Banner');
+  t('Link');
+  t('Url that this banner should redirect to.');
 
   return $fields;
 }
