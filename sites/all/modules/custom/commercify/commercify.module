@@ -70,7 +70,7 @@ function commercify_menu() {
         'title arguments' => array('!name' => $product_type['name']),
         'description' => $product_type['description'],
         'page callback' => 'drupal_goto',
-        'page arguments' => array('admin/commerce/products/add/' . strtr($type, array('_' => '-')), commercify_link_dest('admin/commerce/overview')),
+        'page arguments' => array('admin/commerce/products/add/' . strtr($type, array('_' => '-')), commercify_link_dest('admin/commerce/overview/products/displays')),
         'access callback' => 'commerce_product_access',
         'access arguments' => array('create', commerce_product_new($type)),
         'type' => MENU_LOCAL_ACTION,
