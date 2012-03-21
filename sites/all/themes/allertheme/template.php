@@ -28,6 +28,15 @@ function allertheme_preprocess_html(&$vars) {
 }
 
 /**
+ * Implements hook_css_alter().
+ */
+function allertheme_css_alter(&$css) {
+  // Remove AT Commerce responsive css
+  unset($css[drupal_get_path('theme', 'at_commerce') . '/css/at_commerce.responsive.style.css']);
+  unset($css[drupal_get_path('theme', 'at_commerce') . '/css/at_commerce.responsive.gpanels.css']);
+}
+
+/**
  * Preprocess variables for page.tpl.php
  */
 function allertheme_preprocess_page(&$vars) {
