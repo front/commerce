@@ -18,54 +18,68 @@ function commercify_suppliers_field_default_fields() {
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_product_supplier',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
       'foreign keys' => array(
-        'nid' => array(
+        'node' => array(
           'columns' => array(
-            'nid' => 'nid',
+            'target_id' => 'nid',
           ),
           'table' => 'node',
         ),
       ),
       'indexes' => array(
-        'nid' => array(
-          0 => 'nid',
+        'target_id' => array(
+          0 => 'target_id',
         ),
       ),
-      'module' => 'node_reference',
+      'module' => 'entityreference',
       'settings' => array(
-        'referenceable_types' => array(
-          'article' => 0,
-          'banners' => 0,
-          'page' => 0,
-          'produktpakke' => 0,
-          'produktvisning' => 0,
-          'supplier' => 'supplier',
+        'handler' => 'base',
+        'handler_settings' => array(
+          'behaviors' => array(
+            'views-select-list' => array(
+              'status' => 1,
+            ),
+          ),
+          'sort' => array(
+            'direction' => 'ASC',
+            'field' => 'body:value',
+            'property' => 'title',
+            'type' => 'property',
+          ),
+          'target_bundles' => array(
+            'supplier' => 'supplier',
+          ),
         ),
-        'view' => array(
-          'args' => array(),
-          'display_name' => '',
-          'view_name' => '',
-        ),
+        'handler_submit' => 'Change handler',
+        'target_type' => 'node',
       ),
       'translatable' => '0',
-      'type' => 'node_reference',
+      'type' => 'entityreference',
     ),
     'field_instance' => array(
       'bundle' => 'publication',
+      'commerce_bpc' => array(
+        'show_field' => 1,
+      ),
       'commerce_cart_settings' => array(
         'attribute_field' => 0,
         'attribute_widget' => 'select',
       ),
       'default_value' => NULL,
       'deleted' => '0',
-      'description' => 'Leverandøren som dette produktet kjøpes inn hos.',
+      'description' => 'Leverandøren av dette produktet. Husk at du må opprette leverandøren før du kan velge den her.',
       'display' => array(
         'default' => array(
           'label' => 'above',
-          'module' => 'node_reference',
-          'settings' => array(),
-          'type' => 'node_reference_default',
-          'weight' => 20,
+          'module' => 'entityreference',
+          'settings' => array(
+            'link' => FALSE,
+          ),
+          'type' => 'entityreference_label',
+          'weight' => 22,
         ),
         'line_item' => array(
           'label' => 'above',
@@ -93,7 +107,7 @@ function commercify_suppliers_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '16',
+        'weight' => '11',
       ),
     ),
   );
@@ -319,7 +333,7 @@ function commercify_suppliers_field_default_fields() {
   t('Kontaktperson');
   t('Kontaktpersonen i firmaet.');
   t('Leverandør');
-  t('Leverandøren som dette produktet kjøpes inn hos.');
+  t('Leverandøren av dette produktet. Husk at du må opprette leverandøren før du kan velge den her.');
   t('Navn og addresse på firmaet.');
   t('Telefon');
   t('Telefonnummer til bedriften, fortrinnsvis til kontaktpersonen.');
