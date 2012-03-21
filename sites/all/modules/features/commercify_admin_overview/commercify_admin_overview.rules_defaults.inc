@@ -23,7 +23,7 @@ function commercify_admin_overview_default_rules_configuration() {
           }
         }
       ],
-      "DO" : [ { "redirect" : { "url" : "admin\\/commerce\\/overview" } } ]
+      "DO" : [ { "redirect" : { "url" : "admin\\u002Fcommerce\\u002Foverview" } } ]
     }
   }');
   $items['rules_commercify_move_to_cancelled'] = entity_import('rules_config', '{ "rules_commercify_move_to_cancelled" : {
@@ -35,7 +35,7 @@ function commercify_admin_overview_default_rules_configuration() {
       "ACTION SET" : [
         { "commerce_order_update_status" : { "commerce_order" : [ "order" ], "order_status" : "canceled" } },
         { "drupal_message" : {
-            "message" : "MERK: Ordrene du valgte er n\\u00e5 kansellert. Varene trekkes fra varelager n\\u00e5r de er betalt, men de legges ikke tilbake automatisk. Dette m\\u00e5 gj\\u00f8res manuelt.",
+            "message" : "MERK: Ordrene du valgte er nå kansellert. Varene trekkes fra varelager når de er betalt, men de legges ikke tilbake automatisk. Dette må gjøres manuelt.",
             "type" : "warning",
             "repeat" : 0
           }

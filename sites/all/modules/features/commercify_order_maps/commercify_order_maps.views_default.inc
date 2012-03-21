@@ -22,7 +22,7 @@ function commercify_order_maps_views_default_views() {
 
   /* Display: Master */
   $handler = $view->new_display('default', 'Master', 'default');
-  $handler->display->display_options['title'] = 'Order Locations';
+  $handler->display->display_options['use_more_text'] = 'mer';
   $handler->display->display_options['access']['type'] = 'role';
   $handler->display->display_options['access']['role'] = array(
     3 => '3',
@@ -34,13 +34,17 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['query']['type'] = 'views_query';
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nullstill';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér på';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Synkende';
   $handler->display->display_options['pager']['type'] = 'some';
   $handler->display->display_options['pager']['options']['items_per_page'] = '50';
   $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['style_plugin'] = 'ip_geoloc_map';
   $handler->display->display_options['style_options']['ip_geoloc_map_of_view_div_style'] = 'height:600px';
-  $handler->display->display_options['style_options']['ip_geoloc_map_of_view_options'] = '{"mapTypeId":"terrain", "disableDefaultUI":true, "zoom":4, "zoomControl":true}';
-  /* Footer: Global: Text area */
+  $handler->display->display_options['style_options']['ip_geoloc_map_of_view_options'] = '{"mapTypeId":"terrain", "disableDefaultUI":true, "zoom":5, "zoomControl":true}';
+  /* Bunntekst: Global: Tekstområde */
   $handler->display->display_options['footer']['area']['id'] = 'area';
   $handler->display->display_options['footer']['area']['table'] = 'views';
   $handler->display->display_options['footer']['area']['field'] = 'area';
@@ -48,12 +52,12 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['footer']['area']['content'] = 'Posisjonene på dette kartet er ikke eksakte.';
   $handler->display->display_options['footer']['area']['format'] = 'filtered_html';
   $handler->display->display_options['footer']['area']['tokenize'] = 0;
-  /* Relationship: Commerce Order: Referenced customer profile */
+  /* Relasjon: Commerce Order: Referenced customer profile */
   $handler->display->display_options['relationships']['commerce_customer_billing_profile_id']['id'] = 'commerce_customer_billing_profile_id';
   $handler->display->display_options['relationships']['commerce_customer_billing_profile_id']['table'] = 'field_data_commerce_customer_billing';
   $handler->display->display_options['relationships']['commerce_customer_billing_profile_id']['field'] = 'commerce_customer_billing_profile_id';
   $handler->display->display_options['relationships']['commerce_customer_billing_profile_id']['required'] = 1;
-  /* Field: IP geolocations: IP address */
+  /* Felt: IP geolocations: IP-adresse */
   $handler->display->display_options['fields']['ip_address']['id'] = 'ip_address';
   $handler->display->display_options['fields']['ip_address']['table'] = 'ip_geoloc';
   $handler->display->display_options['fields']['ip_address']['field'] = 'ip_address';
@@ -75,10 +79,11 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['fields']['ip_address']['hide_empty'] = 0;
   $handler->display->display_options['fields']['ip_address']['empty_zero'] = 0;
   $handler->display->display_options['fields']['ip_address']['hide_alter_empty'] = 1;
-  /* Field: Commerce Order: Order number */
+  /* Felt: Commerce Order: Order number */
   $handler->display->display_options['fields']['order_number']['id'] = 'order_number';
   $handler->display->display_options['fields']['order_number']['table'] = 'commerce_order';
   $handler->display->display_options['fields']['order_number']['field'] = 'order_number';
+  $handler->display->display_options['fields']['order_number']['label'] = 'Ordrenummer';
   $handler->display->display_options['fields']['order_number']['alter']['alter_text'] = 1;
   $handler->display->display_options['fields']['order_number']['alter']['text'] = 'Order #[order_number]';
   $handler->display->display_options['fields']['order_number']['alter']['make_link'] = 0;
@@ -97,7 +102,7 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['fields']['order_number']['hide_empty'] = 0;
   $handler->display->display_options['fields']['order_number']['empty_zero'] = 0;
   $handler->display->display_options['fields']['order_number']['hide_alter_empty'] = 1;
-  /* Field: Commerce Order: Created date */
+  /* Felt: Commerce Order: Dato opprettet */
   $handler->display->display_options['fields']['created']['id'] = 'created';
   $handler->display->display_options['fields']['created']['table'] = 'commerce_order';
   $handler->display->display_options['fields']['created']['field'] = 'created';
@@ -120,7 +125,7 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['fields']['created']['empty_zero'] = 0;
   $handler->display->display_options['fields']['created']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['created']['date_format'] = 'medium';
-  /* Field: Commerce Order: Order state */
+  /* Felt: Commerce Order: Order state */
   $handler->display->display_options['fields']['state']['id'] = 'state';
   $handler->display->display_options['fields']['state']['table'] = 'commerce_order';
   $handler->display->display_options['fields']['state']['field'] = 'state';
@@ -142,7 +147,7 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['fields']['state']['hide_empty'] = 0;
   $handler->display->display_options['fields']['state']['empty_zero'] = 0;
   $handler->display->display_options['fields']['state']['hide_alter_empty'] = 1;
-  /* Field: IP geolocations: Address */
+  /* Felt: IP geolocations: Adresse */
   $handler->display->display_options['fields']['formatted_address']['id'] = 'formatted_address';
   $handler->display->display_options['fields']['formatted_address']['table'] = 'ip_geoloc';
   $handler->display->display_options['fields']['formatted_address']['field'] = 'formatted_address';
@@ -163,7 +168,7 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['fields']['formatted_address']['hide_empty'] = 0;
   $handler->display->display_options['fields']['formatted_address']['empty_zero'] = 0;
   $handler->display->display_options['fields']['formatted_address']['hide_alter_empty'] = 1;
-  /* Field: IP geolocations: Latitude */
+  /* Felt: IP geolocations: Latitude */
   $handler->display->display_options['fields']['latitude']['id'] = 'latitude';
   $handler->display->display_options['fields']['latitude']['table'] = 'ip_geoloc';
   $handler->display->display_options['fields']['latitude']['field'] = 'latitude';
@@ -185,7 +190,7 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['fields']['latitude']['empty_zero'] = 0;
   $handler->display->display_options['fields']['latitude']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['latitude']['format_plural'] = 0;
-  /* Field: IP geolocations: Longitude */
+  /* Felt: IP geolocations: Longitude */
   $handler->display->display_options['fields']['longitude']['id'] = 'longitude';
   $handler->display->display_options['fields']['longitude']['table'] = 'ip_geoloc';
   $handler->display->display_options['fields']['longitude']['field'] = 'longitude';
@@ -207,7 +212,7 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['fields']['longitude']['empty_zero'] = 0;
   $handler->display->display_options['fields']['longitude']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['longitude']['format_plural'] = 0;
-  /* Sort criterion: Commerce Order: Order ID */
+  /* Sorteringskriterium: Commerce Order: Order ID */
   $handler->display->display_options['sorts']['order_id']['id'] = 'order_id';
   $handler->display->display_options['sorts']['order_id']['table'] = 'commerce_order';
   $handler->display->display_options['sorts']['order_id']['field'] = 'order_id';
@@ -228,7 +233,7 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['filters']['state']['expose']['identifier'] = 'state';
   $handler->display->display_options['filters']['state']['expose']['multiple'] = 1;
   $handler->display->display_options['filters']['state']['expose']['reduce'] = 0;
-  /* Filter criterion: Commerce Order: Created date */
+  /* Filter criterion: Commerce Order: Dato opprettet */
   $handler->display->display_options['filters']['created']['id'] = 'created';
   $handler->display->display_options['filters']['created']['table'] = 'commerce_order';
   $handler->display->display_options['filters']['created']['field'] = 'created';
@@ -239,7 +244,7 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['filters']['created']['expose']['operator'] = 'created_op';
   $handler->display->display_options['filters']['created']['expose']['identifier'] = 'created';
   $handler->display->display_options['filters']['created']['expose']['multiple'] = FALSE;
-  /* Filter criterion: Commerce Order: Created date */
+  /* Filter criterion: Commerce Order: Dato opprettet */
   $handler->display->display_options['filters']['created_1']['id'] = 'created_1';
   $handler->display->display_options['filters']['created_1']['table'] = 'commerce_order';
   $handler->display->display_options['filters']['created_1']['field'] = 'created';
@@ -261,7 +266,24 @@ function commercify_order_maps_views_default_views() {
 
   /* Display: Content pane */
   $handler = $view->new_display('panel_pane', 'Content pane', 'panel_pane_1');
+  $handler->display->display_options['enabled'] = FALSE;
+  $handler->display->display_options['defaults']['exposed_form'] = FALSE;
+  $handler->display->display_options['exposed_form']['type'] = 'basic';
+  $handler->display->display_options['exposed_form']['options']['reset_button_label'] = 'Nullstill';
+  $handler->display->display_options['exposed_form']['options']['exposed_sorts_label'] = 'Sortér på';
+  $handler->display->display_options['exposed_form']['options']['sort_asc_label'] = 'Stigende';
+  $handler->display->display_options['exposed_form']['options']['sort_desc_label'] = 'Synkende';
+  $handler->display->display_options['exposed_form']['options']['autosubmit'] = 1;
+  $handler->display->display_options['exposed_form']['options']['autosubmit_hide'] = 1;
+  $handler->display->display_options['defaults']['style_plugin'] = FALSE;
+  $handler->display->display_options['style_plugin'] = 'ip_geoloc_map';
+  $handler->display->display_options['style_options']['ip_geoloc_map_of_view_div_style'] = 'height:450px;width:100%';
+  $handler->display->display_options['style_options']['ip_geoloc_map_of_view_options'] = '{"mapTypeId":"terrain", "disableDefaultUI":true, "zoom":6, "zoomControl":true}';
+  $handler->display->display_options['defaults']['style_options'] = FALSE;
+  $handler->display->display_options['defaults']['row_plugin'] = FALSE;
+  $handler->display->display_options['defaults']['row_options'] = FALSE;
   $handler->display->display_options['exposed_block'] = TRUE;
+  $handler->display->display_options['defaults']['footer'] = FALSE;
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Commerce Order: Order state */
   $handler->display->display_options['filters']['state']['id'] = 'state';
@@ -278,19 +300,20 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['filters']['state']['expose']['identifier'] = 'state';
   $handler->display->display_options['filters']['state']['expose']['multiple'] = 1;
   $handler->display->display_options['filters']['state']['expose']['reduce'] = 0;
-  /* Filter criterion: Commerce Order: Created date */
+  /* Filter criterion: Commerce Order: Dato opprettet */
   $handler->display->display_options['filters']['created']['id'] = 'created';
   $handler->display->display_options['filters']['created']['table'] = 'commerce_order';
   $handler->display->display_options['filters']['created']['field'] = 'created';
-  $handler->display->display_options['filters']['created']['operator'] = '<=';
+  $handler->display->display_options['filters']['created']['operator'] = '>=';
   $handler->display->display_options['filters']['created']['group'] = 1;
   $handler->display->display_options['filters']['created']['exposed'] = TRUE;
   $handler->display->display_options['filters']['created']['expose']['operator_id'] = 'created_op';
   $handler->display->display_options['filters']['created']['expose']['label'] = 'Fra DD-MM-ÅÅÅÅ';
   $handler->display->display_options['filters']['created']['expose']['operator'] = 'created_op';
   $handler->display->display_options['filters']['created']['expose']['identifier'] = 'created';
+  $handler->display->display_options['filters']['created']['expose']['remember'] = 1;
   $handler->display->display_options['filters']['created']['expose']['multiple'] = FALSE;
-  /* Filter criterion: Commerce Order: Created date */
+  /* Filter criterion: Commerce Order: Dato opprettet */
   $handler->display->display_options['filters']['created_1']['id'] = 'created_1';
   $handler->display->display_options['filters']['created_1']['table'] = 'commerce_order';
   $handler->display->display_options['filters']['created_1']['field'] = 'created';
@@ -302,26 +325,35 @@ function commercify_order_maps_views_default_views() {
   $handler->display->display_options['filters']['created_1']['expose']['operator'] = 'created_1_op';
   $handler->display->display_options['filters']['created_1']['expose']['identifier'] = 'created_1';
   $handler->display->display_options['filters']['created_1']['expose']['multiple'] = FALSE;
+  $handler->display->display_options['allow']['use_pager'] = 0;
+  $handler->display->display_options['allow']['items_per_page'] = 0;
+  $handler->display->display_options['allow']['offset'] = 0;
+  $handler->display->display_options['allow']['link_to_view'] = 0;
+  $handler->display->display_options['allow']['more_link'] = 0;
+  $handler->display->display_options['allow']['path_override'] = 'path_override';
+  $handler->display->display_options['allow']['title_override'] = 0;
+  $handler->display->display_options['allow']['exposed_form'] = 0;
+  $handler->display->display_options['allow']['fields_override'] = 0;
+  $handler->display->display_options['inherit_panels_path'] = '1';
   $translatables['c_dashboard_map_overview'] = array(
     t('Master'),
-    t('Order Locations'),
-    t('more'),
-    t('Apply'),
-    t('Reset'),
-    t('Sort by'),
-    t('Asc'),
-    t('Desc'),
+    t('mer'),
+    t('Bruk'),
+    t('Nullstill'),
+    t('Sortér på'),
+    t('Stigende'),
+    t('Synkende'),
     t('Posisjonene på dette kartet er ikke eksakte.'),
     t('Customer profile'),
-    t('IP address'),
+    t('IP-adresse'),
     t('IP: [ip_address]'),
-    t('Order number'),
+    t('Ordrenummer'),
     t('Order #[order_number]'),
-    t('Created date'),
+    t('Dato opprettet'),
     t('Order placed: [created]'),
     t('Order state'),
     t('Order state: [state]'),
-    t('Address'),
+    t('Adresse'),
     t('Latitude'),
     t('.'),
     t(','),

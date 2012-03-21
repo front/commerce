@@ -61,7 +61,7 @@ function commercify_product_book_taxonomy_default_vocabularies() {
       'name' => 'Produkter',
       'machine_name' => 'produkter',
       'description' => 'Produkter hovedkategori',
-      'hierarchy' => '0',
+      'hierarchy' => '1',
       'module' => 'taxonomy',
       'weight' => '0',
       'metatags' => array(),

@@ -180,6 +180,7 @@ function commercify_product_book_field_group_info() {
     'children' => array(
       0 => 'commerce_price',
       1 => 'field_product_price_before',
+      2 => 'field_product_price_supplier',
     ),
     'format_type' => 'tab',
     'format_settings' => array(

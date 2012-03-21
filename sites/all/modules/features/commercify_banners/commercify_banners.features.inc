@@ -14,7 +14,7 @@ function commercify_banners_node_info() {
       'base' => 'node_content',
       'description' => t('Bannere for bruk i produktpromotering.'),
       'has_title' => '1',
-      'title_label' => t('Title'),
+      'title_label' => t('Tittel'),
       'help' => '',
     ),
   );

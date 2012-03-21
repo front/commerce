@@ -602,12 +602,28 @@ function commercify_product_book_field_default_fields() {
       'deleted' => '0',
       'entity_types' => array(),
       'field_name' => 'field_product_isbn',
-      'foreign keys' => array(),
-      'indexes' => array(),
-      'module' => 'isbn',
-      'settings' => array(),
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'foreign keys' => array(
+        'format' => array(
+          'columns' => array(
+            'format' => 'format',
+          ),
+          'table' => 'filter_format',
+        ),
+      ),
+      'indexes' => array(
+        'format' => array(
+          0 => 'format',
+        ),
+      ),
+      'module' => 'text',
+      'settings' => array(
+        'max_length' => '255',
+      ),
       'translatable' => '0',
-      'type' => 'isbn',
+      'type' => 'text',
     ),
     'field_instance' => array(
       'bundle' => 'publication',
@@ -619,11 +635,11 @@ function commercify_product_book_field_default_fields() {
       'description' => 'ISBN-nummer for denne publikasjonen.',
       'display' => array(
         'default' => array(
-          'label' => 'inline',
-          'module' => 'isbn',
+          'label' => 'above',
+          'module' => 'text',
           'settings' => array(),
-          'type' => 'isbn_default',
-          'weight' => '17',
+          'type' => 'text_default',
+          'weight' => 23,
         ),
         'line_item' => array(
           'label' => 'above',
@@ -638,20 +654,22 @@ function commercify_product_book_field_default_fields() {
           'weight' => 0,
         ),
       ),
+      'ds_extras_field_template' => '',
       'entity_type' => 'commerce_product',
       'field_name' => 'field_product_isbn',
       'label' => 'ISBN',
       'required' => 0,
       'settings' => array(
+        'text_processing' => '0',
         'user_register_form' => FALSE,
       ),
       'widget' => array(
         'active' => 1,
-        'module' => 'isbn',
+        'module' => 'text',
         'settings' => array(
           'size' => '60',
         ),
-        'type' => 'isbn_textfield',
+        'type' => 'text_textfield',
         'weight' => '1',
       ),
     ),
@@ -868,6 +886,78 @@ function commercify_product_book_field_default_fields() {
         ),
         'type' => 'commerce_price_simple',
         'weight' => '7',
+      ),
+    ),
+  );
+
+  // Exported field: 'commerce_product-publication-field_product_price_supplier'
+  $fields['commerce_product-publication-field_product_price_supplier'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_product_price_supplier',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'foreign keys' => array(),
+      'indexes' => array(
+        'currency_price' => array(
+          0 => 'amount',
+          1 => 'currency_code',
+        ),
+      ),
+      'module' => 'commerce_price',
+      'settings' => array(),
+      'translatable' => '0',
+      'type' => 'commerce_price',
+    ),
+    'field_instance' => array(
+      'bundle' => 'publication',
+      'commerce_bpc' => array(
+        'show_field' => 1,
+      ),
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Prisen som leverandøren tar for dette produktet.',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => NULL,
+          'settings' => array(),
+          'type' => 'commerce_price_default',
+          'weight' => 21,
+        ),
+        'line_item' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'node_teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'ds_extras_field_template' => '',
+      'entity_type' => 'commerce_product',
+      'field_name' => 'field_product_price_supplier',
+      'label' => 'Leverandørpris',
+      'required' => 0,
+      'settings' => array(
+        'user_register_form' => FALSE,
+      ),
+      'widget' => array(
+        'active' => 1,
+        'module' => 'commerce_price',
+        'settings' => array(
+          'currency_code' => 'default',
+        ),
+        'type' => 'commerce_price_simple',
+        'weight' => '9',
       ),
     ),
   );
@@ -1444,12 +1534,18 @@ function commercify_product_book_field_default_fields() {
       ),
       'widget' => array(
         'active' => 0,
-        'module' => 'options',
+        'module' => 'term_reference_tree',
         'settings' => array(
           'autocomplete_path' => 'taxonomy/autocomplete',
+          'filter_view' => '',
+          'leaves_only' => 0,
+          'select_parents' => 0,
           'size' => 60,
+          'start_minimized' => 0,
+          'token_display' => '',
+          'track_list' => 0,
         ),
-        'type' => 'options_select',
+        'type' => 'term_reference_tree',
         'weight' => '7',
       ),
     ),
@@ -1685,8 +1781,10 @@ function commercify_product_book_field_default_fields() {
   t('ISBN-nummer for denne publikasjonen.');
   t('Lagervarsling');
   t('Lavt lagernivå');
+  t('Leverandørpris');
   t('Nummer i serie');
   t('Price');
+  t('Prisen som leverandøren tar for dette produktet.');
   t('Produkt');
   t('Produktbilde');
   t('Produktbilde for gjeldende produkt.');
