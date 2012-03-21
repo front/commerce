@@ -41,6 +41,21 @@ function allertheme_css_alter(&$css) {
 }
 
 /**
+ * Implements hook_js_alter().
+ */
+function allertheme_js_alter(&$js) {
+  // Remove hardcoded setting from superfish menu.
+  foreach ($js as $key => $value) {
+    if ($value['type'] == 'inline') {
+      if (preg_match('/#superfish/i', $value['data'])) {
+        $js[$key]['data'] = str_replace('extraWidth: 1', 'extraWidth: 0', $value['data']);
+      }
+    }
+  }
+}
+
+
+/**
  * Preprocess variables for page.tpl.php
  */
 function allertheme_preprocess_page(&$vars) {

@@ -221,7 +221,6 @@ body.ptf-gwf-bitter {
           background: none;
           display: block;
           float: none;
-          min-width: calc-em(135px, 15px);
           padding: 0 1em;
 
           &:hover {
@@ -234,7 +233,7 @@ body.ptf-gwf-bitter {
         border: none;
         position: relative;
         top: 0!important;
-        left: 0;
+        left: 0!important;
         right: 0;
         margin: 0 0 calc-em(5px, 15px) calc-em(10px, 15px);
         clear: both;
