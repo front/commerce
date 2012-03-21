@@ -1,0 +1,4 @@
+/* Example for field_product_special_css */
+.page-type-produktvisning #content .block-inner {
+  background-color: #ffcc66!important;
+}

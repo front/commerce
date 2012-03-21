@@ -98,14 +98,27 @@ function aller_store_commerce_currency_info_alter(&$currencies, $langcode) {
 
 /**
  * Implements hook_preprocess_node().
- *
- * Show only 1 image on products teasers
  */
 function aller_store_preprocess_node(&$vars) {
+  global $theme;
+  $lang = $vars['language'];
+
+  // Show only 1 image on products teasers
   if ($vars['view_mode'] == 'teaser') {
     if (isset($vars['content']['product:field_product_image'])) {
       $product_image = array($vars['content']['product:field_product_image']['#items'][0]);
       $vars['content']['product:field_product_image']['#items'] = $product_image;
+    }
+  }
+
+  // Include CSS from field product_special_css.
+  if (isset($vars['view_mode']) && $vars['view_mode'] == 'full') {
+    if (isset($vars['field_product_special_css'][$lang])) {
+      foreach ($vars['field_product_special_css'][$lang] as $key => $value) {
+        $css_name = trim($value['value']) . '.css';
+        $css_file = drupal_get_path('theme', $theme) . '/css/' . $css_name;
+        drupal_add_css($css_file, array('group' => CSS_THEME, 'weight' => 10));
+      }
     }
   }
 }

@@ -54,7 +54,6 @@ function allertheme_js_alter(&$js) {
   }
 }
 
-
 /**
  * Preprocess variables for page.tpl.php
  */
