@@ -298,6 +298,14 @@ select {
   margin-top: 2.231em;
 }
 
+#views-exposed-form-c-dashboard-product-charts-panel-pane-1 .views-submit-button {
+  float: right;
+  margin-left: -1em;
+}
+#views-exposed-form-c-dashboard-product-charts-panel-pane-1 .views-submit-button input {
+  padding: 2px 10px 3px;
+}
+
 /* Commerce Products */
 .page-admin-commerce-products form ul.action-links {
   margin: 1em 0;
