@@ -247,7 +247,7 @@ body.ptf-gwf-bitter {
           line-height: calc-em(25px, 14px);
           &:hover {
             color: #fe8f00;
-            
+
           }
         }
       }
@@ -259,17 +259,15 @@ body.ptf-gwf-bitter {
   background-color: #e8e8e8;
   margin-top: 15px;
 
+  .front & {
+    margin-bottom: 90px;
+  }
+
   .region,
   .block,
   .texture-overlay {
     margin: 0;
     padding: 0;
-  }
-  .block-block {
-    p, img {
-      display: block;
-      margin: 0;
-    }
   }
 }
 
@@ -379,7 +377,7 @@ body.ptf-gwf-bitter {
     font-family: $font-family-headings;
     margin-left: 5px;
     margin-bottom: 0.5em;
-    
+
   }
   .pane-content {
     background: transparent url(../images/bg_pane-shadow.png) no-repeat 0 0;
@@ -913,7 +911,7 @@ ol.inline.commerce-checkout-progress {
       display: block;
       color: #fff;
       background: #75cd76 url('../images/bg_arrow.png') no-repeat right center;
-      
+
       &:hover {
         background-color: #5dc65e;
       }
@@ -1051,7 +1049,7 @@ div.checkout-completion-message {
         border-color: #999;
       }
     }
-    
+
     &.form-submit {
       color: #fff;
       text-transform: uppercase;
@@ -1110,6 +1108,48 @@ div.checkout-completion-message {
     &:hover {
       text-decoration: none;
       background-color: #f5f5f5;
+    }
+  }
+}
+
+/* Blocks */
+#block-views-nodequeue-1-block {
+  h2 {
+    @include element-invisible;
+  }
+}
+.view-nodequeue-1 {
+  .views-row {
+    position: relative;
+
+    img {
+      display: block;
+    }
+  }
+
+  .attachment {
+    text-align: center;
+    margin-top: -52px;
+    margin-bottom: -90px;
+    position: relative;
+
+    .views-row {
+      display: inline-block;
+      margin: 0 4px;
+      @include box-shadow(0 0 7px rgba(0,0,0,0.75));
+    }
+    a {
+      background: transparent url('../images/bg_featured-thumbs.png') repeat-x left bottom;
+      display: inline-block;
+      padding: 0 7px 7px;
+      margin: 0 -7px -8px;
+    }
+    img {
+      background-color: #fff;
+      display: inline-block;
+      vertical-align: top;
+      padding: 7px;
+
     }
   }
 }

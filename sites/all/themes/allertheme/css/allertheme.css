@@ -220,15 +220,14 @@ body.ptf-gwf-bitter #nav-wrapper {
   background-color: #e8e8e8;
   margin-top: 15px;
 }
+.front #secondary-content-wrapper {
+  margin-bottom: 90px;
+}
 #secondary-content-wrapper .region,
 #secondary-content-wrapper .block,
 #secondary-content-wrapper .texture-overlay {
   margin: 0;
   padding: 0;
-}
-#secondary-content-wrapper .block-block p, #secondary-content-wrapper .block-block img {
-  display: block;
-  margin: 0;
 }
 
 #content-wrapper {
@@ -1193,4 +1192,45 @@ div.checkout-completion-message {
 .item-list .pager a:hover {
   text-decoration: none;
   background-color: #f5f5f5;
+}
+
+/* Blocks */
+#block-views-nodequeue-1-block h2 {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px);
+  /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+.view-nodequeue-1 .views-row {
+  position: relative;
+}
+.view-nodequeue-1 .views-row img {
+  display: block;
+}
+.view-nodequeue-1 .attachment {
+  text-align: center;
+  margin-top: -52px;
+  margin-bottom: -90px;
+  position: relative;
+}
+.view-nodequeue-1 .attachment .views-row {
+  display: inline-block;
+  margin: 0 4px;
+  -moz-box-shadow: 0 0 7px rgba(0, 0, 0, 0.75);
+  -webkit-box-shadow: 0 0 7px rgba(0, 0, 0, 0.75);
+  -o-box-shadow: 0 0 7px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.75);
+}
+.view-nodequeue-1 .attachment a {
+  background: transparent url("../images/bg_featured-thumbs.png") repeat-x left bottom;
+  display: inline-block;
+  padding: 0 7px 7px;
+  margin: 0 -7px -8px;
+}
+.view-nodequeue-1 .attachment img {
+  background-color: #fff;
+  display: inline-block;
+  vertical-align: top;
+  padding: 7px;
 }
