@@ -24,7 +24,11 @@ function allertheme_preprocess_html(&$vars) {
   );
   load_subtheme_ie_styles($ie_files, 'allertheme'); // Replace 'allertheme' with your themes name
   // */
-
+  $http_header = drupal_get_http_header();
+  if (isset($http_header['status'])) {
+    $status = drupal_clean_css_identifier($http_header['status']);
+    $vars['classes_array'][] = 'page-' . strtolower($status);
+  }
 }
 
 /**
