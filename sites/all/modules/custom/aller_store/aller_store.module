@@ -2,7 +2,7 @@
 
 /**
  * @file
- * Custom code for the allershop store. 
+ * Custom code for the allershop store.
  */
 
 /**
@@ -46,7 +46,7 @@ function aller_store_menu() {
 }
 
 /**
- * Implements hook_form_FORM_ID_alter();
+ * Implements hook_form_alter();
  * Have a date popup.
  */
 function aller_store_form_alter(&$form, &$form_state, $form_id) {
@@ -62,16 +62,34 @@ function aller_store_form_alter(&$form, &$form_state, $form_id) {
       $form['created']['#date_format'] = 'Y-m-d';
       $form['created_1']['#type'] = 'date_popup';
       $form['created_1']['#date_format'] = 'Y-m-d';
-
     }
+  }
+
+  if ($form_id == 'user_profile_form') {
+    $form['#pre_render'][] = 'aller_store_user_profile_form_pre_render';
   }
 }
 
+function aller_store_user_profile_form_pre_render($form) {
+  // Hide language settings, except if it's super admin user.
+  // Rob needs to switch to English, sometimes...
+  if (isset($form['locale']) && $form['#user']->uid != 1) {
+    hide($form['locale']);
+  }
+
+  // We don't need metatags for users.
+  if (isset($form['metatags'])) {
+    hide($form['metatags']);
+  }
+
+  return $form;
+}
+
 /**
-* Implements hook_commerce_currency_info_alter().
-*
-* Because the default display of AUD is awful
-*/
+ * Implements hook_commerce_currency_info_alter().
+ *
+ * Because the default display of AUD is awful
+ */
 function aller_store_commerce_currency_info_alter(&$currencies, $langcode) {
   $currencies['NOK']['symbol'] = 'kr';
   $currencies['NOK']['symbol_placement'] = 'after';
