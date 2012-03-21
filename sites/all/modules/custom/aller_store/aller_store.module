@@ -46,24 +46,6 @@ function aller_store_menu() {
 }
 
 /**
- * Implements hook_views_rss_date_sources().
- * 
- * Implements correct dates in views_rss when using commerce products
- */
-function aller_store_views_rss_date_sources() {
-  $sources['commerce_product'] = array(
-      'pubDate' => array(
-          'table' => 'commerce_product',
-          'field' => 'created',
-      ),
-      'lastBuildDate' => array(
-          'table' => 'commerce_product',
-          'field' => 'changed',
-      ),
-  );
-}
-
-/**
  * Implements hook_form_FORM_ID_alter();
  * Have a date popup.
  */
