@@ -883,6 +883,26 @@ form.commerce-add-to-cart input.form-submit:hover,
 .page-cart table {
   margin-top: 1em;
 }
+.page-cart table th {
+  text-align: center;
+}
+.page-cart table th.views-field {
+  text-align: left;
+}
+.page-cart table th.views-field-edit-delete {
+  text-align: center;
+}
+.page-cart table th.views-field-commerce-total {
+  text-align: right;
+}
+.page-cart table td {
+  vertical-align: middle;
+}
+.page-cart table .form-type-textfield,
+.page-cart table .form-type-textfield input,
+.page-cart table .views-field-edit-delete {
+  text-align: center;
+}
 .page-cart table .views-field-edit-delete input {
   color: #fff;
   font-size: 0.917em;

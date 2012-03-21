@@ -851,6 +851,26 @@ form.commerce-add-to-cart input.form-submit,
 .page-cart table {
   margin-top: 1em;
 
+  th {
+    text-align: center;
+    &.views-field {
+      text-align: left;
+    }
+    &.views-field-edit-delete {
+      text-align: center;
+    }
+    &.views-field-commerce-total {
+      text-align: right;
+    }
+  }
+  td {
+    vertical-align: middle;
+  }
+  .form-type-textfield,
+  .form-type-textfield input,
+  .views-field-edit-delete {
+    text-align: center;
+  }
   .views-field-edit-delete input {
     color: #fff;
     font-size: calc-em(11px, 12px);
