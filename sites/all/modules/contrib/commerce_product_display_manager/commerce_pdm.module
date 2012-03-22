@@ -119,7 +119,8 @@ function commerce_pdm_display_node_products_form($form, &$form_state, $node) {
     $products_query->fields('ft', array('delta'));
 
     $conditions = db_or();
-    foreach($node->{$reference_field_name}[$node_language] as $product_field_value) {
+    $items = field_get_items('node', $node, $reference_field_name);
+    foreach($items as $product_field_value) {
       $conditions->condition('cp.product_id', $product_field_value['product_id']);
     }
     if ($conditions->count()) {
