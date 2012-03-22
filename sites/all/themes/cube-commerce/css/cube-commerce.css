@@ -377,6 +377,43 @@ select {
   margin-bottom: 0.5em;
 }
 
+#commerce-product-ui-product-form .add, #commerce-product-ui-product-form .cancel {
+  color: #fff;
+  font-size: 0.923em;
+  line-height: 1em;
+  vertical-align: middle;
+  background-color: #7BC;
+  display: inline-block;
+  padding: 4px 7px;
+  text-shadow: 0 1px 0 #3388AA;
+  -moz-border-radius: 4px;
+  -webkit-border-radius: 4px;
+  -o-border-radius: 4px;
+  -ms-border-radius: 4px;
+  -khtml-border-radius: 4px;
+  border-radius: 4px;
+  margin-top: 2px;
+  padding-bottom: 5px;
+}
+#commerce-product-ui-product-form .add:hover, #commerce-product-ui-product-form .cancel:hover {
+  background-color: #5badc2;
+}
+#commerce-product-ui-product-form .cancel {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=70);
+  opacity: 0.7;
+}
+#commerce-product-ui-product-form .cancel:hover {
+  filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=90);
+  opacity: 0.9;
+}
+#commerce-product-ui-product-form #commerce_pdm_product_referenced_by td {
+  vertical-align: middle;
+  padding: 5px 7px;
+}
+#commerce-product-ui-product-form #commerce_pdm_product_referenced_by td label {
+  margin-top: 2px;
+}
+
 /* System */
 div.messages {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);

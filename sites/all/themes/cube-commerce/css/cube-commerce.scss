@@ -14,6 +14,21 @@ $font-family-lucida: "Lucida","Lucida Grande","Trebuchet MS",Tahoma,Verdana,sans
   clip: rect(1px, 1px, 1px, 1px);
 }
 
+@mixin blue-button {
+  color: #fff;
+  font-size: calc-em(12px, 13px);
+  line-height: 1em;
+  vertical-align: middle;
+  background-color: #7BC;
+  display: inline-block;
+  padding: 4px 7px;
+  text-shadow: 0 1px 0 #3388AA;
+  @include border-radius(4px);
+  &:hover {
+    background-color: darken(#7BC, 7.5%);
+  }
+}
+
 /* Forms elements */
 input.form-text,
 textarea {
@@ -61,18 +76,7 @@ select {
   margin-top: 3px;
 
   a {
-    color: #fff;
-    font-size: calc-em(12px, 13px);
-    line-height: 1em;
-    vertical-align: middle;
-    background-color: #7BC;
-    display: inline-block;
-    padding: 4px 7px;
-    text-shadow: 0 1px 0 #3388AA;
-    @include border-radius(4px);
-    &:hover {
-      background-color: darken(#7BC, 7.5%);
-    }
+    @include blue-button;
   }
 }
 
@@ -349,6 +353,30 @@ select {
       text-transform: uppercase;
       margin-left: 1px;
       margin-bottom: 0.5em;
+    }
+  }
+}
+
+#commerce-product-ui-product-form {
+  .add, .cancel {
+    @include blue-button;
+    margin-top: 2px;
+    padding-bottom: 5px;
+  }
+  .cancel {
+    @include opacity(0.7);
+    &:hover {
+      @include opacity(0.9);
+    }
+  }
+  #commerce_pdm_product_referenced_by {
+    td {
+      vertical-align: middle;
+      padding: 5px 7px;
+
+      label {
+        margin-top: 2px;
+      }
     }
   }
 }
