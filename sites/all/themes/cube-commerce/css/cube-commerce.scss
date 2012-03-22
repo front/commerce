@@ -50,6 +50,31 @@ select {
   @include border-radius(2px);
 }
 
+.chzn-container-single {
+  .chzn-single {
+    border-color: lighten(#AAA, 5%);
+    border-top-color: lighten(#AAA, 10%);
+    @include border-radius(3px);
+  }
+  .chzn-single-with-drop {
+    @include border-radius(3px 3px 0 0);
+  }
+  .chzn-drop {
+    @include border-radius(0 0 3px 3px);
+  }
+}
+
+.views-widget-filter-state {
+  .search-choice {
+    white-space: nowrap;
+    float: none;
+  }
+  .form-item-state select {
+    min-width: 10em;
+  }
+}
+
+
 /* Commerce elements */
 .views-field-operations,
 .views-field-edit-customer-profile {
