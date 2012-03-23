@@ -401,7 +401,6 @@ body.ptf-gwf-bitter {
   }
 }
 
-
 /* Produktvisning */
 .page-type-produktvisning {
 
@@ -665,6 +664,26 @@ body.ptf-gwf-bitter {
     font-family: $font-family-serif;
     font-size: calc-em(16px, 12px);
     margin-top: calc-em(9px, 16px);
+  }
+}
+
+/* Taxonomy */
+.page-taxonomy {
+  .view-taxonomy-custom {
+    .views-row {
+      @include grid(4);
+
+      $i: 5;
+      @while $i < 30 {
+        &.views-row-#{$i} {
+          clear: both;
+        }
+        $i: $i + 4;
+      }
+    }
+  }
+  .sidebar {
+    margin-top: 3.5em;
   }
 }
 
