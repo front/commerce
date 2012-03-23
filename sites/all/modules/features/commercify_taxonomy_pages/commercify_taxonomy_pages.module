@@ -1,0 +1,7 @@
+<?php
+/**
+ * @file
+ * Code for the Commercify Taxonomy Pages feature.
+ */
+
+include_once('commercify_taxonomy_pages.features.inc');

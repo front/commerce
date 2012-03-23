@@ -44,6 +44,41 @@ select {
   border-radius: 2px;
 }
 
+.chzn-container-single .chzn-single {
+  border-color: #b7b7b7;
+  border-top-color: #c3c3c3;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 3px;
+  -o-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -khtml-border-radius: 3px;
+  border-radius: 3px;
+}
+.chzn-container-single .chzn-single-with-drop {
+  -moz-border-radius: 3px 3px 0 0;
+  -webkit-border-radius: 3px 3px 0 0;
+  -o-border-radius: 3px 3px 0 0;
+  -ms-border-radius: 3px 3px 0 0;
+  -khtml-border-radius: 3px 3px 0 0;
+  border-radius: 3px 3px 0 0;
+}
+.chzn-container-single .chzn-drop {
+  -moz-border-radius: 0 0 3px 3px;
+  -webkit-border-radius: 0 0 3px 3px;
+  -o-border-radius: 0 0 3px 3px;
+  -ms-border-radius: 0 0 3px 3px;
+  -khtml-border-radius: 0 0 3px 3px;
+  border-radius: 0 0 3px 3px;
+}
+
+.views-widget-filter-state .search-choice {
+  white-space: nowrap;
+  float: none;
+}
+.views-widget-filter-state .form-item-state select {
+  min-width: 10em;
+}
+
 /* Commerce elements */
 .views-field-operations a,
 .views-field-edit-customer-profile a {
@@ -415,6 +450,10 @@ select {
 }
 
 /* System */
+#branding .breadcrumb-link strong {
+  font-weight: bold;
+}
+
 div.messages {
   text-shadow: 0 1px 0 rgba(255, 255, 255, 0.25);
   padding: 0.75em 1em;

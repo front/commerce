@@ -85,14 +85,12 @@ function commercify_product_book_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Detaljer',
-    'weight' => '8',
+    'weight' => '3',
     'children' => array(
-      0 => 'field_product_description',
-      1 => 'field_product_detail_publisher',
-      2 => 'field_product_language',
-      3 => 'field_product_series_num',
-      4 => 'field_product_detail_year',
-      5 => 'field_product_pages',
+      0 => 'field_product_detail_publisher',
+      1 => 'field_product_language',
+      2 => 'field_product_detail_year',
+      3 => 'field_product_pages',
     ),
     'format_type' => 'tab',
     'format_settings' => array(
@@ -151,8 +149,13 @@ function commercify_product_book_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Produkt',
-    'weight' => '7',
-    'children' => array(),
+    'weight' => '0',
+    'children' => array(
+      0 => 'field_product_image',
+      1 => 'field_product_isbn',
+      2 => 'sku',
+      3 => 'title',
+    ),
     'format_type' => 'tab',
     'format_settings' => array(
       'formatter' => 'closed',
@@ -176,7 +179,7 @@ function commercify_product_book_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Pris',
-    'weight' => '5',
+    'weight' => '1',
     'children' => array(
       0 => 'commerce_price',
       1 => 'field_product_price_before',
@@ -205,7 +208,7 @@ function commercify_product_book_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Stock',
-    'weight' => '9',
+    'weight' => '4',
     'children' => array(),
     'format_type' => 'tab',
     'format_settings' => array(
@@ -266,13 +269,14 @@ function commercify_product_book_field_group_info() {
   $field_group->parent_name = '';
   $field_group->data = array(
     'label' => 'Lager',
-    'weight' => '6',
+    'weight' => '2',
     'children' => array(
       0 => 'field_product_weight',
       1 => 'field_product_dimension',
       2 => 'commerce_stock',
       3 => 'field_product_stock_min',
       4 => 'field_product_stock_warning',
+      5 => 'field_product_supplier',
     ),
     'format_type' => 'tab',
     'format_settings' => array(

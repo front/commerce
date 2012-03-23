@@ -50,6 +50,31 @@ select {
   @include border-radius(2px);
 }
 
+.chzn-container-single {
+  .chzn-single {
+    border-color: lighten(#AAA, 5%);
+    border-top-color: lighten(#AAA, 10%);
+    @include border-radius(3px);
+  }
+  .chzn-single-with-drop {
+    @include border-radius(3px 3px 0 0);
+  }
+  .chzn-drop {
+    @include border-radius(0 0 3px 3px);
+  }
+}
+
+.views-widget-filter-state {
+  .search-choice {
+    white-space: nowrap;
+    float: none;
+  }
+  .form-item-state select {
+    min-width: 10em;
+  }
+}
+
+
 /* Commerce elements */
 .views-field-operations,
 .views-field-edit-customer-profile {
@@ -382,6 +407,10 @@ select {
 }
 
 /* System */
+#branding .breadcrumb-link strong {
+  font-weight: bold;
+}
+
 div.messages {
   text-shadow: 0 1px 0 rgba(255,255,255,0.25);
   padding: 0.75em 1em;

@@ -5,25 +5,11 @@
  * Replace 'allertheme' with your themes name, i.e. mytheme_preprocess_html()
  */
 function allertheme_preprocess_html(&$vars) {
- /**
-  * Load IE specific stylesheets
-  * AT automates adding IE stylesheets, simply add to the array using
-  * the conditional comment as the key and the stylesheet name as the value.
-  *
-  * See our online help: http://adaptivethemes.com/documentation/working-with-internet-explorer
-  *
-  * For example to add a stylesheet for IE8 only use:
-  *
-  *  'IE 8' => 'ie-8.css',
-  *
-  * Your IE CSS file must be in the /css/ directory in your subtheme.
-  */
-  /* -- Delete this line to add a conditional stylesheet for IE 7 or less.
   $ie_files = array(
-    'lte IE 7' => 'ie-lte-7.css',
+    'lt IE 9' => 'ie.css',
   );
-  load_subtheme_ie_styles($ie_files, 'allertheme'); // Replace 'allertheme' with your themes name
-  // */
+  load_subtheme_ie_styles($ie_files, 'allertheme');
+
   $http_header = drupal_get_http_header();
   if (isset($http_header['status'])) {
     $status = drupal_clean_css_identifier($http_header['status']);
@@ -36,8 +22,13 @@ function allertheme_preprocess_html(&$vars) {
  */
 function allertheme_css_alter(&$css) {
   // Remove AT Commerce responsive css
-  unset($css[drupal_get_path('theme', 'at_commerce') . '/css/at_commerce.responsive.style.css']);
-  unset($css[drupal_get_path('theme', 'at_commerce') . '/css/at_commerce.responsive.gpanels.css']);
+  $at_commerce_path = drupal_get_path('theme', 'at_commerce');
+  unset($css[$at_commerce_path . '/css/at_commerce.responsive.style.css']);
+  unset($css[$at_commerce_path . '/css/at_commerce.responsive.gpanels.css']);
+  unset($css[$at_commerce_path . '/css/ie-6.css']);
+  unset($css[$at_commerce_path . '/css/ie-lte-7.css']);
+  unset($css[$at_commerce_path . '/css/ie-8.css']);
+  unset($css[$at_commerce_path . '/css/ie-lte-9.css']);
 }
 
 /**
