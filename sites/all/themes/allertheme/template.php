@@ -29,8 +29,6 @@ function allertheme_css_alter(&$css) {
   unset($css[$at_commerce_path . '/css/ie-lte-7.css']);
   unset($css[$at_commerce_path . '/css/ie-8.css']);
   unset($css[$at_commerce_path . '/css/ie-lte-9.css']);
-
-  dsm($css);
 }
 
 /**
