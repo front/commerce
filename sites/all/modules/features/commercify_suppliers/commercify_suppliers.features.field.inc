@@ -79,7 +79,7 @@ function commercify_suppliers_field_default_fields() {
             'link' => FALSE,
           ),
           'type' => 'entityreference_label',
-          'weight' => 22,
+          'weight' => '22',
         ),
         'line_item' => array(
           'label' => 'above',
@@ -107,7 +107,7 @@ function commercify_suppliers_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '11',
+        'weight' => '17',
       ),
     ),
   );

@@ -45,18 +45,43 @@ function commercify_product_book_field_group_info() {
   $field_group = new stdClass;
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
   $field_group->api_version = 1;
-  $field_group->identifier = 'group_design|node|produktvisning|form';
-  $field_group->group_name = 'group_design';
+  $field_group->identifier = 'group_categories|node|produktvisning|form';
+  $field_group->group_name = 'group_categories';
   $field_group->entity_type = 'node';
   $field_group->bundle = 'produktvisning';
   $field_group->mode = 'form';
   $field_group->parent_name = '';
   $field_group->data = array(
+    'label' => 'Data',
+    'weight' => '1',
+    'children' => array(
+      0 => 'group_design',
+      1 => 'group_product',
+    ),
+    'format_type' => 'tabs',
+    'format_settings' => array(
+      'label' => 'Data',
+      'instance_settings' => array(
+        'classes' => '',
+      ),
+    ),
+  );
+  $export['group_categories|node|produktvisning|form'] = $field_group;
+
+  $field_group = new stdClass;
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_design|node|produktvisning|form';
+  $field_group->group_name = 'group_design';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'produktvisning';
+  $field_group->mode = 'form';
+  $field_group->parent_name = 'group_categories';
+  $field_group->data = array(
     'label' => 'Design',
-    'weight' => '3',
+    'weight' => '4',
     'children' => array(
       0 => 'field_product_special_css',
-      1 => 'field_product_sub_header',
     ),
     'format_type' => 'div',
     'format_settings' => array(
@@ -230,33 +255,58 @@ function commercify_product_book_field_group_info() {
   $field_group->entity_type = 'node';
   $field_group->bundle = 'produktvisning';
   $field_group->mode = 'form';
-  $field_group->parent_name = '';
+  $field_group->parent_name = 'group_categories';
   $field_group->data = array(
     'label' => 'Produkt',
     'weight' => '2',
     'children' => array(
-      0 => 'field_product_image',
-      1 => 'field_product_description',
-      2 => 'field_product_author',
-      3 => 'field_product_category_main',
-      4 => 'field_product_price_before',
+      0 => 'field_product_description',
+      1 => 'field_product_author',
+      2 => 'field_product_category_main',
+      3 => 'field_product_price_before',
     ),
     'format_type' => 'div',
     'format_settings' => array(
-      'label' => 'Produkt',
+      'formatter' => 'open',
       'instance_settings' => array(
-        'required_fields' => 1,
-        'classes' => '',
         'description' => '',
-        'show_label' => '1',
+        'show_label' => 1,
         'label_element' => 'h3',
         'effect' => 'none',
-        'speed' => 'none',
+        'speed' => 'fast',
+        'classes' => '',
+        'required_fields' => 1,
       ),
-      'formatter' => 'open',
     ),
   );
   $export['group_product|node|produktvisning|form'] = $field_group;
+
+  $field_group = new stdClass;
+  $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */
+  $field_group->api_version = 1;
+  $field_group->identifier = 'group_reference|node|produktvisning|form';
+  $field_group->group_name = 'group_reference';
+  $field_group->entity_type = 'node';
+  $field_group->bundle = 'produktvisning';
+  $field_group->mode = 'form';
+  $field_group->parent_name = '';
+  $field_group->data = array(
+    'label' => 'Referert produkt',
+    'weight' => '7',
+    'children' => array(
+      0 => 'field_display_product',
+    ),
+    'format_type' => 'tab',
+    'format_settings' => array(
+      'formatter' => 'closed',
+      'instance_settings' => array(
+        'description' => '',
+        'classes' => '',
+        'required_fields' => 1,
+      ),
+    ),
+  );
+  $export['group_reference|node|produktvisning|form'] = $field_group;
 
   $field_group = new stdClass;
   $field_group->disabled = FALSE; /* Edit this to true to make a default field_group disabled initially */

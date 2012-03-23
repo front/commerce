@@ -1199,6 +1199,10 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['title'] = 'Ordre for siste 31 dager';
   $handler->display->display_options['defaults']['group_by'] = FALSE;
   $handler->display->display_options['group_by'] = TRUE;
+  $handler->display->display_options['defaults']['pager'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['pager']['options']['items_per_page'] = '200';
+  $handler->display->display_options['pager']['options']['offset'] = '0';
   $handler->display->display_options['defaults']['footer'] = FALSE;
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Felt: Commerce Order: Order number */
@@ -4428,7 +4432,7 @@ function commercify_admin_overview_views_default_views() {
     'field_product_category_main' => 'field_product_category_main',
     'edit_node' => 'edit_node',
   );
-  $handler->display->display_options['style_options']['default'] = 'title';
+  $handler->display->display_options['style_options']['default'] = '-1';
   $handler->display->display_options['style_options']['info'] = array(
     'views_bulk_operations' => array(
       'align' => '',
@@ -4799,6 +4803,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['sorts']['created']['table'] = 'node';
   $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['sorts']['created']['order'] = 'DESC';
+  $handler->display->display_options['sorts']['created']['granularity'] = 'minute';
   /* Filter criterion: Innhold: Tittel */
   $handler->display->display_options['filters']['title']['id'] = 'title';
   $handler->display->display_options['filters']['title']['table'] = 'node';
@@ -5986,6 +5991,11 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['edit_product']['hide_empty'] = 0;
   $handler->display->display_options['fields']['edit_product']['empty_zero'] = 0;
   $handler->display->display_options['fields']['edit_product']['hide_alter_empty'] = 1;
+  $handler->display->display_options['defaults']['sorts'] = FALSE;
+  /* Sorteringskriterium: Commerce Product: Dato opprettet */
+  $handler->display->display_options['sorts']['created']['id'] = 'created';
+  $handler->display->display_options['sorts']['created']['table'] = 'commerce_product';
+  $handler->display->display_options['sorts']['created']['field'] = 'created';
   $handler->display->display_options['defaults']['filters'] = FALSE;
   /* Filter criterion: Commerce Product: Leverandør (field_product_supplier) */
   $handler->display->display_options['filters']['field_product_supplier_target_id']['id'] = 'field_product_supplier_target_id';
@@ -6037,7 +6047,7 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['path'] = 'admin/commerce/overview/products/stock';
   $handler->display->display_options['menu']['type'] = 'tab';
   $handler->display->display_options['menu']['title'] = 'Varelager';
-  $handler->display->display_options['menu']['weight'] = '30';
+  $handler->display->display_options['menu']['weight'] = '50';
   $handler->display->display_options['menu']['context'] = 0;
   $handler->display->display_options['tab_options']['type'] = 'tab';
   $handler->display->display_options['tab_options']['title'] = 'Products';
@@ -6221,45 +6231,6 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['query']['options']['query_comment'] = FALSE;
   $handler->display->display_options['pager']['type'] = 'none';
   $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['style_plugin'] = 'rss_fields';
-  $handler->display->display_options['style_options']['channel'] = array(
-    'core' => array(
-      'views_rss_core' => array(
-        'description' => '',
-        'language' => '',
-        'category' => '',
-        'image' => '',
-        'copyright' => '',
-        'managingEditor' => '',
-        'webMaster' => '',
-        'generator' => '',
-        'docs' => '',
-        'cloud' => '',
-        'ttl' => '',
-        'skipHours' => '',
-        'skipDays' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['style_options']['item'] = array(
-    'core' => array(
-      'views_rss_core' => array(
-        'title' => 'sku',
-        'link' => '',
-        'description' => 'title',
-        'author' => '',
-        'category' => '',
-        'comments' => '',
-        'enclosure' => '',
-        'guid' => '',
-        'pubDate' => '',
-      ),
-    ),
-  );
-  $handler->display->display_options['style_options']['feed_settings'] = array(
-    'absolute_paths' => 1,
-    'feed_in_links' => 0,
-  );
   $handler->display->display_options['defaults']['fields'] = FALSE;
   /* Felt: Commerce Product: SKU */
   $handler->display->display_options['fields']['sku']['id'] = 'sku';

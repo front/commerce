@@ -1211,7 +1211,7 @@ function commercify_product_book_field_default_fields() {
         'module' => 'options',
         'settings' => array(),
         'type' => 'options_select',
-        'weight' => '1',
+        'weight' => '8',
       ),
     ),
   );
@@ -1291,12 +1291,12 @@ function commercify_product_book_field_default_fields() {
       ),
       'widget' => array(
         'active' => 0,
-        'module' => 'taxonomy',
+        'module' => 'options',
         'settings' => array(
           'autocomplete_path' => 'taxonomy/autocomplete',
           'size' => 60,
         ),
-        'type' => 'taxonomy_autocomplete',
+        'type' => 'options_select',
         'weight' => '6',
       ),
     ),
@@ -1375,7 +1375,7 @@ function commercify_product_book_field_default_fields() {
       ),
       'widget' => array(
         'active' => 0,
-        'module' => 'term_reference_tree',
+        'module' => 'options',
         'settings' => array(
           'autocomplete_path' => 'taxonomy/autocomplete',
           'filter_view' => '',
@@ -1386,8 +1386,8 @@ function commercify_product_book_field_default_fields() {
           'token_display' => '',
           'track_list' => 0,
         ),
-        'type' => 'term_reference_tree',
-        'weight' => '7',
+        'type' => 'options_select',
+        'weight' => '8',
       ),
     ),
   );
@@ -1466,70 +1466,6 @@ function commercify_product_book_field_default_fields() {
         ),
         'type' => 'text_textarea',
         'weight' => '5',
-      ),
-    ),
-  );
-
-  // Exported field: 'node-produktvisning-field_product_price_before'
-  $fields['node-produktvisning-field_product_price_before'] = array(
-    'field_config' => array(
-      'active' => '1',
-      'cardinality' => '1',
-      'deleted' => '0',
-      'entity_types' => array(),
-      'field_name' => 'field_product_price_before',
-      'foreign keys' => array(),
-      'indexes' => array(
-        'currency_price' => array(
-          0 => 'amount',
-          1 => 'currency_code',
-        ),
-      ),
-      'module' => 'commerce_price',
-      'settings' => array(),
-      'translatable' => '0',
-      'type' => 'commerce_price',
-    ),
-    'field_instance' => array(
-      'bundle' => 'produktvisning',
-      'default_value' => NULL,
-      'deleted' => '0',
-      'description' => 'Produktets førpris. Brukes kun for å vise førpris for kunden, ikke i kalkuleringer.',
-      'display' => array(
-        'default' => array(
-          'label' => 'hidden',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '18',
-        ),
-        'search_result' => array(
-          'label' => 'hidden',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '19',
-        ),
-        'teaser' => array(
-          'label' => 'above',
-          'settings' => array(),
-          'type' => 'hidden',
-          'weight' => '12',
-        ),
-      ),
-      'entity_type' => 'node',
-      'field_name' => 'field_product_price_before',
-      'label' => 'Førpris',
-      'required' => 0,
-      'settings' => array(
-        'user_register_form' => FALSE,
-      ),
-      'widget' => array(
-        'active' => 1,
-        'module' => 'commerce_price',
-        'settings' => array(
-          'currency_code' => 'NOK',
-        ),
-        'type' => 'commerce_price_simple',
-        'weight' => '8',
       ),
     ),
   );
@@ -1614,7 +1550,6 @@ function commercify_product_book_field_default_fields() {
   t('Forfatter');
   t('Forfattere av publikasjoner.');
   t('Forlag');
-  t('Førpris');
   t('Hovedkategori');
   t('ISBN');
   t('ISBN-nummer for denne publikasjonen.');
@@ -1626,7 +1561,6 @@ function commercify_product_book_field_default_fields() {
   t('Produkt');
   t('Produktbilde');
   t('Produktbilde for gjeldende produkt.');
-  t('Produktets førpris. Brukes kun for å vise førpris for kunden, ikke i kalkuleringer.');
   t('Produktets hovedkategori.');
   t('Spesialdesign');
   t('Spesialdesign som kan legges på produktvisningen.');
