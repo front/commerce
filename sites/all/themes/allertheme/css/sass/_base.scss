@@ -1,0 +1,47 @@
+/**
+ * Use:
+ * Compass - $ gem install compass
+ * Compass 960.gs plugin - $ gem install compass-960-plugin
+ *
+ * Recommended:
+ * Scout - http://mhs.github.com/scout-app/
+ */
+
+@import "compass/utilities/general/clearfix";
+@import "960/grid";
+@import "compass/css3";
+
+/* 960.gs configuration */
+$ninesixty-columns: 24;
+$ninesixty-gutter-width: 10px;
+
+
+/* Fonts */
+$font-family-serif: Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
+$font-family-headings: "Bitter", $font-family-serif;
+$font-size: 12;
+
+
+/* Helpers */
+@function calc-em($target-px, $context) {
+  @return ($target-px / $context) * 1em;
+}
+
+@mixin element-invisible {
+  position: absolute !important;
+  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+  clip: rect(1px, 1px, 1px, 1px);
+}
+
+@mixin image-replace {
+  display: block;
+  white-space: nowrap;
+  text-indent: 100%;
+  overflow: hidden;
+}
+
+@mixin PIE {
+  position: relative;
+  zoom: 1;
+  behavior: url('../js/PIE.php');
+}

@@ -2,7 +2,8 @@
  * Aller Theme
  *
  * Use this file to add custom styles.
- *
+ */
+/**
  * Use:
  * Compass - $ gem install compass
  * Compass 960.gs plugin - $ gem install compass-960-plugin
@@ -11,7 +12,7 @@
  * Scout - http://mhs.github.com/scout-app/
  */
 /* 960.gs configuration */
-/* Variables */
+/* Fonts */
 /* Helpers */
 /* AT theme overrides */
 body.ptf-gwf-bitter #page-title,
@@ -562,22 +563,16 @@ body.ptf-gwf-bitter #nav-wrapper {
 }
 .article-type-produktvisning.view-mode-full .group-cart .field-name-field-display-product input.form-submit {
   font-size: 1.25em;
-  background-image: url(../images/icon_addtocart.png), -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #a2668a), color-stop(100%, #8c2764));
-  background-image: url(../images/icon_addtocart.png), -webkit-linear-gradient(#a2668a, #8c2764);
-  background-image: url(../images/icon_addtocart.png), -moz-linear-gradient(#a2668a, #8c2764);
-  background-image: url(../images/icon_addtocart.png), -o-linear-gradient(#a2668a, #8c2764);
-  background-image: url(../images/icon_addtocart.png), -ms-linear-gradient(#a2668a, #8c2764);
-  background-image: url(../images/icon_addtocart.png), linear-gradient(#a2668a, #8c2764);
-  background-repeat: no-repeat;
-  background-position: 94.5% center;
+  background: #984276 url("../images/bg_addtocart.png") no-repeat right center;
   padding: 11px 60px 11px 13px;
   margin: 7px;
-  -webkit-border-radius: 14px 11px;
-  -moz-border-radius: 14px 14px / 11px 11px;
-  -o-border-radius: 14px 14px / 11px 11px;
-  -ms-border-radius: 14px 14px / 11px 11px;
-  -khtml-border-radius: 14px 14px / 11px 11px;
-  border-radius: 14px 14px / 11px 11px;
+  filter: none;
+  -moz-border-radius: 14px;
+  -webkit-border-radius: 14px;
+  -o-border-radius: 14px;
+  -ms-border-radius: 14px;
+  -khtml-border-radius: 14px;
+  border-radius: 14px;
 }
 .article-type-produktvisning.view-mode-full .group-details {
   font-size: 1.417em;
@@ -695,6 +690,9 @@ body.ptf-gwf-bitter #nav-wrapper {
 .page-taxonomy .sidebar {
   margin-top: 3.5em;
 }
+.page-taxonomy .sidebar .block {
+  padding-right: 40px;
+}
 
 /* Commerce */
 .region-header .block-search-api-page {
@@ -753,6 +751,9 @@ body.ptf-gwf-bitter #nav-wrapper {
   -ms-border-radius: 15px;
   -khtml-border-radius: 15px;
   border-radius: 15px;
+}
+.region-header .block-search-api-page form .placeholder {
+  color: #7F7F7F;
 }
 
 .region-header .block-commerce-cart {
@@ -832,7 +833,8 @@ body.ptf-gwf-bitter #nav-wrapper {
 .sidebar .block-menu .block-inner .menu {
   font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
   font-size: 1.25em;
-  line-height: 2.133em;
+  /*line-height: calc-em(32px, 15px);*/
+  line-height: 1.333em;
   margin: 0;
 }
 .sidebar .block-menu .block-inner .menu li {
@@ -845,7 +847,7 @@ body.ptf-gwf-bitter #nav-wrapper {
   color: #fff;
   background: transparent url(../images/icon_sidebar-dropdown.png) no-repeat right center;
   display: block;
-  padding-left: 1px;
+  padding: 6px 1.5em 6px 1px;
   border-top: 1px solid #868686;
   border-bottom: 1px solid #868686;
 }
@@ -897,6 +899,8 @@ form.commerce-add-to-cart input.form-submit,
   -khtml-border-radius: 6px;
   border-radius: 6px;
   padding: 3px 5px 4px;
+  margin-left: auto;
+  margin-right: auto;
 }
 form.commerce-add-to-cart input.form-submit:hover,
 .add-to-cart #edit-actions input.form-submit:hover {

@@ -2,47 +2,9 @@
  * Aller Theme
  *
  * Use this file to add custom styles.
- *
- * Use:
- * Compass - $ gem install compass
- * Compass 960.gs plugin - $ gem install compass-960-plugin
- *
- * Recommended:
- * Scout - http://mhs.github.com/scout-app/
  */
 
-@import "compass/utilities/general/clearfix";
-@import "960/grid";
-@import "compass/css3";
-
-/* 960.gs configuration */
-$ninesixty-columns: 24;
-$ninesixty-gutter-width: 10px;
-
-
-/* Variables */
-$font-family-serif: Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
-$font-family-headings: "Bitter", $font-family-serif;
-$font-size: 12;
-
-
-/* Helpers */
-@function calc-em($target-px, $context) {
-  @return ($target-px / $context) * 1em;
-}
-
-@mixin element-invisible {
-  position: absolute !important;
-  clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-  clip: rect(1px, 1px, 1px, 1px);
-}
-
-@mixin image-replace {
-  display: block;
-  white-space: nowrap;
-  text-indent: 100%;
-  overflow: hidden;
-}
+@import "base";
 
 /* AT theme overrides */
 body.ptf-gwf-bitter {
@@ -582,12 +544,11 @@ body.ptf-gwf-bitter {
 
       input.form-submit {
         font-size: calc-em(15px, 12px);
-        @include background-image(url(../images/icon_addtocart.png), linear-gradient(#A2668A, #8C2764));
-        background-repeat: no-repeat;
-        background-position: 94.5% center;
+        background: #984276 url('../images/bg_addtocart.png') no-repeat right center;
         padding: 11px 60px 11px 13px;
         margin: 7px;
-        @include border-radius(14px 14px, 11px 11px);
+        filter: none;
+        @include border-radius(14px);
       }
     }
   }
@@ -684,6 +645,10 @@ body.ptf-gwf-bitter {
   }
   .sidebar {
     margin-top: 3.5em;
+
+    .block {
+      padding-right: 40px;
+    }
   }
 }
 
@@ -725,6 +690,9 @@ body.ptf-gwf-bitter {
         padding: 4px 15px;
         border: none;
         @include border-radius(15px);
+      }
+      .placeholder {
+        color: #7F7F7F;
       }
     }
   }
@@ -796,7 +764,8 @@ body.ptf-gwf-bitter {
     .menu {
       font-family: $font-family-headings;
       font-size: calc-em(15px, 12px);
-      line-height: calc-em(32px, 15px);
+      /*line-height: calc-em(32px, 15px);*/
+      line-height: calc-em(20px, 15px);
       margin: 0;
 
       li {
@@ -809,7 +778,7 @@ body.ptf-gwf-bitter {
         color: #fff;
         background: transparent url(../images/icon_sidebar-dropdown.png) no-repeat right center;
         display: block;
-        padding-left: 1px;
+        padding: 6px 1.5em 6px 1px;
         border-top: 1px solid #868686;
         border-bottom: 1px solid #868686;
       }
@@ -854,6 +823,8 @@ form.commerce-add-to-cart input.form-submit,
   border: 2px solid #fff;
   @include border-radius(6px);
   padding: 3px 5px 4px;
+  margin-left: auto;
+  margin-right: auto;
 
   &:hover {
     text-shadow: 0 -1px 0 rgba(0,0,0,0.5);

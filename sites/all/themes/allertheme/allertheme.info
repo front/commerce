@@ -28,6 +28,7 @@
 
 ;----------// Scripts
 
+  scripts[] = js/jquery.placeholder.min.js
   scripts[] = js/equalheights.js
   scripts[] = js/allertheme.js
 

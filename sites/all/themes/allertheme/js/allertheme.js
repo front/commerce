@@ -30,6 +30,9 @@
                   $('.eq', view).equalHeight();
               }
             });
+
+            // Placeholder support
+            $('input.form-text, textarea').placeholder();
         }
     };
 

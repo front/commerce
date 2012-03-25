@@ -3,3 +3,98 @@
  * template.php for details on how to
  * load this or additional IE stylesheets.
  */
+
+@import "base";
+
+#menu-bar {
+  background: #e1e1e1 url('../images/bg_menubar-ie.png') repeat-x 0 0;
+
+  nav {
+    .sf-menu {
+      .sf-sub-indicator {
+        top: 0.7em;
+      }
+      ul {
+        margin: calc-em(-15px, 15px) 0 0;
+      }
+    }
+  }
+}
+
+.block-commerce-cart {
+ .region-header & {
+   .block-content {
+     background-image: url('../images/bg_innershadow-ie.png');
+     background-repeat: repeat-x;
+     background-position: 0 0;
+     border: 1px solid #944274;
+     box-shadow: none;
+     @include PIE;
+   }
+ }
+}
+
+.block-search-api-page {
+  .region-header & {
+    form {
+      .form-text {
+        @include PIE;
+      }
+      .form-submit {
+        filter: none;
+        box-shadow: 0 1px 3px #751a53;
+        @include PIE;
+      }
+    }
+  }
+}
+
+.view-nodequeue-1 {
+  .attachment {
+    margin-top: -66px;
+    padding-top: 7px;
+    overflow: hidden;
+
+    .views-row {
+      box-shadow: 0 0 7px rgba(0,0,0,0.75);
+      @include PIE;
+    }
+  }
+}
+
+.block-menu {
+  .sidebar & .block-inner {
+    @include PIE;
+  }
+}
+
+.article-type-produktvisning.view-mode-full {
+  .field-field-product-image {
+    .gallery-slides {
+      .colorbox,
+      .colorbox:hover {
+        filter: none;
+      }
+    }
+  }
+  .group-cart {
+    background: #E9E9E9;
+    @include PIE;
+    .field-name-field-display-product {
+      input.form-submit {
+        @include PIE;
+      }
+    }
+  }
+}
+
+form.commerce-add-to-cart input.form-submit,
+.add-to-cart #edit-actions input.form-submit {
+  filter: none;
+  box-shadow: 0 1px 7px #999;
+
+  &:hover {
+    filter: none;
+    @include box-shadow(0 1px 5px #8C2764);
+  }
+}

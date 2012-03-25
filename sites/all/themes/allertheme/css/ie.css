@@ -3,3 +3,95 @@
  * template.php for details on how to
  * load this or additional IE stylesheets.
  */
+/**
+ * Use:
+ * Compass - $ gem install compass
+ * Compass 960.gs plugin - $ gem install compass-960-plugin
+ *
+ * Recommended:
+ * Scout - http://mhs.github.com/scout-app/
+ */
+/* 960.gs configuration */
+/* Fonts */
+/* Helpers */
+#menu-bar {
+  background: #e1e1e1 url("../images/bg_menubar-ie.png") repeat-x 0 0;
+}
+#menu-bar nav .sf-menu .sf-sub-indicator {
+  top: 0.7em;
+}
+#menu-bar nav .sf-menu ul {
+  margin: -1em 0 0;
+}
+
+.region-header .block-commerce-cart .block-content {
+  background-image: url("../images/bg_innershadow-ie.png");
+  background-repeat: repeat-x;
+  background-position: 0 0;
+  border: 1px solid #944274;
+  box-shadow: none;
+  position: relative;
+  zoom: 1;
+  behavior: url("../js/PIE.php");
+}
+
+.region-header .block-search-api-page form .form-text {
+  position: relative;
+  zoom: 1;
+  behavior: url("../js/PIE.php");
+}
+.region-header .block-search-api-page form .form-submit {
+  filter: none;
+  box-shadow: 0 1px 3px #751a53;
+  position: relative;
+  zoom: 1;
+  behavior: url("../js/PIE.php");
+}
+
+.view-nodequeue-1 .attachment {
+  margin-top: -66px;
+  padding-top: 7px;
+  overflow: hidden;
+}
+.view-nodequeue-1 .attachment .views-row {
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0.75);
+  position: relative;
+  zoom: 1;
+  behavior: url("../js/PIE.php");
+}
+
+.sidebar .block-menu .block-inner {
+  position: relative;
+  zoom: 1;
+  behavior: url("../js/PIE.php");
+}
+
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-slides .colorbox,
+.article-type-produktvisning.view-mode-full .field-field-product-image .gallery-slides .colorbox:hover {
+  filter: none;
+}
+.article-type-produktvisning.view-mode-full .group-cart {
+  background: #E9E9E9;
+  position: relative;
+  zoom: 1;
+  behavior: url("../js/PIE.php");
+}
+.article-type-produktvisning.view-mode-full .group-cart .field-name-field-display-product input.form-submit {
+  position: relative;
+  zoom: 1;
+  behavior: url("../js/PIE.php");
+}
+
+form.commerce-add-to-cart input.form-submit,
+.add-to-cart #edit-actions input.form-submit {
+  filter: none;
+  box-shadow: 0 1px 7px #999;
+}
+form.commerce-add-to-cart input.form-submit:hover,
+.add-to-cart #edit-actions input.form-submit:hover {
+  filter: none;
+  -moz-box-shadow: 0 1px 5px #8c2764;
+  -webkit-box-shadow: 0 1px 5px #8c2764;
+  -o-box-shadow: 0 1px 5px #8c2764;
+  box-shadow: 0 1px 5px #8c2764;
+}
