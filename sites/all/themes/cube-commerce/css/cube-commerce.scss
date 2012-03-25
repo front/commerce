@@ -272,6 +272,7 @@ select {
     .form-item {
       background: none;
       padding: 0;
+      margin-top: 0;
       border: none;
     }
     .container-inline-date {
@@ -283,7 +284,7 @@ select {
       }
     }
     .form-submit {
-      margin-top: calc-em(29px, 13px);
+      margin-top: calc-em(20px, 13px);
     }
   }
 }

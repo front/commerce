@@ -66,9 +66,16 @@
   behavior: url("../js/PIE.php");
 }
 
+.article-type-produktvisning.view-mode-full .field-field-product-image img {
+  box-shadow: 0 0 10px #bcbcbc;
+  position: relative;
+  zoom: 1;
+  behavior: url("../js/PIE.php");
+}
 .article-type-produktvisning.view-mode-full .field-field-product-image .gallery-slides .colorbox,
 .article-type-produktvisning.view-mode-full .field-field-product-image .gallery-slides .colorbox:hover {
   filter: none;
+  z-index: 5;
 }
 .article-type-produktvisning.view-mode-full .group-cart {
   background: #E9E9E9;
