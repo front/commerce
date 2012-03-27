@@ -1,0 +1,9 @@
+name = allerads_client
+description = 
+core = 7.x
+package = 
+php = 
+version =
+dependencies[] = 
+files[] = 
+configure = 

@@ -1,0 +1,123 @@
+<?php
+
+/**
+ * @file
+ * Allerads client. To be put where there are stuff to track.
+ *  
+ */
+define('ALLERADS_PINGBACK_MAX', '20');
+define('ALLERADS_PINGBACK_URL', 'http://allerads.vps4.front.no/pingback');
+
+/**
+ * Implements hook_boot().
+ * 
+ * Look for adtrack IDs, even for cached pages. 
+ */
+function allerads_client_boot() {
+  // Save a new path, but only if we're not being flooded
+  if ($_SESSION['allerads']['active']) {
+    // If history's gotten too long
+    if (count($_SESSION['allerads']['visits']) >= ALLERADS_PINGBACK_MAX) {
+      $_SESSION['allerads']['visits'][($_SESSION['q'])] = $_SESSION['q'];
+    }
+  }
+  // Initiate.
+  if ($_GET['adid']) {
+    // If we have a session
+    if (!$_SESSION['allerads']) {
+      $_SESSION['allerads'] = array(
+        'active' => TRUE,
+        'code' => $_GET['adid'],
+        'visits' => array(
+          $_SESSION['q'] => $_SESSION['q'],
+        ),
+      );
+    }
+    else {
+      // If have a previous session
+    }
+  }
+  // Pingback URLs.
+}
+
+/**
+ * Pingback command.
+ * Pings whatever we've got, then deletes. 
+ */
+function allerads_client_pingback($success = false, $skus = array(), $unset = true) {
+  if ($_SESSION['allerads']) {
+    $params = array(
+      'links' => $_SESSION['allerads']['links'],
+      'code' => $_SESSION['allerads']['code'],
+    );
+    if (count($skus) > 0) {
+      $params['skus'] = implode(" ", $skus);
+    }
+    $link = ALLERADS_PINGBACK_URL;
+    curl_post_async($link, $params);
+  }
+  if ($unset) {
+    unset($_SESSION['allerads']);
+  }
+}
+
+/**
+ * Implements hook_commerce_checkout_complete().
+ * 
+ * We'll now ping home, so we know what happened.
+ */
+function allerads_client_commerce_checkout_complete($order) {
+  if (module_exists('commerce')) {
+    if ($_SESSION['allerads']['active']) {
+      // Let's just send a simple OK to home base, for now.
+      // @todo this should be done asynchronous, so we don't have to wait.
+      drupal_set_message("We're now talking to allerbok. Pingback with cool tuff.");
+      // Since we now have a success, remove allerads from session.
+      // Gether SKUs
+      $product_ids = array();
+      foreach (entity_metadata_wrapper('commerce_order', $order)->commerce_line_items as $delta => $line_item_wrapper) {
+        if (in_array($line_item_wrapper->type->value(), commerce_product_line_item_types())) {
+          $product_ids[] = $line_item_wrapper->commerce_product->raw();
+        }
+      }
+      drupal_set_message(implode(" ", $product_ids));
+      // Pingback the mothership.
+      allerads_client_pingback(true,$product_ids,true);
+    }
+  }
+}
+
+/**
+ * Post asynchronous using curl.
+ * Allows us to fire off a request & close connections immediately.
+ * 
+ * @param type $url
+ * @param type $params 
+ */
+function curl_post_async($url, $params) {
+  foreach ($params as $key => &$val) {
+    if (is_array($val))
+      $val = implode(',', $val);
+    $post_params[] = $key . '=' . urlencode($val);
+  }
+  $post_string = implode('&', $post_params);
+
+  $parts = parse_url($url);
+
+  $fp = fsockopen($parts['host'], isset($parts['port']) ? $parts['port'] : 80, $errno, $errstr, 30);
+
+  $out = "POST " . $parts['path'] . " HTTP/1.1\r\n";
+  $out.= "Host: " . $parts['host'] . "\r\n";
+  $out.= "Content-Type: application/x-www-form-urlencoded\r\n";
+  $out.= "Content-Length: " . strlen($post_string) . "\r\n";
+  $out.= "Connection: Close\r\n\r\n";
+  if (isset($post_string))
+    $out.= $post_string;
+
+  fwrite($fp, $out);
+  fclose($fp);
+}
+
+function allerads_client_page_build($page){
+  dpm($_SESSION);
+}
