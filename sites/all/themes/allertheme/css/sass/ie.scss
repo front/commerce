@@ -29,7 +29,10 @@
      background-position: 0 0;
      border: 1px solid #944274;
      box-shadow: none;
-     @include PIE;
+
+     .ie6-8 & {
+       @include PIE;
+     }
    }
  }
 }
@@ -38,18 +41,22 @@
   .region-header & {
     form {
       .form-text {
-        @include PIE;
+        .ie6-8 & {
+          @include PIE;
+        }
       }
       .form-submit {
         filter: none;
-        box-shadow: 0 1px 3px #751a53;
-        @include PIE;
+        .ie6-8 & {
+          box-shadow: 0 1px 3px #751a53;
+          @include PIE;
+        }
       }
     }
   }
 }
 
-.view-nodequeue-1 {
+.ie6-8 .view-nodequeue-1 {
   .attachment {
     margin-top: -59px;
     margin-bottom: -97px;
@@ -63,7 +70,7 @@
   }
 }
 
-.block-menu {
+.ie6-8 .block-menu {
   .sidebar & .block-inner {
     @include PIE;
   }
@@ -72,8 +79,10 @@
 .article-type-produktvisning.view-mode-full {
   .field-field-product-image {
     img {
-      box-shadow: 0 0 10px #bcbcbc;
-      @include PIE;
+      .ie6-8 & {
+        box-shadow: 0 0 10px #bcbcbc;
+        @include PIE;
+      }
     }
     .gallery-slides {
       .colorbox,
@@ -85,10 +94,14 @@
   }
   .group-cart {
     background: #E9E9E9;
-    @include PIE;
+    .ie6-8 & {
+      @include PIE;
+    }
     .field-name-field-display-product {
       input.form-submit {
-        @include PIE;
+        .ie6-8 & {
+          @include PIE;
+        }
       }
     }
   }
@@ -111,8 +124,10 @@ input#edit-cancel,
 input#edit-back,
 .view-commerce-cart-form input#edit-submit {
   filter: none;
-  @include PIE;
   box-shadow: 0 1px 7px #999;
+  .ie6-8 & {
+    @include PIE;
+  }
 
   &:hover {
     filter: none;
@@ -122,10 +137,12 @@ input#edit-back,
 
 .page-checkout {
   fieldset {
+    box-shadow: none;
     padding: 10px;
     border: 5px solid #f0f0f0;
   }
-  #account-login-container {
+  #commerce-checkout-form-checkout #account-login-container {
+    box-shadow: none;
     padding: 10px 33px;
     border: 5px solid #f0f0f0;
   }

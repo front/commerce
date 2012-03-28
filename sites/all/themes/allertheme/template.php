@@ -6,7 +6,7 @@
  */
 function allertheme_preprocess_html(&$vars) {
   $ie_files = array(
-    'lt IE 9' => 'ie.css',
+    'IE' => 'ie.css',
   );
   load_subtheme_ie_styles($ie_files, 'allertheme');
 
