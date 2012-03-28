@@ -122,3 +122,10 @@ function allertheme_form_alter(&$form, &$form_state, $form_id) {
     }
   }
 }
+
+function allertheme_preprocess_commerce_line_item_summary(&$vars) {
+  if (empty($vars['links'])) {
+    $vars['quantity_raw'] = l($vars['quantity_raw'], 'cart');
+    $vars['quantity_label'] = l($vars['quantity_label'], 'cart');
+  }
+}

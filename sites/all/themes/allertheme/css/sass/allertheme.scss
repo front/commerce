@@ -701,7 +701,7 @@ body.ptf-gwf-bitter {
 .block-commerce-cart {
   .region-header & {
     @include grid(6);
-    margin: calc-em(-10px, 12px) 0 0;
+    margin: 5px 0 0;
     @include grid-prefix(1);
 
     .block-content {
@@ -710,9 +710,10 @@ body.ptf-gwf-bitter {
       @include box-shadow(inset 0 1px 4px rgba(0,0,0,0.18), 0 0 1px rgba(212,212,212,0.18));
       border: 1px solid rgba(212,212,212,0.18);
       @include border-radius(7px);
-      min-height: calc-em(60px, 12px);
+      float: right;
+
       margin: 5px 0 calc-em(19px, 12px);
-      padding: 3px 15px;
+      padding: 4px 4px 4px 16px;
 
       .view-header {
         div, ul {
@@ -726,7 +727,13 @@ body.ptf-gwf-bitter {
           display: block;
         }
         ul {
-          font-size: calc-em(13px, 18px);
+          display: none;
+        }
+        a {
+          color: #fff;
+          display: inline-block;
+          margin: 0 -3px;
+          padding: 0 3px;
         }
       }
       .cart-contents,
@@ -734,7 +741,13 @@ body.ptf-gwf-bitter {
         color: #fff;
         font-family: $font-family-headings;
         font-size: calc-em(18px, 12px);
-        padding: 0;
+        padding: 0 12px 0 30px;
+
+        background: none;
+        background: transparent url('../images/icon_shoppingcart.png') no-repeat center left;
+
+        @include box-shadow(none);
+
         .views-field-quantity {
           margin-right: 0.5em;
         }
@@ -742,10 +755,7 @@ body.ptf-gwf-bitter {
       .cart-empty-block {
         font-size: 1em;
         display: block;
-        margin-top: calc-em(21px, 12px);
-      }
-      .cart-contents {
-        background: transparent;
+        padding: 5px 12px 4px 30px;
       }
       .view-content {
         display: none;
