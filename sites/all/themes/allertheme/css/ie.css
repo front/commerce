@@ -14,6 +14,11 @@
 /* 960.gs configuration */
 /* Fonts */
 /* Helpers */
+.ie6-7 #header-wrapper header {
+  padding-bottom: 25px;
+  overflow: hidden;
+}
+
 #menu-bar {
   background: #e1e1e1 url("../images/bg_menubar-ie.png") repeat-x 0 0;
 }
@@ -30,6 +35,10 @@
   background-position: 0 0;
   border: 1px solid #944274;
   box-shadow: none;
+}
+.region-header .block-commerce-cart .block-content .cart-contents,
+.region-header .block-commerce-cart .block-content .cart-empty-block {
+  zoom: 1;
 }
 .ie6-8 .region-header .block-commerce-cart .block-content {
   position: relative;
@@ -51,6 +60,15 @@
   zoom: 1;
   behavior: url("../js/PIE.php");
 }
+.ie6-7 .region-header .block-search-api-page form .form-submit {
+  padding-left: 4px;
+  padding-right: 4px;
+}
+.ie6-7 .region-header .block-search-api-page form {
+  vertical-align: top;
+  padding-left: 4px;
+  padding-right: 4px;
+}
 
 .ie6-8 .view-nodequeue-1 .attachment {
   margin-top: -59px;
@@ -59,10 +77,18 @@
   overflow: hidden;
 }
 .ie6-8 .view-nodequeue-1 .attachment .views-row {
-  box-shadow: 0 0 7px rgba(0, 0, 0, 0.75);
+  box-shadow: 0 0 7px rgba(0, 0, 0, 0);
   position: relative;
   zoom: 1;
   behavior: url("../js/PIE.php");
+}
+
+.ie6-7 .view-nodequeue-1 .attachment {
+  padding-left: 32px;
+  overflow: hidden;
+}
+.ie6-7 .view-nodequeue-1 .attachment .views-row {
+  float: left;
 }
 
 .sidebar .ie6-8 .block-menu .block-inner {
@@ -96,15 +122,18 @@
   behavior: url("../js/PIE.php");
 }
 
-form.commerce-add-to-cart input.form-submit,
-.add-to-cart #edit-actions input.form-submit {
+form.commerce-add-to-cart input.form-submit, .add-to-cart #edit-actions input.form-submit {
   filter: none;
   box-shadow: 0 1px 7px #999;
+  overflow: visible;
 }
-form.commerce-add-to-cart input.form-submit:hover,
-.add-to-cart #edit-actions input.form-submit:hover {
+form.commerce-add-to-cart input.form-submit:hover, .add-to-cart #edit-actions input.form-submit:hover {
   filter: none;
   box-shadow: 0 1px 5px #8C2764;
+}
+
+.form-actions {
+  zoom: 1;
 }
 
 input#edit-checkout,
@@ -115,10 +144,10 @@ input#edit-back,
   filter: none;
   box-shadow: 0 1px 7px #999;
 }
-.ie6-8 input#edit-checkout, .ie6-8
-input#edit-continue, .ie6-8
-input#edit-cancel, .ie6-8
-input#edit-back, .ie6-8
+.ie8 input#edit-checkout, .ie8
+input#edit-continue, .ie8
+input#edit-cancel, .ie8
+input#edit-back, .ie8
 .view-commerce-cart-form input#edit-submit {
   position: relative;
   zoom: 1;
@@ -151,4 +180,14 @@ input#edit-back:hover,
   color: #313131;
   margin-left: 10px;
   white-space: nowrap;
+}
+.ie6-7 .page-checkout .form-item-customer-profile-billing-commerce-customer-address-und-0-last-name,
+.ie6-7 .page-checkout .form-item-customer-profile-billing-commerce-customer-address-und-0-locality,
+.ie6-7 .page-checkout .form-item-customer-profile-shipping-commerce-customer-address-und-0-last-name,
+.ie6-7 .page-checkout .form-item-customer-profile-shipping-commerce-customer-address-und-0-locality {
+  margin-top: -0.5em;
+}
+
+.ie6-7 .pager li.pager-current {
+  display: inline;
 }

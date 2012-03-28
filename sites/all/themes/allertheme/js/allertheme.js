@@ -32,7 +32,7 @@
             });
 
             // Placeholder support
-            $('input.form-text, textarea').placeholder();
+            $('input[placeholder], textarea[placeholder]').placeholder();
         }
     };
 
