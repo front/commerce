@@ -994,11 +994,15 @@ div.checkout-completion-message {
   #account-login-container {
     margin: 0 2px 15px;
     padding: 10px 35px;
-    @include box-shadow(0 0 4px 4px rgba(0, 0, 0, 0.1) inset);
+    @include box-shadow(0 0 4px 4px rgba(0,0,0,0.1) inset);
   }
   .redirect-list {
     display: none;
   }
+}
+
+.page-checkout #messages-help-wrapper {
+  display: none;
 }
 
 /* Search */
