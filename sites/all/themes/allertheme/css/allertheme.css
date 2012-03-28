@@ -34,6 +34,11 @@ body.ptf-gwf-bitter #nav-wrapper {
   margin-right: 5px;
 }
 
+div#tasks {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
 /* Base */
 #top-bar-wrapper {
   border-bottom: 1px solid #d1a9c1;
@@ -1086,6 +1091,14 @@ div.checkout-completion-message {
   vertical-align: middle;
   padding-top: 0.2em;
 }
+#commerce-checkout-form-checkout #account-login-container {
+  margin: 0 2px 15px;
+  padding: 10px 35px;
+  -moz-box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.1) inset;
+  -webkit-box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.1) inset;
+  -o-box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.1) inset;
+  box-shadow: 0 0 4px 4px rgba(0, 0, 0, 0.1) inset;
+}
 #commerce-checkout-form-checkout .redirect-list {
   display: none;
 }
@@ -1235,6 +1248,23 @@ div.checkout-completion-message {
 .page-user .pane-commerce-user-orders table .views-field-order-number {
   text-align: center;
   width: 12.5%;
+}
+.page-user form {
+  margin-bottom: 2em;
+}
+.page-user form#user-register-form {
+  width: 40%;
+}
+.page-user form .description {
+  font-size: 0.917em;
+  color: #888;
+  margin-top: 0.25em;
+  margin-right: 5%;
+}
+.page-user input.form-submit {
+  color: #fff;
+  font-size: 1em;
+  padding: 0.25em 1em 0.35em;
 }
 
 /* 404 Page */

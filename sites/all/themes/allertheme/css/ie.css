@@ -49,7 +49,8 @@
 }
 
 .view-nodequeue-1 .attachment {
-  margin-top: -66px;
+  margin-top: -59px;
+  margin-bottom: -97px;
   padding-top: 7px;
   overflow: hidden;
 }
@@ -97,8 +98,43 @@ form.commerce-add-to-cart input.form-submit,
 form.commerce-add-to-cart input.form-submit:hover,
 .add-to-cart #edit-actions input.form-submit:hover {
   filter: none;
-  -moz-box-shadow: 0 1px 5px #8c2764;
-  -webkit-box-shadow: 0 1px 5px #8c2764;
-  -o-box-shadow: 0 1px 5px #8c2764;
-  box-shadow: 0 1px 5px #8c2764;
+  box-shadow: 0 1px 5px #8C2764;
+}
+
+input#edit-checkout,
+input#edit-continue,
+input#edit-cancel,
+input#edit-back,
+.view-commerce-cart-form input#edit-submit {
+  filter: none;
+  position: relative;
+  zoom: 1;
+  behavior: url("../js/PIE.php");
+  box-shadow: 0 1px 7px #999;
+}
+input#edit-checkout:hover,
+input#edit-continue:hover,
+input#edit-cancel:hover,
+input#edit-back:hover,
+.view-commerce-cart-form input#edit-submit:hover {
+  filter: none;
+  box-shadow: 0 1px 5px #8C2764;
+}
+
+.page-checkout fieldset {
+  padding: 10px;
+  border: 5px solid #f0f0f0;
+}
+.page-checkout #account-login-container {
+  padding: 10px 33px;
+  border: 5px solid #f0f0f0;
+}
+.page-checkout legend {
+  width: 0;
+  height: 0;
+}
+.page-checkout legend .fieldset-legend {
+  color: #313131;
+  margin-left: 10px;
+  white-space: nowrap;
 }

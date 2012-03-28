@@ -51,7 +51,8 @@
 
 .view-nodequeue-1 {
   .attachment {
-    margin-top: -66px;
+    margin-top: -59px;
+    margin-bottom: -97px;
     padding-top: 7px;
     overflow: hidden;
 
@@ -100,6 +101,42 @@ form.commerce-add-to-cart input.form-submit,
 
   &:hover {
     filter: none;
-    @include box-shadow(0 1px 5px #8C2764);
+    box-shadow: 0 1px 5px #8C2764;
+  }
+}
+
+input#edit-checkout,
+input#edit-continue,
+input#edit-cancel,
+input#edit-back,
+.view-commerce-cart-form input#edit-submit {
+  filter: none;
+  @include PIE;
+  box-shadow: 0 1px 7px #999;
+
+  &:hover {
+    filter: none;
+    box-shadow: 0 1px 5px #8C2764;
+  }
+}
+
+.page-checkout {
+  fieldset {
+    padding: 10px;
+    border: 5px solid #f0f0f0;
+  }
+  #account-login-container {
+    padding: 10px 33px;
+    border: 5px solid #f0f0f0;
+  }
+  legend {
+    width: 0;
+    height: 0;
+
+    .fieldset-legend {
+      color: #313131;
+      margin-left: 10px;
+      white-space: nowrap;
+    }
   }
 }

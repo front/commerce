@@ -28,6 +28,10 @@ body.ptf-gwf-bitter {
   margin-right: 5px;
 }
 
+div#tasks {
+  margin-left: 5px;
+  margin-right: 5px;
+}
 
 /* Base */
 #top-bar-wrapper {
@@ -982,6 +986,11 @@ div.checkout-completion-message {
       padding-top: 0.2em;
     }
   }
+  #account-login-container {
+    margin: 0 2px 15px;
+    padding: 10px 35px;
+    @include box-shadow(0 0 4px 4px rgba(0, 0, 0, 0.1) inset);
+  }
   .redirect-list {
     display: none;
   }
@@ -1112,6 +1121,24 @@ div.checkout-completion-message {
       }
     }
   }
+  form {
+    margin-bottom: 2em;
+
+    &#user-register-form {
+      width: 40%;
+    }
+    .description {
+      font-size: calc-em(11px, 12px);
+      color: #888;
+      margin-top: 0.25em;
+      margin-right: 5%;
+    }
+  }
+  input.form-submit {
+    color: #fff;
+    font-size: 1em;
+    padding: 0.25em 1em 0.35em;
+  }
 }
 
 /* 404 Page */
@@ -1131,7 +1158,6 @@ div.checkout-completion-message {
 }
 
 /* Pager */
-
 .item-list .pager {
   margin-left: 0;
   margin-bottom: 15px;
