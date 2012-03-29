@@ -6,48 +6,58 @@
  *  
  */
 define('ALLERADS_PINGBACK_MAX', '20');
-define('ALLERADS_PINGBACK_URL', 'http://allerads.vps4.front.no/pingback');
+define('ALLERADS_PINGBACK_URL', 'http://allerads.vps4.front.no/advertising/ping');
 
 /**
  * Implements hook_boot().
  * 
  * Look for adtrack IDs, even for cached pages. 
+ * We want this code to collect, even when page is being cached.
  */
 function allerads_client_boot() {
-  // Save a new path, but only if we're not being flooded
-  if ($_SESSION['allerads']['active']) {
-    // If history's gotten too long
-    if (count($_SESSION['allerads']['visits']) >= ALLERADS_PINGBACK_MAX) {
-      $_SESSION['allerads']['visits'][($_SESSION['q'])] = $_SESSION['q'];
+  // To keep out all bogus imagelinks, let's check for sites/
+  if ((strpos($_GET['q'], 'sites/') === false)) {
+    // Save a new path, but only if we're not being flooded
+    if ($_SESSION['allerads']['active']) {
+      $_SESSION['allerads']['visits'][($_GET['q'])] = $_GET['q'];
+      // If history's gotten too long
+      if (count($_SESSION['allerads']['visits']) >= ALLERADS_PINGBACK_MAX) {
+        // Call this in as a false & return paths.
+        allerads_client_pingback(false, array(), true);
+        drupal_set_message("Called in!");
+      }
+    }
+    // Initiate. 
+    if ($_GET['adid']) {
+      // If we have a session
+      if (!$_SESSION['allerads']) {
+        $_SESSION['allerads'] = array(
+          'active' => TRUE,
+          'code' => $_GET['adid'],
+          'visits' => array(
+            $_SESSION['q'] => $_SESSION['q'],
+          ),
+        );
+      }
+      else {
+        // If have a previous session, we'd want to finish up that first.
+        allerads_client_pingback(false, array(), true);
+        // Now, to pick up the new code, let's call this again.
+        // @todo move this first.
+        allerads_client_boot();
+      }
     }
   }
-  // Initiate.
-  if ($_GET['adid']) {
-    // If we have a session
-    if (!$_SESSION['allerads']) {
-      $_SESSION['allerads'] = array(
-        'active' => TRUE,
-        'code' => $_GET['adid'],
-        'visits' => array(
-          $_SESSION['q'] => $_SESSION['q'],
-        ),
-      );
-    }
-    else {
-      // If have a previous session
-    }
-  }
-  // Pingback URLs.
 }
 
 /**
  * Pingback command.
- * Pings whatever we've got, then deletes. 
+ * Pings whatever we've got, then eventually removes. 
  */
 function allerads_client_pingback($success = false, $skus = array(), $unset = true) {
   if ($_SESSION['allerads']) {
     $params = array(
-      'links' => $_SESSION['allerads']['links'],
+      'visits' => $_SESSION['allerads']['visits'],
       'code' => $_SESSION['allerads']['code'],
     );
     if (count($skus) > 0) {
@@ -67,23 +77,20 @@ function allerads_client_pingback($success = false, $skus = array(), $unset = tr
  * We'll now ping home, so we know what happened.
  */
 function allerads_client_commerce_checkout_complete($order) {
-  if (module_exists('commerce')) {
-    if ($_SESSION['allerads']['active']) {
-      // Let's just send a simple OK to home base, for now.
-      // @todo this should be done asynchronous, so we don't have to wait.
-      drupal_set_message("We're now talking to allerbok. Pingback with cool tuff.");
-      // Since we now have a success, remove allerads from session.
-      // Gether SKUs
-      $product_ids = array();
+  if ($_SESSION['allerads']['active']) {
+    // Let's just send a simple OK to home base, for now.
+    watchdog('allerads',"Tracking called in during checkout");
+    // Since we now have a success, remove allerads from session.
+    // Gether SKUs
+    $product_ids = array();
       foreach (entity_metadata_wrapper('commerce_order', $order)->commerce_line_items as $delta => $line_item_wrapper) {
         if (in_array($line_item_wrapper->type->value(), commerce_product_line_item_types())) {
           $product_ids[] = $line_item_wrapper->commerce_product->raw();
         }
       }
       drupal_set_message(implode(" ", $product_ids));
-      // Pingback the mothership.
-      allerads_client_pingback(true,$product_ids,true);
-    }
+    // Pingback the mothership.
+    allerads_client_pingback(true, $product_ids, true);
   }
 }
 
@@ -116,8 +123,4 @@ function curl_post_async($url, $params) {
 
   fwrite($fp, $out);
   fclose($fp);
-}
-
-function allerads_client_page_build($page){
-  dpm($_SESSION);
 }
