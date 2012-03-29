@@ -6,6 +6,11 @@
 
 @import "base";
 
+.ie6-7 #header-wrapper header {
+  padding-bottom: 25px;
+  overflow: hidden;
+}
+
 #menu-bar {
   background: #e1e1e1 url('../images/bg_menubar-ie.png') repeat-x 0 0;
 
@@ -29,7 +34,14 @@
      background-position: 0 0;
      border: 1px solid #944274;
      box-shadow: none;
-     @include PIE;
+
+     .cart-contents,
+     .cart-empty-block {
+       zoom: 1;
+     }
+     .ie6-8 & {
+       @include PIE;
+     }
    }
  }
 }
@@ -38,20 +50,34 @@
   .region-header & {
     form {
       .form-text {
-        @include PIE;
+        .ie6-8 & {
+          @include PIE;
+        }
       }
       .form-submit {
         filter: none;
-        box-shadow: 0 1px 3px #751a53;
-        @include PIE;
+        .ie6-8 & {
+          box-shadow: 0 1px 3px #751a53;
+          @include PIE;
+        }
+        .ie6-7 & {
+          padding-left: 4px;
+          padding-right: 4px;
+        }
+      }
+      .ie6-7 & {
+        vertical-align: top;
+        padding-left: 4px;
+        padding-right: 4px;
       }
     }
   }
 }
 
-.view-nodequeue-1 {
+.ie6-8 .view-nodequeue-1 {
   .attachment {
-    margin-top: -66px;
+    margin-top: -59px;
+    margin-bottom: -97px;
     padding-top: 7px;
     overflow: hidden;
 
@@ -62,7 +88,18 @@
   }
 }
 
-.block-menu {
+.ie6-7 .view-nodequeue-1 {
+  .attachment {
+    padding-left: 32px;
+    overflow: hidden;
+
+    .views-row {
+      float: left;
+    }
+  }
+}
+
+.ie6-8 .block-menu {
   .sidebar & .block-inner {
     @include PIE;
   }
@@ -71,8 +108,10 @@
 .article-type-produktvisning.view-mode-full {
   .field-field-product-image {
     img {
-      box-shadow: 0 0 10px #bcbcbc;
-      @include PIE;
+      .ie6-8 & {
+        box-shadow: 0 0 10px #bcbcbc;
+        @include PIE;
+      }
     }
     .gallery-slides {
       .colorbox,
@@ -84,22 +123,82 @@
   }
   .group-cart {
     background: #E9E9E9;
-    @include PIE;
+    .ie6-8 & {
+      @include PIE;
+    }
     .field-name-field-display-product {
       input.form-submit {
-        @include PIE;
+        .ie6-8 & {
+          @include PIE;
+        }
       }
     }
   }
 }
 
-form.commerce-add-to-cart input.form-submit,
-.add-to-cart #edit-actions input.form-submit {
+form.commerce-add-to-cart input.form-submit, .add-to-cart #edit-actions input.form-submit {
   filter: none;
   box-shadow: 0 1px 7px #999;
+  overflow: visible;
 
   &:hover {
     filter: none;
-    @include box-shadow(0 1px 5px #8C2764);
+    box-shadow: 0 1px 5px #8C2764;
   }
+}
+
+.form-actions {
+  zoom: 1;
+}
+
+input#edit-checkout,
+input#edit-continue,
+input#edit-cancel,
+input#edit-back,
+.view-commerce-cart-form input#edit-submit {
+  filter: none;
+  box-shadow: 0 1px 7px #999;
+  .ie8 & {
+    @include PIE;
+  }
+
+  &:hover {
+    filter: none;
+    box-shadow: 0 1px 5px #8C2764;
+  }
+}
+
+.page-checkout {
+  fieldset {
+    box-shadow: none;
+    padding: 10px;
+    border: 5px solid #f0f0f0;
+  }
+  #commerce-checkout-form-checkout #account-login-container {
+    box-shadow: none;
+    padding: 10px 33px;
+    border: 5px solid #f0f0f0;
+  }
+  legend {
+    width: 0;
+    height: 0;
+
+    .fieldset-legend {
+      color: #313131;
+      margin-left: 10px;
+      white-space: nowrap;
+    }
+  }
+  .ie6-7 & {
+    .form-item-customer-profile-billing-commerce-customer-address-und-0-last-name,
+    .form-item-customer-profile-billing-commerce-customer-address-und-0-locality,
+    .form-item-customer-profile-shipping-commerce-customer-address-und-0-last-name,
+    .form-item-customer-profile-shipping-commerce-customer-address-und-0-locality {
+      margin-top: -0.5em;
+    }
+  }
+}
+
+.ie6-7 .pager li.pager-current {
+  display: inline;
 }
