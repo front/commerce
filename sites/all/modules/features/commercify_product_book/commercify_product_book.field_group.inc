@@ -263,7 +263,7 @@ function commercify_product_book_field_group_info() {
       0 => 'field_product_description',
       1 => 'field_product_author',
       2 => 'field_product_category_main',
-      3 => 'field_product_price_before',
+      3 => 'field_product_ebook_link',
     ),
     'format_type' => 'div',
     'format_settings' => array(

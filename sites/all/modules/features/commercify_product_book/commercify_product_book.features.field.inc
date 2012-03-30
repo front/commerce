@@ -1387,7 +1387,7 @@ function commercify_product_book_field_default_fields() {
           'track_list' => 0,
         ),
         'type' => 'options_select',
-        'weight' => '8',
+        'weight' => '7',
       ),
     ),
   );
@@ -1466,6 +1466,98 @@ function commercify_product_book_field_default_fields() {
         ),
         'type' => 'text_textarea',
         'weight' => '5',
+      ),
+    ),
+  );
+
+  // Exported field: 'node-produktvisning-field_product_ebook_link'
+  $fields['node-produktvisning-field_product_ebook_link'] = array(
+    'field_config' => array(
+      'active' => '1',
+      'cardinality' => '1',
+      'deleted' => '0',
+      'entity_types' => array(),
+      'field_name' => 'field_product_ebook_link',
+      'field_permissions' => array(
+        'type' => '0',
+      ),
+      'foreign keys' => array(),
+      'indexes' => array(),
+      'module' => 'link',
+      'settings' => array(
+        'attributes' => array(
+          'class' => '',
+          'rel' => '',
+          'target' => 'default',
+        ),
+        'display' => array(
+          'url_cutoff' => 80,
+        ),
+        'enable_tokens' => 1,
+        'title' => 'optional',
+        'title_maxlength' => 128,
+        'title_value' => '',
+        'url' => 0,
+      ),
+      'translatable' => '0',
+      'type' => 'link_field',
+    ),
+    'field_instance' => array(
+      'bundle' => 'produktvisning',
+      'default_value' => NULL,
+      'deleted' => '0',
+      'description' => 'Lenke til den eksterne ebok-tjenesten.',
+      'display' => array(
+        'default' => array(
+          'label' => 'above',
+          'module' => 'link',
+          'settings' => array(),
+          'type' => 'link_default',
+          'weight' => 33,
+        ),
+        'search_result' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+        'teaser' => array(
+          'label' => 'above',
+          'settings' => array(),
+          'type' => 'hidden',
+          'weight' => 0,
+        ),
+      ),
+      'ds_extras_field_template' => '',
+      'entity_type' => 'node',
+      'field_name' => 'field_product_ebook_link',
+      'label' => 'lenke til e-bok',
+      'required' => 0,
+      'settings' => array(
+        'attributes' => array(
+          'class' => '',
+          'configurable_title' => 0,
+          'rel' => '',
+          'target' => 'default',
+          'title' => '',
+        ),
+        'display' => array(
+          'url_cutoff' => '80',
+        ),
+        'enable_tokens' => 1,
+        'title' => 'none',
+        'title_maxlength' => '128',
+        'title_value' => '',
+        'url' => 0,
+        'user_register_form' => FALSE,
+        'validate_url' => 1,
+      ),
+      'widget' => array(
+        'active' => 0,
+        'module' => 'link',
+        'settings' => array(),
+        'type' => 'link_field',
+        'weight' => '8',
       ),
     ),
   );
@@ -1555,6 +1647,7 @@ function commercify_product_book_field_default_fields() {
   t('ISBN-nummer for denne publikasjonen.');
   t('Lagervarsling');
   t('Lavt lagernivå');
+  t('Lenke til den eksterne ebok-tjenesten.');
   t('Leverandørpris');
   t('Price');
   t('Prisen som leverandøren tar for dette produktet.');
@@ -1570,6 +1663,7 @@ function commercify_product_book_field_default_fields() {
   t('Veiledende pris');
   t('Veiledende pris for produktet.');
   t('Vekt');
+  t('lenke til e-bok');
   t('Årstall');
   t('Årstall for utgivelsen.');
 

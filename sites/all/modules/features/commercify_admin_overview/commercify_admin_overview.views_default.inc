@@ -766,7 +766,7 @@ function commercify_admin_overview_views_default_views() {
 
   /* Display: Defaults */
   $handler = $view->new_display('default', 'Defaults', 'default');
-  $handler->display->display_options['title'] = 'Ordre for siste 7 dager';
+  $handler->display->display_options['title'] = 'Custom ordreeksport';
   $handler->display->display_options['use_more_always'] = TRUE;
   $handler->display->display_options['use_more_text'] = 'Ordreliste';
   $handler->display->display_options['access']['type'] = 'role';
@@ -924,38 +924,6 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['created']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['created']['date_format'] = 'custom';
   $handler->display->display_options['fields']['created']['custom_date_format'] = 'd-m-h:i';
-  /* Felt: Commerce Customer profile: Address */
-  $handler->display->display_options['fields']['commerce_customer_address']['id'] = 'commerce_customer_address';
-  $handler->display->display_options['fields']['commerce_customer_address']['table'] = 'field_data_commerce_customer_address';
-  $handler->display->display_options['fields']['commerce_customer_address']['field'] = 'commerce_customer_address';
-  $handler->display->display_options['fields']['commerce_customer_address']['relationship'] = 'commerce_customer_billing_profile_id';
-  $handler->display->display_options['fields']['commerce_customer_address']['label'] = 'Navn';
-  $handler->display->display_options['fields']['commerce_customer_address']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['commerce_customer_address']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['commerce_customer_address']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['commerce_customer_address']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['commerce_customer_address']['alter']['replace_spaces'] = 0;
-  $handler->display->display_options['fields']['commerce_customer_address']['alter']['trim_whitespace'] = 0;
-  $handler->display->display_options['fields']['commerce_customer_address']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['commerce_customer_address']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['commerce_customer_address']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['commerce_customer_address']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['commerce_customer_address']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['commerce_customer_address']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['commerce_customer_address']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['commerce_customer_address']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['commerce_customer_address']['empty'] = '-';
-  $handler->display->display_options['fields']['commerce_customer_address']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['commerce_customer_address']['empty_zero'] = 0;
-  $handler->display->display_options['fields']['commerce_customer_address']['hide_alter_empty'] = 0;
-  $handler->display->display_options['fields']['commerce_customer_address']['click_sort_column'] = 'country';
-  $handler->display->display_options['fields']['commerce_customer_address']['settings'] = array(
-    'use_widget_handlers' => 0,
-    'format_handlers' => array(
-      'name-oneline' => 'name-oneline',
-    ),
-  );
-  $handler->display->display_options['fields']['commerce_customer_address']['field_api_classes'] = 0;
   /* Felt: Bruker: Navn */
   $handler->display->display_options['fields']['name']['id'] = 'name';
   $handler->display->display_options['fields']['name']['table'] = 'users';
@@ -1048,6 +1016,194 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['created_1']['empty_zero'] = 0;
   $handler->display->display_options['fields']['created_1']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['created_1']['date_format'] = 'long';
+  /* Felt: Commerce Customer profile: Address */
+  $handler->display->display_options['fields']['commerce_customer_address_1']['id'] = 'commerce_customer_address_1';
+  $handler->display->display_options['fields']['commerce_customer_address_1']['table'] = 'field_data_commerce_customer_address';
+  $handler->display->display_options['fields']['commerce_customer_address_1']['field'] = 'commerce_customer_address';
+  $handler->display->display_options['fields']['commerce_customer_address_1']['relationship'] = 'commerce_customer_billing_profile_id';
+  $handler->display->display_options['fields']['commerce_customer_address_1']['label'] = 'Fornavn';
+  $handler->display->display_options['fields']['commerce_customer_address_1']['alter']['alter_text'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['alter']['text'] = '[commerce_customer_address_1-first_name]';
+  $handler->display->display_options['fields']['commerce_customer_address_1']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_1']['click_sort_column'] = 'country';
+  $handler->display->display_options['fields']['commerce_customer_address_1']['settings'] = array(
+    'use_widget_handlers' => 0,
+    'format_handlers' => array(
+      'address' => 'address',
+    ),
+  );
+  $handler->display->display_options['fields']['commerce_customer_address_1']['field_api_classes'] = 0;
+  /* Felt: Commerce Customer profile: Address */
+  $handler->display->display_options['fields']['commerce_customer_address_2']['id'] = 'commerce_customer_address_2';
+  $handler->display->display_options['fields']['commerce_customer_address_2']['table'] = 'field_data_commerce_customer_address';
+  $handler->display->display_options['fields']['commerce_customer_address_2']['field'] = 'commerce_customer_address';
+  $handler->display->display_options['fields']['commerce_customer_address_2']['relationship'] = 'commerce_customer_billing_profile_id';
+  $handler->display->display_options['fields']['commerce_customer_address_2']['label'] = 'Etternavn';
+  $handler->display->display_options['fields']['commerce_customer_address_2']['alter']['alter_text'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['alter']['text'] = '[commerce_customer_address_2-last_name]';
+  $handler->display->display_options['fields']['commerce_customer_address_2']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_2']['click_sort_column'] = 'country';
+  $handler->display->display_options['fields']['commerce_customer_address_2']['settings'] = array(
+    'use_widget_handlers' => 1,
+    'format_handlers' => array(
+      'address' => 'address',
+    ),
+  );
+  $handler->display->display_options['fields']['commerce_customer_address_2']['field_api_classes'] = 0;
+  /* Felt: Commerce Customer profile: Address */
+  $handler->display->display_options['fields']['commerce_customer_address_3']['id'] = 'commerce_customer_address_3';
+  $handler->display->display_options['fields']['commerce_customer_address_3']['table'] = 'field_data_commerce_customer_address';
+  $handler->display->display_options['fields']['commerce_customer_address_3']['field'] = 'commerce_customer_address';
+  $handler->display->display_options['fields']['commerce_customer_address_3']['relationship'] = 'commerce_customer_billing_profile_id';
+  $handler->display->display_options['fields']['commerce_customer_address_3']['label'] = 'Adresse';
+  $handler->display->display_options['fields']['commerce_customer_address_3']['alter']['alter_text'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['alter']['text'] = '[commerce_customer_address_3-thoroughfare]';
+  $handler->display->display_options['fields']['commerce_customer_address_3']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_3']['click_sort_column'] = 'country';
+  $handler->display->display_options['fields']['commerce_customer_address_3']['settings'] = array(
+    'use_widget_handlers' => 1,
+    'format_handlers' => array(
+      'address' => 'address',
+    ),
+  );
+  $handler->display->display_options['fields']['commerce_customer_address_3']['field_api_classes'] = 0;
+  /* Felt: Commerce Customer profile: Address */
+  $handler->display->display_options['fields']['commerce_customer_address_4']['id'] = 'commerce_customer_address_4';
+  $handler->display->display_options['fields']['commerce_customer_address_4']['table'] = 'field_data_commerce_customer_address';
+  $handler->display->display_options['fields']['commerce_customer_address_4']['field'] = 'commerce_customer_address';
+  $handler->display->display_options['fields']['commerce_customer_address_4']['relationship'] = 'commerce_customer_billing_profile_id';
+  $handler->display->display_options['fields']['commerce_customer_address_4']['label'] = 'Postnr';
+  $handler->display->display_options['fields']['commerce_customer_address_4']['alter']['alter_text'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['alter']['text'] = '[commerce_customer_address_4-postal_code]';
+  $handler->display->display_options['fields']['commerce_customer_address_4']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_4']['click_sort_column'] = 'country';
+  $handler->display->display_options['fields']['commerce_customer_address_4']['settings'] = array(
+    'use_widget_handlers' => 1,
+    'format_handlers' => array(
+      'address' => 'address',
+    ),
+  );
+  $handler->display->display_options['fields']['commerce_customer_address_4']['field_api_classes'] = 0;
+  /* Felt: Commerce Customer profile: Address */
+  $handler->display->display_options['fields']['commerce_customer_address_5']['id'] = 'commerce_customer_address_5';
+  $handler->display->display_options['fields']['commerce_customer_address_5']['table'] = 'field_data_commerce_customer_address';
+  $handler->display->display_options['fields']['commerce_customer_address_5']['field'] = 'commerce_customer_address';
+  $handler->display->display_options['fields']['commerce_customer_address_5']['relationship'] = 'commerce_customer_billing_profile_id';
+  $handler->display->display_options['fields']['commerce_customer_address_5']['label'] = 'Sted';
+  $handler->display->display_options['fields']['commerce_customer_address_5']['alter']['alter_text'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['alter']['text'] = '[commerce_customer_address_5-locality]';
+  $handler->display->display_options['fields']['commerce_customer_address_5']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['commerce_customer_address_5']['click_sort_column'] = 'country';
+  $handler->display->display_options['fields']['commerce_customer_address_5']['settings'] = array(
+    'use_widget_handlers' => 1,
+    'format_handlers' => array(
+      'address' => 'address',
+    ),
+  );
+  $handler->display->display_options['fields']['commerce_customer_address_5']['field_api_classes'] = 0;
+  /* Felt: Commerce Order: Order total */
+  $handler->display->display_options['fields']['commerce_order_total_1']['id'] = 'commerce_order_total_1';
+  $handler->display->display_options['fields']['commerce_order_total_1']['table'] = 'field_data_commerce_order_total';
+  $handler->display->display_options['fields']['commerce_order_total_1']['field'] = 'commerce_order_total';
+  $handler->display->display_options['fields']['commerce_order_total_1']['label'] = 'Totalsum';
+  $handler->display->display_options['fields']['commerce_order_total_1']['alter']['alter_text'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total_1']['alter']['make_link'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total_1']['alter']['absolute'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total_1']['alter']['external'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total_1']['alter']['replace_spaces'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total_1']['alter']['trim_whitespace'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total_1']['alter']['nl2br'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total_1']['alter']['word_boundary'] = 1;
+  $handler->display->display_options['fields']['commerce_order_total_1']['alter']['ellipsis'] = 1;
+  $handler->display->display_options['fields']['commerce_order_total_1']['alter']['strip_tags'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total_1']['alter']['trim'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total_1']['alter']['html'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total_1']['element_label_colon'] = 1;
+  $handler->display->display_options['fields']['commerce_order_total_1']['element_default_classes'] = 1;
+  $handler->display->display_options['fields']['commerce_order_total_1']['hide_empty'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total_1']['empty_zero'] = 0;
+  $handler->display->display_options['fields']['commerce_order_total_1']['hide_alter_empty'] = 1;
+  $handler->display->display_options['fields']['commerce_order_total_1']['click_sort_column'] = 'amount';
+  $handler->display->display_options['fields']['commerce_order_total_1']['type'] = 'commerce_price_formatted_amount';
+  $handler->display->display_options['fields']['commerce_order_total_1']['settings'] = array(
+    'calculation' => FALSE,
+  );
+  $handler->display->display_options['fields']['commerce_order_total_1']['field_api_classes'] = 0;
   /* Sorteringskriterium: Commerce Order: Dato opprettet */
   $handler->display->display_options['sorts']['created']['id'] = 'created';
   $handler->display->display_options['sorts']['created']['table'] = 'commerce_order';
@@ -1329,9 +1485,61 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['created']['expose']['multiple'] = FALSE;
   $handler->display->display_options['path'] = 'admin/commerce/overview/orders/export/csv';
   $handler->display->display_options['sitename_title'] = 0;
+
+  /* Display: Custom export */
+  $handler = $view->new_display('views_data_export', 'Custom export', 'views_data_export_4');
+  $handler->display->display_options['defaults']['title'] = FALSE;
+  $handler->display->display_options['title'] = 'Custom ordreeksport';
+  $handler->display->display_options['defaults']['query'] = FALSE;
+  $handler->display->display_options['query']['type'] = 'views_query';
+  $handler->display->display_options['query']['options']['distinct'] = TRUE;
+  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
+  $handler->display->display_options['pager']['type'] = 'some';
+  $handler->display->display_options['style_plugin'] = 'views_data_export_csv';
+  $handler->display->display_options['style_options']['provide_file'] = 0;
+  $handler->display->display_options['style_options']['parent_sort'] = 0;
+  $handler->display->display_options['style_options']['quote'] = 1;
+  $handler->display->display_options['style_options']['trim'] = 0;
+  $handler->display->display_options['style_options']['replace_newlines'] = 0;
+  $handler->display->display_options['style_options']['header'] = 1;
+  $handler->display->display_options['defaults']['relationships'] = FALSE;
+  /* Relasjon: Commerce Order: Eier */
+  $handler->display->display_options['relationships']['uid']['id'] = 'uid';
+  $handler->display->display_options['relationships']['uid']['table'] = 'commerce_order';
+  $handler->display->display_options['relationships']['uid']['field'] = 'uid';
+  $handler->display->display_options['relationships']['uid']['required'] = 0;
+  /* Relasjon: Commerce Order: Referenced customer profile */
+  $handler->display->display_options['relationships']['commerce_customer_billing_profile_id']['id'] = 'commerce_customer_billing_profile_id';
+  $handler->display->display_options['relationships']['commerce_customer_billing_profile_id']['table'] = 'field_data_commerce_customer_billing';
+  $handler->display->display_options['relationships']['commerce_customer_billing_profile_id']['field'] = 'commerce_customer_billing_profile_id';
+  $handler->display->display_options['relationships']['commerce_customer_billing_profile_id']['required'] = 0;
+  $handler->display->display_options['defaults']['arguments'] = FALSE;
+  /* Contextual filter: Commerce Order: Order ID */
+  $handler->display->display_options['arguments']['order_id']['id'] = 'order_id';
+  $handler->display->display_options['arguments']['order_id']['table'] = 'commerce_order';
+  $handler->display->display_options['arguments']['order_id']['field'] = 'order_id';
+  $handler->display->display_options['arguments']['order_id']['default_action'] = 'not found';
+  $handler->display->display_options['arguments']['order_id']['default_argument_type'] = 'fixed';
+  $handler->display->display_options['arguments']['order_id']['default_argument_skip_url'] = 0;
+  $handler->display->display_options['arguments']['order_id']['summary']['number_of_records'] = '0';
+  $handler->display->display_options['arguments']['order_id']['summary']['format'] = 'default_summary';
+  $handler->display->display_options['arguments']['order_id']['summary_options']['items_per_page'] = '25';
+  $handler->display->display_options['arguments']['order_id']['break_phrase'] = 1;
+  $handler->display->display_options['arguments']['order_id']['not'] = 0;
+  $handler->display->display_options['defaults']['filters'] = FALSE;
+  /* Filter criterion: Commerce Order: Order state */
+  $handler->display->display_options['filters']['state']['id'] = 'state';
+  $handler->display->display_options['filters']['state']['table'] = 'commerce_order';
+  $handler->display->display_options['filters']['state']['field'] = 'state';
+  $handler->display->display_options['filters']['state']['value'] = array(
+    'pending' => 'pending',
+    'completed' => 'completed',
+  );
+  $handler->display->display_options['path'] = 'admin/commerce/overview/orders/export/oid/%';
+  $handler->display->display_options['sitename_title'] = 0;
   $translatables['c_dashboard_order_exports'] = array(
     t('Defaults'),
-    t('Ordre for siste 7 dager'),
+    t('Custom ordreeksport'),
     t('Ordreliste'),
     t('Eksporter'),
     t('Nullstill'),
@@ -1347,16 +1555,26 @@ function commercify_admin_overview_views_default_views() {
     t('Produkt'),
     t('Ordrenummer'),
     t('Opprettet'),
-    t('Navn'),
-    t('-'),
     t('Bruker'),
     t('Totalt'),
     t('Ordrestatus'),
     t('Dato opprettet'),
+    t('Fornavn'),
+    t('[commerce_customer_address_1-first_name]'),
+    t('Etternavn'),
+    t('[commerce_customer_address_2-last_name]'),
+    t('Adresse'),
+    t('[commerce_customer_address_3-thoroughfare]'),
+    t('Postnr'),
+    t('[commerce_customer_address_4-postal_code]'),
+    t('Sted'),
+    t('[commerce_customer_address_5-locality]'),
+    t('Totalsum'),
     t('Order state'),
     t('Export last 7 days'),
     t('mer'),
     t('7 days: Block'),
+    t('Ordre for siste 7 dager'),
     t('admin/commerce/overview/orders/export/7days/csv'),
     t('_blank'),
     t('View panes'),
@@ -1367,6 +1585,8 @@ function commercify_admin_overview_views_default_views() {
     t('Export exposed filters'),
     t('Exposed filters'),
     t('Export with exposed filters'),
+    t('Custom export'),
+    t('Alle'),
   );
   $export['c_dashboard_order_exports'] = $view;
 
@@ -1876,13 +2096,19 @@ function commercify_admin_overview_views_default_views() {
         ),
       ),
     ),
-    'action::views_bulk_operations_argument_selector_action' => array(
+    'rules_component::rules_order_csv_export_redirect' => array(
       'selected' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
+    ),
+    'action::views_bulk_operations_argument_selector_action' => array(
+      'selected' => 1,
+      'skip_confirmation' => 0,
+      'override_label' => 1,
+      'label' => 'Eksporter til CSV',
       'settings' => array(
-        'url' => '',
+        'url' => 'admin/commerce/overview/orders/export/oid/',
       ),
     ),
     'rules_component::commerce_shipping_service_BPAKKE_DOR-DOR' => array(
@@ -2461,13 +2687,19 @@ function commercify_admin_overview_views_default_views() {
         ),
       ),
     ),
-    'action::views_bulk_operations_argument_selector_action' => array(
+    'rules_component::rules_order_csv_export_redirect' => array(
       'selected' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
+    ),
+    'action::views_bulk_operations_argument_selector_action' => array(
+      'selected' => 1,
+      'skip_confirmation' => 0,
+      'override_label' => 1,
+      'label' => 'Eksporter til CSV',
       'settings' => array(
-        'url' => '',
+        'url' => 'admin/commerce/overview/orders/export/oid/',
       ),
     ),
     'rules_component::commerce_shipping_service_BPAKKE_DOR-DOR' => array(
@@ -2873,13 +3105,19 @@ function commercify_admin_overview_views_default_views() {
         ),
       ),
     ),
-    'action::views_bulk_operations_argument_selector_action' => array(
+    'rules_component::rules_order_csv_export_redirect' => array(
       'selected' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
+    ),
+    'action::views_bulk_operations_argument_selector_action' => array(
+      'selected' => 1,
+      'skip_confirmation' => 0,
+      'override_label' => 1,
+      'label' => 'Eksporter som CSV',
       'settings' => array(
-        'url' => '',
+        'url' => 'admin/commerce/overview/orders/export/oid/',
       ),
     ),
     'rules_component::commerce_shipping_service_BPAKKE_DOR-DOR' => array(
@@ -3239,19 +3477,33 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['fields']['views_bulk_operations']['hide_alter_empty'] = 1;
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['entity_load_capacity'] = '10';
   $handler->display->display_options['fields']['views_bulk_operations']['vbo']['operations'] = array(
+    'rules_component::rules_commercify_move_to_cancelled' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'rules_component::rules_commercify_move_to_completed' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'rules_component::rules_commercify_move_to_processing' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
     'action::views_bulk_operations_delete_item' => array(
       'selected' => 1,
       'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 1,
       'label' => 'Slett ordre',
-    ),
-    'action::system_message_action' => array(
-      'selected' => 0,
-      'use_queue' => 0,
-      'skip_confirmation' => 0,
-      'override_label' => 0,
-      'label' => '',
     ),
     'action::views_bulk_operations_script_action' => array(
       'selected' => 0,
@@ -3260,14 +3512,89 @@ function commercify_admin_overview_views_default_views() {
       'override_label' => 0,
       'label' => '',
     ),
-    'action::views_bulk_operations_argument_selector_action' => array(
+    'action::views_bulk_operations_modify_action' => array(
       'selected' => 0,
+      'use_queue' => 0,
       'skip_confirmation' => 0,
       'override_label' => 0,
       'label' => '',
       'settings' => array(
-        'url' => '',
+        'show_all_tokens' => 1,
+        'display_values' => array(
+          '_all_' => '_all_',
+        ),
       ),
+    ),
+    'rules_component::rules_order_csv_export_redirect' => array(
+      'selected' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::views_bulk_operations_argument_selector_action' => array(
+      'selected' => 1,
+      'skip_confirmation' => 0,
+      'override_label' => 1,
+      'label' => 'Eksporter til CSV',
+      'settings' => array(
+        'url' => 'admin/commerce/overview/orders/export/oid/',
+      ),
+    ),
+    'rules_component::commerce_shipping_service_BPAKKE_DOR-DOR' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'rules_component::commerce_shipping_service_EKSPRESS07' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'rules_component::commerce_shipping_service_EKSPRESS09' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'rules_component::commerce_shipping_service_PA_DOREN' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'rules_component::commerce_shipping_service_SERVICEPAKKE' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'rules_component::commerce_shipping_service_standard_frakt' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'action::system_send_email_action' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
+    ),
+    'rules_component::rules_apply_a_percentage_coupon_amount_cloned_' => array(
+      'selected' => 0,
+      'use_queue' => 0,
+      'skip_confirmation' => 0,
+      'override_label' => 0,
+      'label' => '',
     ),
     'action::system_goto_action' => array(
       'selected' => 0,
@@ -3276,7 +3603,7 @@ function commercify_admin_overview_views_default_views() {
       'override_label' => 0,
       'label' => '',
     ),
-    'action::system_send_email_action' => array(
+    'action::system_message_action' => array(
       'selected' => 0,
       'use_queue' => 0,
       'skip_confirmation' => 0,
@@ -6222,63 +6549,6 @@ function commercify_admin_overview_views_default_views() {
   $handler->display->display_options['filters']['field_product_stock_warning_value']['value'] = array(
     1 => '1',
   );
-
-  /* Display: Feed */
-  $handler = $view->new_display('feed', 'Feed', 'feed_1');
-  $handler->display->display_options['field_language'] = 'und';
-  $handler->display->display_options['defaults']['query'] = FALSE;
-  $handler->display->display_options['query']['type'] = 'views_query';
-  $handler->display->display_options['query']['options']['query_comment'] = FALSE;
-  $handler->display->display_options['pager']['type'] = 'none';
-  $handler->display->display_options['pager']['options']['offset'] = '0';
-  $handler->display->display_options['defaults']['fields'] = FALSE;
-  /* Felt: Commerce Product: SKU */
-  $handler->display->display_options['fields']['sku']['id'] = 'sku';
-  $handler->display->display_options['fields']['sku']['table'] = 'commerce_product';
-  $handler->display->display_options['fields']['sku']['field'] = 'sku';
-  $handler->display->display_options['fields']['sku']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['sku']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['sku']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['sku']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['sku']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['sku']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['sku']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['sku']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['sku']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['sku']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['sku']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['sku']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['sku']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['sku']['empty_zero'] = 0;
-  $handler->display->display_options['fields']['sku']['link_to_product'] = 0;
-  /* Felt: Commerce Product: Tittel */
-  $handler->display->display_options['fields']['title']['id'] = 'title';
-  $handler->display->display_options['fields']['title']['table'] = 'commerce_product';
-  $handler->display->display_options['fields']['title']['field'] = 'title';
-  $handler->display->display_options['fields']['title']['alter']['alter_text'] = 0;
-  $handler->display->display_options['fields']['title']['alter']['make_link'] = 0;
-  $handler->display->display_options['fields']['title']['alter']['absolute'] = 0;
-  $handler->display->display_options['fields']['title']['alter']['external'] = 0;
-  $handler->display->display_options['fields']['title']['alter']['nl2br'] = 0;
-  $handler->display->display_options['fields']['title']['alter']['word_boundary'] = 1;
-  $handler->display->display_options['fields']['title']['alter']['ellipsis'] = 1;
-  $handler->display->display_options['fields']['title']['alter']['strip_tags'] = 0;
-  $handler->display->display_options['fields']['title']['alter']['trim'] = 0;
-  $handler->display->display_options['fields']['title']['alter']['html'] = 0;
-  $handler->display->display_options['fields']['title']['element_label_colon'] = 1;
-  $handler->display->display_options['fields']['title']['element_default_classes'] = 1;
-  $handler->display->display_options['fields']['title']['hide_empty'] = 0;
-  $handler->display->display_options['fields']['title']['empty_zero'] = 0;
-  $handler->display->display_options['fields']['title']['link_to_product'] = 1;
-  $handler->display->display_options['defaults']['filters'] = FALSE;
-  /* Filter criterion: Commerce Product: Lagervarsling (field_product_stock_warning) */
-  $handler->display->display_options['filters']['field_product_stock_warning_value']['id'] = 'field_product_stock_warning_value';
-  $handler->display->display_options['filters']['field_product_stock_warning_value']['table'] = 'field_data_field_product_stock_warning';
-  $handler->display->display_options['filters']['field_product_stock_warning_value']['field'] = 'field_product_stock_warning_value';
-  $handler->display->display_options['filters']['field_product_stock_warning_value']['value'] = array(
-    1 => '1',
-  );
-  $handler->display->display_options['path'] = 'feeds/low-stock';
   $translatables['c_dashboard_products'] = array(
     t('Defaults'),
     t('Produkter'),
@@ -6313,7 +6583,6 @@ function commercify_admin_overview_views_default_views() {
     t('Block'),
     t('Lager / Varselgrense'),
     t('Lavt lagernivå'),
-    t('Feed'),
   );
   $export['c_dashboard_products'] = $view;
 
