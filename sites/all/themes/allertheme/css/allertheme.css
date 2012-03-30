@@ -537,6 +537,38 @@ div#tasks {
   font-size: 1.25em;
   float: left;
 }
+.article-type-produktvisning.view-mode-full .group-cart .field-name-field-product-ebook-link {
+  clear: both;
+}
+.article-type-produktvisning.view-mode-full .group-cart .field-name-field-product-ebook-link a {
+  color: #fff;
+  font-size: 1.25em;
+  line-height: 1.267em;
+  text-transform: capitalize;
+  text-shadow: 0 1px 0 rgba(0, 0, 0, 0.75);
+  background: #984276 url("../images/bg_addebook.png") no-repeat right center;
+  border: 2px solid #fff;
+  float: right;
+  margin: 7px;
+  padding: 11px 60px 11px 13px;
+  -moz-border-radius: 14px;
+  -webkit-border-radius: 14px;
+  -o-border-radius: 14px;
+  -ms-border-radius: 14px;
+  -khtml-border-radius: 14px;
+  border-radius: 14px;
+  -moz-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.5);
+  -o-box-shadow: 0 1px 7px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 7px rgba(0, 0, 0, 0.5);
+}
+.article-type-produktvisning.view-mode-full .group-cart .field-name-field-product-ebook-link a:hover {
+  text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: 0 1px 5px #8c2764;
+  -webkit-box-shadow: 0 1px 5px #8c2764;
+  -o-box-shadow: 0 1px 5px #8c2764;
+  box-shadow: 0 1px 5px #8c2764;
+}
 .article-type-produktvisning.view-mode-full .group-cart table {
   font-family: "Bitter", Georgia, Palatino, "Palatino Linotype", Times, "Times New Roman", serif;
   font-style: oblique;

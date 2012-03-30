@@ -514,6 +514,29 @@ div#tasks {
       font-size: calc-em(15px, 12px);
       float: left;
     }
+    .field-name-field-product-ebook-link {
+      clear: both;
+
+      a {
+        color: #fff;
+        font-size: calc-em(15px, 12px);
+        line-height: calc-em(19px, 15px);
+        text-transform: capitalize;
+        text-shadow: 0 1px 0 rgba(0,0,0,0.75);
+        background: #984276 url('../images/bg_addebook.png') no-repeat right center;
+        border: 2px solid #fff;
+        float: right;
+        margin: 7px;
+        padding: 11px 60px 11px 13px;
+        @include border-radius(14px);
+        @include box-shadow(0 1px 7px rgba(0, 0, 0, 0.5));
+
+        &:hover {
+          text-shadow: 0 -1px 0 rgba(0,0,0,0.5);
+          @include box-shadow(0 1px 5px #8C2764);
+        }
+      }
+    }
     table {
       font-family: $font-family-headings;
       font-style: oblique;

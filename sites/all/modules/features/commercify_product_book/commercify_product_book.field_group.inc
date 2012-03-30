@@ -24,7 +24,8 @@ function commercify_product_book_field_group_info() {
     'weight' => '3',
     'children' => array(
       0 => 'field_display_product',
-      1 => 'product:commerce_price',
+      1 => 'field_product_ebook_link',
+      2 => 'product:commerce_price',
     ),
     'format_type' => 'div',
     'format_settings' => array(
@@ -143,9 +144,9 @@ function commercify_product_book_field_group_info() {
     'weight' => '4',
     'children' => array(
       0 => 'product:field_product_language',
-      1 => 'product:field_product_isbn',
-      2 => 'product:field_product_detail_year',
-      3 => 'product:field_product_pages',
+      1 => 'product:field_product_detail_year',
+      2 => 'product:field_product_pages',
+      3 => 'product:field_product_isbn',
     ),
     'format_type' => 'div',
     'format_settings' => array(

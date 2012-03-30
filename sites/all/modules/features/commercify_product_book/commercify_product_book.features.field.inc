@@ -1509,11 +1509,11 @@ function commercify_product_book_field_default_fields() {
       'description' => 'Lenke til den eksterne ebok-tjenesten.',
       'display' => array(
         'default' => array(
-          'label' => 'above',
+          'label' => 'hidden',
           'module' => 'link',
           'settings' => array(),
-          'type' => 'link_default',
-          'weight' => 33,
+          'type' => 'link_label',
+          'weight' => '6',
         ),
         'search_result' => array(
           'label' => 'above',
